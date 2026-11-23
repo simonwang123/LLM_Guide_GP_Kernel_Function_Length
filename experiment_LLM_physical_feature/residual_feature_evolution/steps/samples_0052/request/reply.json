@@ -1,0 +1,38 @@
+{
+  "crest_max_settlement_m": [
+    {
+      "name": "downward_flared_soft_wedge",
+      "expression": "(secondary_bottom_width - secondary_top_width) / H_dam",
+      "physical_rationale": "候选假设：五个匹配对中高残差断面的底宽减顶宽均大于对照，尤其 lhs_013、lhs_006、lhs_007；正残差的 eval_0028、lhs_019 也呈更大的向下张开。该几何意味着坝顶下方低模量次堆石形成更宽的深部压缩楔体，使竖向应力传播到更大的可压缩体积。若模型低估这种楔体压缩，残差为正；在三个负残差断面中，该楔体可能被更强排水或壳体骨架抵消，模型反而高估沉降。"
+    },
+    {
+      "name": "bottom_drain_dominance",
+      "expression": "(A_drain - A_ds_shell) / A_tot",
+      "physical_rationale": "候选假设：五个高残差断面的底部排水区相对下游壳体的面积优势均高于对照，且在三个负残差高估断面 lhs_013、lhs_006、lhs_007 中提高最明显。力学上，更大的底部高刚度支承会缩短压缩路径并约束深部侧向变形；若模型对该支承估计不足，观测沉降会小于预测，形成负残差。两个正残差断面该量仅略高，说明此时向下张开的软楔体或帽盖骨架效应可能占主导。"
+    }
+  ],
+  "dam_max_settlement_m": [
+    {
+      "name": "face_asymmetry_soft_elevation_index",
+      "expression": "(upstream_slope - downstream_slope) * (Y_c_sec / H_dam)",
+      "physical_rationale": "候选假设：五个高残差断面相对各自对照均具有更大的符号化上游坡比减下游坡比，即从较负值变小或转为正值。把这个不对称量按次堆石形心高度缩放，可表征面坡形状在软区所在高程对推力线和偏压路径的影响。正残差的 eval_0050、eval_0025、eval_0051 中，模型可能低估这种偏压导致的整体压缩；负残差的 eval_0031、lhs_009 中，同样的不对称若伴随较强帽盖或骨架约束，预测又可能偏高。"
+    },
+    {
+      "name": "tall_narrow_throated_soft_column",
+      "expression": "(secondary_height / H_dam) * (W_sec_mean / (secondary_top_width + W_sec_mean))",
+      "physical_rationale": "候选假设：四对匹配中高残差断面的该量高于对照，表现为次堆石相对更高、顶部喉口相对平均宽度更窄；正残差的 eval_0050、eval_0025 提高显著，负残差的 lhs_009 也略高，eval_0051 为例外。该几何类似高而缩颈的可压缩柱，会使竖向应力在软区中上部集中并延长压缩路径。若模型低估该应力集中，整体沉降被低估；若帽盖或总体骨架约束更强，则同一几何也可能对应预测偏高。"
+    }
+  ],
+  "dam_max_horizontal_displacement_m": [
+    {
+      "name": "cap_width_area_restraint_index",
+      "expression": "(A_mod / A_tot) * (B_mod_bot / B_bot)",
+      "physical_rationale": "候选假设：四个匹配对中高残差断面具有更大的顶部增模区面积占比与更宽的帽盖底宽，lhs_017 为例外；多数对应负残差，即观测水平位移小于预测。力学上，宽而厚的顶部帽盖可增强坝顶附近横向约束并把水平剪切分散到更大的骨架范围；若模型低估这种约束，就会高估水平位移。正残差的 lhs_019 中该量也高，说明软区高度、排水高度或下游壳体效应可能压过帽盖约束。"
+    },
+    {
+      "name": "base_spread_crest_throat_index",
+      "expression": "(B_bot - crest_width) / (B_bot + crest_width)",
+      "physical_rationale": "候选假设：四个匹配对中高残差断面相对对照表现出更明显的宽底窄顶几何，lhs_001 为例外；这在多数负残差断面中与观测位移小于预测相对应。该几何代表坝底展开相对于坝顶受力 throat 的约束尺度，宽底可提供更强的基底抗滑和侧向约束，窄顶则改变上部剪切传递。若模型低估这种整体基底约束，水平位移会被高估；正残差的 lhs_019 提示该效应并非单独决定符号，仍需与软区压缩机制共同解释。"
+    }
+  ]
+}

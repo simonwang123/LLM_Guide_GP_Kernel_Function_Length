@@ -1,0 +1,1362 @@
+{
+  "sample_count": 28,
+  "response_unit": "m",
+  "residual_definition": "observed minus LOO prediction",
+  "original_variable_units": {
+    "upstream_slope": "1",
+    "downstream_slope": "1",
+    "crest_width": "m",
+    "modulus_zone_height": "m",
+    "secondary_top_width": "m",
+    "secondary_height": "m",
+    "secondary_bottom_width": "m",
+    "secondary_right_slope_distance": "m"
+  },
+  "aliases": {
+    "x1": "upstream_slope",
+    "x2": "downstream_slope",
+    "x3": "crest_width",
+    "x4": "modulus_zone_height",
+    "x5": "secondary_top_width",
+    "x6": "secondary_height",
+    "x7": "secondary_bottom_width",
+    "x8": "secondary_right_slope_distance",
+    "d_ds_perp": "secondary_right_slope_distance"
+  },
+  "primitive_catalog": {
+    "A_tot": {
+      "unit": "m^2",
+      "desc": "坝体主体域面积（GeoStudio 材料 4、5、6、12 的并集）"
+    },
+    "A_mod": {
+      "unit": "m^2",
+      "desc": "坝顶增模区(Material 12)面积（顶部高模量加强帽盖）"
+    },
+    "A_sec": {
+      "unit": "m^2",
+      "desc": "次堆石区(Material 5)面积（内部低模量软弱压缩区）"
+    },
+    "A_drain": {
+      "unit": "m^2",
+      "desc": "底部排水区(Material 6)面积（底部高刚度支承区）"
+    },
+    "A_main": {
+      "unit": "m^2",
+      "desc": "主堆石区(Material 4)面积（高刚度主承重与抗推骨架）"
+    },
+    "A_ds_shell": {
+      "unit": "m^2",
+      "desc": "次堆石区顶底高程之间、其右腰下游侧的材料 4 面积"
+    },
+    "B_bot": {
+      "unit": "m",
+      "desc": "坝体主体域在坝底高程的水平宽度"
+    },
+    "B_mod_bot": {
+      "unit": "m",
+      "desc": "坝顶增模区底面宽度"
+    },
+    "h_drain": {
+      "unit": "m",
+      "desc": "底部排水区高度（次堆石区底面至坝基的距离）"
+    },
+    "d_ds_perp": {
+      "unit": "m",
+      "desc": "次堆石区右腰到 GeoStudio 下游参考线的法向距离，等于 x8"
+    },
+    "d_us_min": {
+      "unit": "m",
+      "desc": "次堆石区左腰距主体域上游边界的最小水平净宽"
+    },
+    "X_c_sec": {
+      "unit": "m",
+      "desc": "次堆石区形心相对坝轴线的横坐标，正值偏下游"
+    },
+    "Y_c_sec": {
+      "unit": "m",
+      "desc": "次堆石区形心相对坝底的高程"
+    },
+    "W_sec_mean": {
+      "unit": "m",
+      "desc": "次堆石区平均水平宽度 0.5*(x5+x7)"
+    },
+    "H_dam": {
+      "unit": "m",
+      "desc": "大坝总高度常量"
+    }
+  },
+  "responses": {
+    "crest_max_settlement_m": {
+      "current_formulas": [
+        {
+          "name": "upstream_clearance_ratio",
+          "expression": "d_us_min / B_bot",
+          "physical_rationale": "上游最窄净宽相对主体宽度反映软区一侧的约束尺度。"
+        },
+        {
+          "name": "soft_area_ratio",
+          "expression": "A_sec / A_tot",
+          "physical_rationale": "低模量次堆石占比表征主体断面的整体可压缩性。"
+        },
+        {
+          "name": "stiff_support_to_soft_area",
+          "expression": "(A_mod + A_ds_shell) / A_sec",
+          "physical_rationale": "候选假设：高残差断面相对对照通常降低 A_mod 与 A_ds_shell 之和相对于 A_sec 的比例，正残差子组尤其明显；负残差中帽盖显著增大的断面可能反向。力学上，顶部增模区和下游壳体构成绕过软区的刚度骨架，骨架面积不足会使软区承担更大压缩应变，导致观测沉降高于预测。"
+        }
+      ],
+      "loo_nrmse": 0.5392433982571737,
+      "loo_formula_fallback": null,
+      "top5_signs": {
+        "underestimated": 3,
+        "overestimated": 2,
+        "zero": 0
+      },
+      "top5_direction": "mixed_or_tied",
+      "matched_pairs": [
+        {
+          "high_residual": {
+            "sample_index": 13,
+            "design_id": "lhs_013",
+            "original_variables": {
+              "upstream_slope": 1.6446159216739957,
+              "downstream_slope": 1.6795317296966799,
+              "crest_width": 7.589823503377536,
+              "modulus_zone_height": 11.310364914746476,
+              "secondary_top_width": 27.938447008999383,
+              "secondary_height": 24.297527356364657,
+              "secondary_bottom_width": 65.86501425442128,
+              "secondary_right_slope_distance": 8.027170857060547
+            },
+            "geometric_primitives": {
+              "A_tot": 8935.356992263625,
+              "A_mod": 279.49980368069726,
+              "A_sec": 1139.5960830739239,
+              "A_drain": 3871.8024894206746,
+              "A_main": 3644.4586160883296,
+              "A_ds_shell": 378.5524835054062,
+              "B_bot": 246.17674519499997,
+              "B_mod_bot": 43.878225472000025,
+              "h_drain": 35.392107728999974,
+              "d_ds_perp": 8.027170857060547,
+              "d_us_min": 0.49380531299999575,
+              "X_c_sec": 10.12346508600001,
+              "Y_c_sec": 45.90354411200002,
+              "W_sec_mean": 46.90173063150003,
+              "H_dam": 74.0
+            },
+            "current_feature_values": {
+              "upstream_clearance_ratio": 0.0020058974807260765,
+              "soft_area_ratio": 0.12753783470102026,
+              "stiff_support_to_soft_area": 0.5774434441816317
+            },
+            "loo_prediction_m": 0.09405737398530827,
+            "observed_m": 0.07951806597548103,
+            "observed_minus_loo_m": -0.014539308009827237
+          },
+          "matched_low_residual": {
+            "sample_index": 11,
+            "design_id": "lhs_011",
+            "original_variables": {
+              "upstream_slope": 1.3717017078040479,
+              "downstream_slope": 1.320912292949585,
+              "crest_width": 9.763338568555401,
+              "modulus_zone_height": 5.227712698589564,
+              "secondary_top_width": 14.210190616724496,
+              "secondary_height": 29.327369356524045,
+              "secondary_bottom_width": 49.60905740491252,
+              "secondary_right_slope_distance": 2.713831948671564
+            },
+            "geometric_primitives": {
+              "A_tot": 7364.980022583283,
+              "A_mod": 68.12974081013377,
+              "A_sec": 935.825329374874,
+              "A_drain": 2780.5265482474133,
+              "A_main": 3580.498404150864,
+              "A_ds_shell": 126.00460934764087,
+              "B_bot": 201.616770115,
+              "B_mod_bot": 20.240492020000005,
+              "h_drain": 36.444917944999986,
+              "d_ds_perp": 2.713831948671564,
+              "d_us_min": 1.906027913999992,
+              "X_c_sec": 16.229618721999998,
+              "Y_c_sec": 48.39741523800001,
+              "W_sec_mean": 31.909624011000005,
+              "H_dam": 74.0
+            },
+            "current_feature_values": {
+              "upstream_clearance_ratio": 0.009453717133315916,
+              "soft_area_ratio": 0.12706420472361732,
+              "stiff_support_to_soft_area": 0.20744720629378058
+            },
+            "loo_prediction_m": 0.10587575975947393,
+            "observed_m": 0.10697526562532986,
+            "observed_minus_loo_m": 0.0010995058658559292
+          }
+        },
+        {
+          "high_residual": {
+            "sample_index": 3,
+            "design_id": "lhs_003",
+            "original_variables": {
+              "upstream_slope": 1.353045691022059,
+              "downstream_slope": 1.508176082826362,
+              "crest_width": 8.675030182722553,
+              "modulus_zone_height": 6.283991266198675,
+              "secondary_top_width": 17.933888328549898,
+              "secondary_height": 31.60548164084404,
+              "secondary_bottom_width": 69.30628530326103,
+              "secondary_right_slope_distance": 2.4169107295218755
+            },
+            "geometric_primitives": {
+              "A_tot": 7748.20338776067,
+              "A_mod": 90.71643162123773,
+              "A_sec": 1378.6338530328105,
+              "A_drain": 3336.543297254967,
+              "A_main": 2942.3098058516557,
+              "A_ds_shell": 132.028256194689,
+              "B_bot": 213.00543693799997,
+              "B_mod_bot": 23.630378285999996,
+              "h_drain": 33.11052709299997,
+              "d_ds_perp": 2.4169107295218755,
+              "d_us_min": 1.7045446040000058,
+              "X_c_sec": 17.784611874000007,
+              "Y_c_sec": 45.811391636999986,
+              "W_sec_mean": 43.620086816500006,
+              "H_dam": 74.0
+            },
+            "current_feature_values": {
+              "upstream_clearance_ratio": 0.008002352561996584,
+              "soft_area_ratio": 0.17792948688086171,
+              "stiff_support_to_soft_area": 0.1615691413103763
+            },
+            "loo_prediction_m": 0.09660456996240985,
+            "observed_m": 0.10576399845433376,
+            "observed_minus_loo_m": 0.009159428491923916
+          },
+          "matched_low_residual": {
+            "sample_index": 10,
+            "design_id": "lhs_010",
+            "original_variables": {
+              "upstream_slope": 1.5468086093385431,
+              "downstream_slope": 1.3012624657189515,
+              "crest_width": 11.291715983318776,
+              "modulus_zone_height": 13.534298401099962,
+              "secondary_top_width": 26.23483907948985,
+              "secondary_height": 27.391521289178613,
+              "secondary_bottom_width": 63.350919984777626,
+              "secondary_right_slope_distance": 8.592072960145197
+            },
+            "geometric_primitives": {
+              "A_tot": 7897.915705416024,
+              "A_mod": 372.63251196399375,
+              "A_sec": 1226.9451132903607,
+              "A_drain": 2947.1016370375714,
+              "A_main": 3351.236443124097,
+              "A_ds_shell": 381.73199744837643,
+              "B_bot": 214.648971028,
+              "B_mod_bot": 47.245817955999996,
+              "h_drain": 30.074180309999974,
+              "d_ds_perp": 8.592072960145197,
+              "d_us_min": 7.236450769000015,
+              "X_c_sec": 9.331825449999997,
+              "Y_c_sec": 41.878520691000006,
+              "W_sec_mean": 44.792879532000015,
+              "H_dam": 74.0
+            },
+            "current_feature_values": {
+              "upstream_clearance_ratio": 0.03371295345299397,
+              "soft_area_ratio": 0.15535049487157462,
+              "stiff_support_to_soft_area": 0.6148315040673276
+            },
+            "loo_prediction_m": 0.09316849769599105,
+            "observed_m": 0.09483388871555554,
+            "observed_minus_loo_m": 0.001665391019564491
+          }
+        },
+        {
+          "high_residual": {
+            "sample_index": 19,
+            "design_id": "lhs_019",
+            "original_variables": {
+              "upstream_slope": 1.6745232365833786,
+              "downstream_slope": 1.4008319126769921,
+              "crest_width": 9.165674889626958,
+              "modulus_zone_height": 16.760990775170942,
+              "secondary_top_width": 24.924136868277312,
+              "secondary_height": 36.21510900519744,
+              "secondary_bottom_width": 57.11954572428753,
+              "secondary_right_slope_distance": 10.172838528352186
+            },
+            "geometric_primitives": {
+              "A_tot": 8367.75443834113,
+              "A_mod": 547.9646538156717,
+              "A_sec": 1485.6104541145198,
+              "A_drain": 1491.4065154909613,
+              "A_main": 4842.7728149199775,
+              "A_ds_shell": 626.5786803350254,
+              "B_bot": 229.341951425,
+              "B_mod_bot": 59.01079680599997,
+              "h_drain": 18.023900219999973,
+              "d_ds_perp": 10.172838528352186,
+              "d_us_min": 16.988913295000003,
+              "X_c_sec": 21.663753582000027,
+              "Y_c_sec": 33.76287860899998,
+              "W_sec_mean": 41.02184129599998,
+              "H_dam": 74.0
+            },
+            "current_feature_values": {
+              "upstream_clearance_ratio": 0.0740767800633098,
+              "soft_area_ratio": 0.17753992006594252,
+              "stiff_support_to_soft_area": 0.790613266686232
+            },
+            "loo_prediction_m": 0.07473655967811349,
+            "observed_m": 0.08383617259362591,
+            "observed_minus_loo_m": 0.009099612915512423
+          },
+          "matched_low_residual": {
+            "sample_index": 12,
+            "design_id": "lhs_012",
+            "original_variables": {
+              "upstream_slope": 1.4358822591610336,
+              "downstream_slope": 1.3705155660015915,
+              "crest_width": 11.72827352663696,
+              "modulus_zone_height": 10.858807129173226,
+              "secondary_top_width": 13.057879130529466,
+              "secondary_height": 39.41897416299703,
+              "secondary_bottom_width": 43.37466410070071,
+              "secondary_right_slope_distance": 10.671255276130882
+            },
+            "geometric_primitives": {
+              "A_tot": 7815.085045741038,
+              "A_mod": 257.57908015435964,
+              "A_sec": 1112.2564817836796,
+              "A_drain": 1441.4633632943508,
+              "A_main": 5003.786120508648,
+              "A_ds_shell": 704.5739071908122,
+              "B_bot": 212.00170807900003,
+              "B_mod_bot": 39.310873696000016,
+              "h_drain": 20.722218708000014,
+              "d_ds_perp": 10.671255276130882,
+              "d_us_min": 8.612333860000007,
+              "X_c_sec": 22.910333228000013,
+              "Y_c_sec": 36.90225128499998,
+              "W_sec_mean": 28.216271616,
+              "H_dam": 74.0
+            },
+            "current_feature_values": {
+              "upstream_clearance_ratio": 0.040623889015039064,
+              "soft_area_ratio": 0.1423217374185611,
+              "stiff_support_to_soft_area": 0.8650459701544799
+            },
+            "loo_prediction_m": 0.09138995060394947,
+            "observed_m": 0.09035788391975826,
+            "observed_minus_loo_m": -0.0010320666841912157
+          }
+        },
+        {
+          "high_residual": {
+            "sample_index": 25,
+            "design_id": "eval_0025",
+            "original_variables": {
+              "upstream_slope": 1.6882901702076196,
+              "downstream_slope": 1.6950646217912435,
+              "crest_width": 11.977469097822905,
+              "modulus_zone_height": 18.36188363377005,
+              "secondary_top_width": 11.75962993875146,
+              "secondary_height": 27.23224811255932,
+              "secondary_bottom_width": 25.882059396244586,
+              "secondary_right_slope_distance": 13.828325916081667
+            },
+            "geometric_primitives": {
+              "A_tot": 9408.289879923997,
+              "A_mod": 766.9773790584494,
+              "A_sec": 512.5339116636007,
+              "A_drain": 1520.5571967507958,
+              "A_main": 6608.221392451151,
+              "A_ds_shell": 737.2519028341619,
+              "B_bot": 254.94571919599997,
+              "B_mod_bot": 73.42945398900002,
+              "h_drain": 25.405868253999984,
+              "d_ds_perp": 13.828325916081667,
+              "d_us_min": 34.727601421,
+              "X_c_sec": 30.76631473499998,
+              "Y_c_sec": 37.31915736899998,
+              "W_sec_mean": 18.820844667500026,
+              "H_dam": 74.0
+            },
+            "current_feature_values": {
+              "upstream_clearance_ratio": 0.13621566790969233,
+              "soft_area_ratio": 0.054476840978005786,
+              "stiff_support_to_soft_area": 2.934887326791959
+            },
+            "loo_prediction_m": 0.048986266074956646,
+            "observed_m": 0.05785997394491101,
+            "observed_minus_loo_m": 0.008873707869954367
+          },
+          "matched_low_residual": {
+            "sample_index": 22,
+            "design_id": "eval_0022",
+            "original_variables": {
+              "upstream_slope": 1.3205078296363355,
+              "downstream_slope": 1.345730435848236,
+              "crest_width": 6.8380967024713755,
+              "modulus_zone_height": 17.62106172274798,
+              "secondary_top_width": 10.626825615763664,
+              "secondary_height": 29.657871406525373,
+              "secondary_bottom_width": 41.223519132472575,
+              "secondary_right_slope_distance": 10.31685505528003
+            },
+            "geometric_primitives": {
+              "A_tot": 7085.442265647426,
+              "A_mod": 473.7222413471512,
+              "A_sec": 768.8854284502752,
+              "A_drain": 1681.2664624725392,
+              "A_main": 4161.568133377461,
+              "A_ds_shell": 507.66319523807937,
+              "B_bot": 196.739723839,
+              "B_mod_bot": 50.947742920999985,
+              "h_drain": 23.721066871000005,
+              "d_ds_perp": 10.31685505528003,
+              "d_us_min": 23.397086489000003,
+              "X_c_sec": 23.046316125000033,
+              "Y_c_sec": 35.633169502999976,
+              "W_sec_mean": 25.925172374000027,
+              "H_dam": 74.0
+            },
+            "current_feature_values": {
+              "upstream_clearance_ratio": 0.11892405881461325,
+              "soft_area_ratio": 0.10851622236456385,
+              "stiff_support_to_soft_area": 1.276374086791135
+            },
+            "loo_prediction_m": 0.07262552616409185,
+            "observed_m": 0.0715414503469349,
+            "observed_minus_loo_m": -0.0010840758171569431
+          }
+        },
+        {
+          "high_residual": {
+            "sample_index": 9,
+            "design_id": "lhs_009",
+            "original_variables": {
+              "upstream_slope": 1.521905918548933,
+              "downstream_slope": 1.4341577509152494,
+              "crest_width": 6.2300210381399586,
+              "modulus_zone_height": 9.880374085179792,
+              "secondary_top_width": 11.206422680062811,
+              "secondary_height": 35.685761868782116,
+              "secondary_bottom_width": 62.945727953476855,
+              "secondary_right_slope_distance": 6.127392062091551
+            },
+            "geometric_primitives": {
+              "A_tot": 7833.748071896116,
+              "A_mod": 177.90726934915705,
+              "A_sec": 1323.0879947750243,
+              "A_drain": 2345.947228942543,
+              "A_main": 3986.80557882939,
+              "A_ds_shell": 374.8224797625352,
+              "B_bot": 217.57872806899996,
+              "B_mod_bot": 32.93087933900003,
+              "h_drain": 25.433864045999997,
+              "d_ds_perp": 6.127392062091551,
+              "d_us_min": 11.431447804000015,
+              "X_c_sec": 20.587154639999994,
+              "Y_c_sec": 39.12681695700002,
+              "W_sec_mean": 37.076075316499995,
+              "H_dam": 74.0
+            },
+            "current_feature_values": {
+              "upstream_clearance_ratio": 0.05253936313284634,
+              "soft_area_ratio": 0.16889590814410477,
+              "stiff_support_to_soft_area": 0.41775736103302596
+            },
+            "loo_prediction_m": 0.0924309871159422,
+            "observed_m": 0.08449103233596528,
+            "observed_minus_loo_m": -0.00793995477997693
+          },
+          "matched_low_residual": {
+            "sample_index": 1,
+            "design_id": "lhs_001",
+            "original_variables": {
+              "upstream_slope": 1.6094092387020262,
+              "downstream_slope": 1.398042551563892,
+              "crest_width": 10.294596895348278,
+              "modulus_zone_height": 17.22436933287436,
+              "secondary_top_width": 22.75627311159097,
+              "secondary_height": 28.75351770691302,
+              "secondary_bottom_width": 46.6598200010875,
+              "secondary_right_slope_distance": 12.621874746349105
+            },
+            "geometric_primitives": {
+              "A_tot": 8262.411076914119,
+              "A_mod": 581.5095874314916,
+              "A_sec": 997.9784312431392,
+              "A_drain": 1974.2684502131478,
+              "A_main": 4708.654608026342,
+              "A_ds_shell": 619.0967573010715,
+              "B_bot": 225.44602486499997,
+              "B_mod_bot": 60.22160053099998,
+              "h_drain": 25.022112960000015,
+              "d_ds_perp": 12.621874746349105,
+              "d_us_min": 16.09770578199999,
+              "X_c_sec": 15.802945496999996,
+              "Y_c_sec": 37.74865155499998,
+              "W_sec_mean": 34.70804655650002,
+              "H_dam": 74.0
+            },
+            "current_feature_values": {
+              "upstream_clearance_ratio": 0.07140381291548391,
+              "soft_area_ratio": 0.12078537632091146,
+              "stiff_support_to_soft_area": 1.2030383695136768
+            },
+            "loo_prediction_m": 0.0788043060716193,
+            "observed_m": 0.07718245309587664,
+            "observed_minus_loo_m": -0.0016218529757426603
+          }
+        }
+      ]
+    },
+    "dam_max_settlement_m": {
+      "current_formulas": [
+        {
+          "name": "soft_core_eccentricity",
+          "expression": "X_c_sec / B_bot",
+          "physical_rationale": "软区相对坝轴线的有符号偏心反映骨架承载分布的不对称性。"
+        },
+        {
+          "name": "deep_soft_drainage_deficit",
+          "expression": "((H_dam - Y_c_sec) / H_dam) * (A_sec / (A_sec + A_drain))",
+          "physical_rationale": "候选假设：正残差断面的次堆石形心更低且 A_sec/(A_sec+A_drain) 更大，而多数负残差对照形心更高或底部排水支承更强；个别负残差断面因主骨架和帽盖很大而不服从该方向。力学上，低位软区若缺少底部高刚度排水支承，会形成更长的压缩柱并增大整体沉降，使模型低估。"
+        }
+      ],
+      "loo_nrmse": 0.3258056555407223,
+      "loo_formula_fallback": null,
+      "top5_signs": {
+        "underestimated": 2,
+        "overestimated": 3,
+        "zero": 0
+      },
+      "top5_direction": "mixed_or_tied",
+      "matched_pairs": [
+        {
+          "high_residual": {
+            "sample_index": 10,
+            "design_id": "lhs_010",
+            "original_variables": {
+              "upstream_slope": 1.5468086093385431,
+              "downstream_slope": 1.3012624657189515,
+              "crest_width": 11.291715983318776,
+              "modulus_zone_height": 13.534298401099962,
+              "secondary_top_width": 26.23483907948985,
+              "secondary_height": 27.391521289178613,
+              "secondary_bottom_width": 63.350919984777626,
+              "secondary_right_slope_distance": 8.592072960145197
+            },
+            "geometric_primitives": {
+              "A_tot": 7897.915705416024,
+              "A_mod": 372.63251196399375,
+              "A_sec": 1226.9451132903607,
+              "A_drain": 2947.1016370375714,
+              "A_main": 3351.236443124097,
+              "A_ds_shell": 381.73199744837643,
+              "B_bot": 214.648971028,
+              "B_mod_bot": 47.245817955999996,
+              "h_drain": 30.074180309999974,
+              "d_ds_perp": 8.592072960145197,
+              "d_us_min": 7.236450769000015,
+              "X_c_sec": 9.331825449999997,
+              "Y_c_sec": 41.878520691000006,
+              "W_sec_mean": 44.792879532000015,
+              "H_dam": 74.0
+            },
+            "current_feature_values": {
+              "soft_core_eccentricity": 0.043474820332507914,
+              "deep_soft_drainage_deficit": 0.12759440893394416
+            },
+            "loo_prediction_m": 0.19083797317876677,
+            "observed_m": 0.17887868717138825,
+            "observed_minus_loo_m": -0.011959286007378528
+          },
+          "matched_low_residual": {
+            "sample_index": 1,
+            "design_id": "lhs_001",
+            "original_variables": {
+              "upstream_slope": 1.6094092387020262,
+              "downstream_slope": 1.398042551563892,
+              "crest_width": 10.294596895348278,
+              "modulus_zone_height": 17.22436933287436,
+              "secondary_top_width": 22.75627311159097,
+              "secondary_height": 28.75351770691302,
+              "secondary_bottom_width": 46.6598200010875,
+              "secondary_right_slope_distance": 12.621874746349105
+            },
+            "geometric_primitives": {
+              "A_tot": 8262.411076914119,
+              "A_mod": 581.5095874314916,
+              "A_sec": 997.9784312431392,
+              "A_drain": 1974.2684502131478,
+              "A_main": 4708.654608026342,
+              "A_ds_shell": 619.0967573010715,
+              "B_bot": 225.44602486499997,
+              "B_mod_bot": 60.22160053099998,
+              "h_drain": 25.022112960000015,
+              "d_ds_perp": 12.621874746349105,
+              "d_us_min": 16.09770578199999,
+              "X_c_sec": 15.802945496999996,
+              "Y_c_sec": 37.74865155499998,
+              "W_sec_mean": 34.70804655650002,
+              "H_dam": 74.0
+            },
+            "current_feature_values": {
+              "soft_core_eccentricity": 0.07009635901304095,
+              "deep_soft_drainage_deficit": 0.16448591730430925
+            },
+            "loo_prediction_m": 0.16904983567952125,
+            "observed_m": 0.1688936901258416,
+            "observed_minus_loo_m": -0.0001561455536796541
+          }
+        },
+        {
+          "high_residual": {
+            "sample_index": 9,
+            "design_id": "lhs_009",
+            "original_variables": {
+              "upstream_slope": 1.521905918548933,
+              "downstream_slope": 1.4341577509152494,
+              "crest_width": 6.2300210381399586,
+              "modulus_zone_height": 9.880374085179792,
+              "secondary_top_width": 11.206422680062811,
+              "secondary_height": 35.685761868782116,
+              "secondary_bottom_width": 62.945727953476855,
+              "secondary_right_slope_distance": 6.127392062091551
+            },
+            "geometric_primitives": {
+              "A_tot": 7833.748071896116,
+              "A_mod": 177.90726934915705,
+              "A_sec": 1323.0879947750243,
+              "A_drain": 2345.947228942543,
+              "A_main": 3986.80557882939,
+              "A_ds_shell": 374.8224797625352,
+              "B_bot": 217.57872806899996,
+              "B_mod_bot": 32.93087933900003,
+              "h_drain": 25.433864045999997,
+              "d_ds_perp": 6.127392062091551,
+              "d_us_min": 11.431447804000015,
+              "X_c_sec": 20.587154639999994,
+              "Y_c_sec": 39.12681695700002,
+              "W_sec_mean": 37.076075316499995,
+              "H_dam": 74.0
+            },
+            "current_feature_values": {
+              "soft_core_eccentricity": 0.0946193353675239,
+              "deep_soft_drainage_deficit": 0.16994043175725815
+            },
+            "loo_prediction_m": 0.17640074186329474,
+            "observed_m": 0.1658134202298651,
+            "observed_minus_loo_m": -0.010587321633429653
+          },
+          "matched_low_residual": {
+            "sample_index": 22,
+            "design_id": "eval_0022",
+            "original_variables": {
+              "upstream_slope": 1.3205078296363355,
+              "downstream_slope": 1.345730435848236,
+              "crest_width": 6.8380967024713755,
+              "modulus_zone_height": 17.62106172274798,
+              "secondary_top_width": 10.626825615763664,
+              "secondary_height": 29.657871406525373,
+              "secondary_bottom_width": 41.223519132472575,
+              "secondary_right_slope_distance": 10.31685505528003
+            },
+            "geometric_primitives": {
+              "A_tot": 7085.442265647426,
+              "A_mod": 473.7222413471512,
+              "A_sec": 768.8854284502752,
+              "A_drain": 1681.2664624725392,
+              "A_main": 4161.568133377461,
+              "A_ds_shell": 507.66319523807937,
+              "B_bot": 196.739723839,
+              "B_mod_bot": 50.947742920999985,
+              "h_drain": 23.721066871000005,
+              "d_ds_perp": 10.31685505528003,
+              "d_us_min": 23.397086489000003,
+              "X_c_sec": 23.046316125000033,
+              "Y_c_sec": 35.633169502999976,
+              "W_sec_mean": 25.925172374000027,
+              "H_dam": 74.0
+            },
+            "current_feature_values": {
+              "soft_core_eccentricity": 0.1171411430050586,
+              "deep_soft_drainage_deficit": 0.16270197543534856
+            },
+            "loo_prediction_m": 0.16107776860120943,
+            "observed_m": 0.16522087358991466,
+            "observed_minus_loo_m": 0.004143104988705237
+          }
+        },
+        {
+          "high_residual": {
+            "sample_index": 19,
+            "design_id": "lhs_019",
+            "original_variables": {
+              "upstream_slope": 1.6745232365833786,
+              "downstream_slope": 1.4008319126769921,
+              "crest_width": 9.165674889626958,
+              "modulus_zone_height": 16.760990775170942,
+              "secondary_top_width": 24.924136868277312,
+              "secondary_height": 36.21510900519744,
+              "secondary_bottom_width": 57.11954572428753,
+              "secondary_right_slope_distance": 10.172838528352186
+            },
+            "geometric_primitives": {
+              "A_tot": 8367.75443834113,
+              "A_mod": 547.9646538156717,
+              "A_sec": 1485.6104541145198,
+              "A_drain": 1491.4065154909613,
+              "A_main": 4842.7728149199775,
+              "A_ds_shell": 626.5786803350254,
+              "B_bot": 229.341951425,
+              "B_mod_bot": 59.01079680599997,
+              "h_drain": 18.023900219999973,
+              "d_ds_perp": 10.172838528352186,
+              "d_us_min": 16.988913295000003,
+              "X_c_sec": 21.663753582000027,
+              "Y_c_sec": 33.76287860899998,
+              "W_sec_mean": 41.02184129599998,
+              "H_dam": 74.0
+            },
+            "current_feature_values": {
+              "soft_core_eccentricity": 0.09446049206171757,
+              "deep_soft_drainage_deficit": 0.2713431235989366
+            },
+            "loo_prediction_m": 0.1878281055330463,
+            "observed_m": 0.19813934916032805,
+            "observed_minus_loo_m": 0.010311243627281752
+          },
+          "matched_low_residual": {
+            "sample_index": 16,
+            "design_id": "lhs_016",
+            "original_variables": {
+              "upstream_slope": 1.5904733072542485,
+              "downstream_slope": 1.3508043169679371,
+              "crest_width": 11.693416459617298,
+              "modulus_zone_height": 18.970891762402378,
+              "secondary_top_width": 29.273667476470944,
+              "secondary_height": 34.417047583299556,
+              "secondary_bottom_width": 29.75174025290207,
+              "secondary_right_slope_distance": 14.580711971134479
+            },
+            "geometric_primitives": {
+              "A_tot": 8180.935829827038,
+              "A_mod": 702.2368509688888,
+              "A_sec": 1015.7401332483503,
+              "A_drain": 959.5100318499856,
+              "A_main": 5503.448813759815,
+              "A_ds_shell": 836.5874225057545,
+              "B_bot": 221.947956142,
+              "B_mod_bot": 65.53266242199996,
+              "h_drain": 17.612060654000004,
+              "d_ds_perp": 14.580711971134479,
+              "d_us_min": 12.149648116999998,
+              "X_c_sec": 19.369528333999995,
+              "Y_c_sec": 34.774124641000014,
+              "W_sec_mean": 29.512703864500025,
+              "H_dam": 74.0
+            },
+            "current_feature_values": {
+              "soft_core_eccentricity": 0.08727058663071252,
+              "deep_soft_drainage_deficit": 0.2725846713463669
+            },
+            "loo_prediction_m": 0.19178316969555573,
+            "observed_m": 0.19149546774053072,
+            "observed_minus_loo_m": -0.00028770195502500484
+          }
+        },
+        {
+          "high_residual": {
+            "sample_index": 6,
+            "design_id": "lhs_006",
+            "original_variables": {
+              "upstream_slope": 1.4984125475442482,
+              "downstream_slope": 1.4983500043069138,
+              "crest_width": 8.764640387706127,
+              "modulus_zone_height": 15.56011237959704,
+              "secondary_top_width": 18.525734632902335,
+              "secondary_height": 25.22773911812784,
+              "secondary_bottom_width": 42.48636761761311,
+              "secondary_right_slope_distance": 5.681667919744493
+            },
+            "geometric_primitives": {
+              "A_tot": 8124.688657783201,
+              "A_mod": 459.94107055730245,
+              "A_sec": 769.5986993184081,
+              "A_drain": 2031.492431420449,
+              "A_main": 4863.656456487041,
+              "A_ds_shell": 254.52176138450596,
+              "B_bot": 223.12506471600003,
+              "B_mod_bot": 53.37986146999998,
+              "h_drain": 30.21214850199999,
+              "d_ds_perp": 5.681667919744493,
+              "d_us_min": 24.910982525999998,
+              "X_c_sec": 26.94885141000003,
+              "Y_c_sec": 41.17478118700001,
+              "W_sec_mean": 30.506051125,
+              "H_dam": 74.0
+            },
+            "current_feature_values": {
+              "soft_core_eccentricity": 0.12077913095196768,
+              "deep_soft_drainage_deficit": 0.12187454201233337
+            },
+            "loo_prediction_m": 0.15082600044057018,
+            "observed_m": 0.14069650531293582,
+            "observed_minus_loo_m": -0.010129495127634364
+          },
+          "matched_low_residual": {
+            "sample_index": 25,
+            "design_id": "eval_0025",
+            "original_variables": {
+              "upstream_slope": 1.6882901702076196,
+              "downstream_slope": 1.6950646217912435,
+              "crest_width": 11.977469097822905,
+              "modulus_zone_height": 18.36188363377005,
+              "secondary_top_width": 11.75962993875146,
+              "secondary_height": 27.23224811255932,
+              "secondary_bottom_width": 25.882059396244586,
+              "secondary_right_slope_distance": 13.828325916081667
+            },
+            "geometric_primitives": {
+              "A_tot": 9408.289879923997,
+              "A_mod": 766.9773790584494,
+              "A_sec": 512.5339116636007,
+              "A_drain": 1520.5571967507958,
+              "A_main": 6608.221392451151,
+              "A_ds_shell": 737.2519028341619,
+              "B_bot": 254.94571919599997,
+              "B_mod_bot": 73.42945398900002,
+              "h_drain": 25.405868253999984,
+              "d_ds_perp": 13.828325916081667,
+              "d_us_min": 34.727601421,
+              "X_c_sec": 30.76631473499998,
+              "Y_c_sec": 37.31915736899998,
+              "W_sec_mean": 18.820844667500026,
+              "H_dam": 74.0
+            },
+            "current_feature_values": {
+              "soft_core_eccentricity": 0.12067790285722395,
+              "deep_soft_drainage_deficit": 0.12496067101678475
+            },
+            "loo_prediction_m": 0.12770358527609793,
+            "observed_m": 0.1320332795531413,
+            "observed_minus_loo_m": 0.0043296942770433555
+          }
+        },
+        {
+          "high_residual": {
+            "sample_index": 2,
+            "design_id": "lhs_002",
+            "original_variables": {
+              "upstream_slope": 1.569363259687807,
+              "downstream_slope": 1.4665851746995955,
+              "crest_width": 6.669684274972619,
+              "modulus_zone_height": 7.144992267623804,
+              "secondary_top_width": 15.054269429416003,
+              "secondary_height": 22.4629175393885,
+              "secondary_bottom_width": 51.30574787263373,
+              "secondary_right_slope_distance": 5.155855220570123
+            },
+            "geometric_primitives": {
+              "A_tot": 8083.082706026641,
+              "A_mod": 106.02391874393064,
+              "A_sec": 745.3197982798283,
+              "A_drain": 3894.8369460715667,
+              "A_main": 3336.9020429313186,
+              "A_ds_shell": 202.66168602689874,
+              "B_bot": 223.92986391,
+              "B_mod_bot": 25.91713976700001,
+              "h_drain": 41.392090193,
+              "d_ds_perp": 5.155855220570123,
+              "d_us_min": 1.969850661999999,
+              "X_c_sec": 9.817879002000012,
+              "Y_c_sec": 50.578356681,
+              "W_sec_mean": 33.18000865150002,
+              "H_dam": 74.0
+            },
+            "current_feature_values": {
+              "soft_core_eccentricity": 0.04384354471784939,
+              "deep_soft_drainage_deficit": 0.05083884200256824
+            },
+            "loo_prediction_m": 0.14101184074044573,
+            "observed_m": 0.14969855874817578,
+            "observed_minus_loo_m": 0.008686718007730049
+          },
+          "matched_low_residual": {
+            "sample_index": 15,
+            "design_id": "lhs_015",
+            "original_variables": {
+              "upstream_slope": 1.330067888507769,
+              "downstream_slope": 1.6538643380389764,
+              "crest_width": 10.105264623039737,
+              "modulus_zone_height": 8.088284809986758,
+              "secondary_top_width": 16.701126741418904,
+              "secondary_height": 21.205121572254274,
+              "secondary_bottom_width": 55.28494324306234,
+              "secondary_right_slope_distance": 6.607914647939461
+            },
+            "geometric_primitives": {
+              "A_tot": 8184.754006807319,
+              "A_mod": 156.67531762998547,
+              "A_sec": 763.2366827567953,
+              "A_drain": 4430.871938240758,
+              "A_main": 2833.9700681797785,
+              "A_ds_shell": 268.2284303453537,
+              "B_bot": 223.51624487799998,
+              "B_mod_bot": 31.70107872799997,
+              "h_drain": 41.706593618,
+              "d_ds_perp": 6.607914647939461,
+              "d_us_min": 2.472503617000001,
+              "X_c_sec": 11.089266749000018,
+              "Y_c_sec": 50.41486541199998,
+              "W_sec_mean": 35.9930349925,
+              "H_dam": 74.0
+            },
+            "current_feature_values": {
+              "soft_core_eccentricity": 0.04961279997815273,
+              "deep_soft_drainage_deficit": 0.04683330933129728
+            },
+            "loo_prediction_m": 0.1507808291882294,
+            "observed_m": 0.14955056909205866,
+            "observed_minus_loo_m": -0.0012302600961707488
+          }
+        }
+      ]
+    },
+    "dam_max_horizontal_displacement_m": {
+      "current_formulas": [
+        {
+          "name": "soft_eccentric_area_fraction",
+          "expression": "(X_c_sec / B_bot) * (A_sec / A_tot)",
+          "physical_rationale": "将次堆石的相对面积与有符号偏心相乘以刻画软区对断面不对称的贡献。"
+        },
+        {
+          "name": "soft_core_eccentricity",
+          "expression": "X_c_sec / B_bot",
+          "physical_rationale": "有符号次堆石偏心率刻画软区相对轴线向下游或上游偏移。"
+        },
+        {
+          "name": "cap_shell_over_soft_depth_factor",
+          "expression": "((A_mod + A_ds_shell) / A_sec) * ((H_dam - Y_c_sec) / H_dam)",
+          "physical_rationale": "候选假设：正残差两对中，高残差断面的 A_mod+A_ds_shell 相对 A_sec 及软区埋深因子更大；负残差中有一对帽盖和下游壳体相对软区明显减小，另有断面呈高位或顶部偏重软区。力学上，较大的顶部增模区与下游壳体在低位软区上方形成更宽的变形传递路径，可能增加向下游的相容位移；该解释只对深位软区子组作为候选假设成立。"
+        }
+      ],
+      "loo_nrmse": 0.4557385145232941,
+      "loo_formula_fallback": null,
+      "top5_signs": {
+        "underestimated": 1,
+        "overestimated": 4,
+        "zero": 0
+      },
+      "top5_direction": "mostly_overestimated",
+      "matched_pairs": [
+        {
+          "high_residual": {
+            "sample_index": 19,
+            "design_id": "lhs_019",
+            "original_variables": {
+              "upstream_slope": 1.6745232365833786,
+              "downstream_slope": 1.4008319126769921,
+              "crest_width": 9.165674889626958,
+              "modulus_zone_height": 16.760990775170942,
+              "secondary_top_width": 24.924136868277312,
+              "secondary_height": 36.21510900519744,
+              "secondary_bottom_width": 57.11954572428753,
+              "secondary_right_slope_distance": 10.172838528352186
+            },
+            "geometric_primitives": {
+              "A_tot": 8367.75443834113,
+              "A_mod": 547.9646538156717,
+              "A_sec": 1485.6104541145198,
+              "A_drain": 1491.4065154909613,
+              "A_main": 4842.7728149199775,
+              "A_ds_shell": 626.5786803350254,
+              "B_bot": 229.341951425,
+              "B_mod_bot": 59.01079680599997,
+              "h_drain": 18.023900219999973,
+              "d_ds_perp": 10.172838528352186,
+              "d_us_min": 16.988913295000003,
+              "X_c_sec": 21.663753582000027,
+              "Y_c_sec": 33.76287860899998,
+              "W_sec_mean": 41.02184129599998,
+              "H_dam": 74.0
+            },
+            "current_feature_values": {
+              "soft_eccentric_area_fraction": 0.016770508210026933,
+              "soft_core_eccentricity": 0.09446049206171757,
+              "cap_shell_over_soft_depth_factor": 0.42989191871606736
+            },
+            "loo_prediction_m": 0.09808635449018804,
+            "observed_m": 0.12216219021832611,
+            "observed_minus_loo_m": 0.024075835728138067
+          },
+          "matched_low_residual": {
+            "sample_index": 12,
+            "design_id": "lhs_012",
+            "original_variables": {
+              "upstream_slope": 1.4358822591610336,
+              "downstream_slope": 1.3705155660015915,
+              "crest_width": 11.72827352663696,
+              "modulus_zone_height": 10.858807129173226,
+              "secondary_top_width": 13.057879130529466,
+              "secondary_height": 39.41897416299703,
+              "secondary_bottom_width": 43.37466410070071,
+              "secondary_right_slope_distance": 10.671255276130882
+            },
+            "geometric_primitives": {
+              "A_tot": 7815.085045741038,
+              "A_mod": 257.57908015435964,
+              "A_sec": 1112.2564817836796,
+              "A_drain": 1441.4633632943508,
+              "A_main": 5003.786120508648,
+              "A_ds_shell": 704.5739071908122,
+              "B_bot": 212.00170807900003,
+              "B_mod_bot": 39.310873696000016,
+              "h_drain": 20.722218708000014,
+              "d_ds_perp": 10.671255276130882,
+              "d_us_min": 8.612333860000007,
+              "X_c_sec": 22.910333228000013,
+              "Y_c_sec": 36.90225128499998,
+              "W_sec_mean": 28.216271616,
+              "H_dam": 74.0
+            },
+            "current_feature_values": {
+              "soft_eccentric_area_fraction": 0.01538024603382966,
+              "soft_core_eccentricity": 0.10806673887487142,
+              "cap_shell_over_soft_depth_factor": 0.43366564902316623
+            },
+            "loo_prediction_m": 0.10130264645156668,
+            "observed_m": 0.10412201094086328,
+            "observed_minus_loo_m": 0.002819364489296594
+          }
+        },
+        {
+          "high_residual": {
+            "sample_index": 4,
+            "design_id": "lhs_004",
+            "original_variables": {
+              "upstream_slope": 1.5014740020205382,
+              "downstream_slope": 1.5240172039007247,
+              "crest_width": 8.143891063356346,
+              "modulus_zone_height": 15.05385059674546,
+              "secondary_top_width": 20.880637571229904,
+              "secondary_height": 37.75439049568013,
+              "secondary_bottom_width": 25.12606122906331,
+              "secondary_right_slope_distance": 11.414546318035475
+            },
+            "geometric_primitives": {
+              "A_tot": 8159.104536977323,
+              "A_mod": 428.5172402523009,
+              "A_sec": 868.4774359454105,
+              "A_drain": 856.1050285227655,
+              "A_main": 6006.004832256849,
+              "A_ds_shell": 777.3720588287769,
+              "B_bot": 224.63023579199998,
+              "B_mod_bot": 51.727709488000016,
+              "h_drain": 18.191758907999997,
+              "d_ds_perp": 11.414546318035475,
+              "d_us_min": 10.47389064699999,
+              "X_c_sec": 28.690286130999993,
+              "Y_c_sec": 36.488301820000004,
+              "W_sec_mean": 23.003349400000005,
+              "H_dam": 74.0
+            },
+            "current_feature_values": {
+              "soft_eccentric_area_fraction": 0.01359510945656136,
+              "soft_core_eccentricity": 0.12772228115170672,
+              "cap_shell_over_soft_depth_factor": 0.7038561465467201
+            },
+            "loo_prediction_m": 0.10093375939885915,
+            "observed_m": 0.08146443749533204,
+            "observed_minus_loo_m": -0.019469321903527112
+          },
+          "matched_low_residual": {
+            "sample_index": 22,
+            "design_id": "eval_0022",
+            "original_variables": {
+              "upstream_slope": 1.3205078296363355,
+              "downstream_slope": 1.345730435848236,
+              "crest_width": 6.8380967024713755,
+              "modulus_zone_height": 17.62106172274798,
+              "secondary_top_width": 10.626825615763664,
+              "secondary_height": 29.657871406525373,
+              "secondary_bottom_width": 41.223519132472575,
+              "secondary_right_slope_distance": 10.31685505528003
+            },
+            "geometric_primitives": {
+              "A_tot": 7085.442265647426,
+              "A_mod": 473.7222413471512,
+              "A_sec": 768.8854284502752,
+              "A_drain": 1681.2664624725392,
+              "A_main": 4161.568133377461,
+              "A_ds_shell": 507.66319523807937,
+              "B_bot": 196.739723839,
+              "B_mod_bot": 50.947742920999985,
+              "h_drain": 23.721066871000005,
+              "d_ds_perp": 10.31685505528003,
+              "d_us_min": 23.397086489000003,
+              "X_c_sec": 23.046316125000033,
+              "Y_c_sec": 35.633169502999976,
+              "W_sec_mean": 25.925172374000027,
+              "H_dam": 74.0
+            },
+            "current_feature_values": {
+              "soft_eccentric_area_fraction": 0.012711714322376111,
+              "soft_core_eccentricity": 0.1171411430050586,
+              "cap_shell_over_soft_depth_factor": 0.661762543765928
+            },
+            "loo_prediction_m": 0.08057976929431628,
+            "observed_m": 0.08265192762211852,
+            "observed_minus_loo_m": 0.002072158327802248
+          }
+        },
+        {
+          "high_residual": {
+            "sample_index": 1,
+            "design_id": "lhs_001",
+            "original_variables": {
+              "upstream_slope": 1.6094092387020262,
+              "downstream_slope": 1.398042551563892,
+              "crest_width": 10.294596895348278,
+              "modulus_zone_height": 17.22436933287436,
+              "secondary_top_width": 22.75627311159097,
+              "secondary_height": 28.75351770691302,
+              "secondary_bottom_width": 46.6598200010875,
+              "secondary_right_slope_distance": 12.621874746349105
+            },
+            "geometric_primitives": {
+              "A_tot": 8262.411076914119,
+              "A_mod": 581.5095874314916,
+              "A_sec": 997.9784312431392,
+              "A_drain": 1974.2684502131478,
+              "A_main": 4708.654608026342,
+              "A_ds_shell": 619.0967573010715,
+              "B_bot": 225.44602486499997,
+              "B_mod_bot": 60.22160053099998,
+              "h_drain": 25.022112960000015,
+              "d_ds_perp": 12.621874746349105,
+              "d_us_min": 16.09770578199999,
+              "X_c_sec": 15.802945496999996,
+              "Y_c_sec": 37.74865155499998,
+              "W_sec_mean": 34.70804655650002,
+              "H_dam": 74.0
+            },
+            "current_feature_values": {
+              "soft_eccentric_area_fraction": 0.008466615102115866,
+              "soft_core_eccentricity": 0.07009635901304095,
+              "cap_shell_over_soft_depth_factor": 0.589348150350608
+            },
+            "loo_prediction_m": 0.0986371096987263,
+            "observed_m": 0.08021133624444485,
+            "observed_minus_loo_m": -0.018425773454281452
+          },
+          "matched_low_residual": {
+            "sample_index": 18,
+            "design_id": "lhs_018",
+            "original_variables": {
+              "upstream_slope": 1.4073083504793016,
+              "downstream_slope": 1.6098931341111617,
+              "crest_width": 6.968367593672207,
+              "modulus_zone_height": 14.064017121294864,
+              "secondary_top_width": 25.924104461028058,
+              "secondary_height": 23.459001636342418,
+              "secondary_bottom_width": 33.408226510869504,
+              "secondary_right_slope_distance": 9.609280043438371
+            },
+            "geometric_primitives": {
+              "A_tot": 8053.077537985863,
+              "A_mod": 361.127237449573,
+              "A_sec": 695.9386246940131,
+              "A_drain": 1913.1590371105046,
+              "A_main": 5082.852638731771,
+              "A_ds_shell": 423.96854022055777,
+              "B_bot": 222.84127294400002,
+              "B_mod_bot": 47.35163473,
+              "h_drain": 33.47698124200002,
+              "d_ds_perp": 9.609280043438371,
+              "d_us_min": 3.4910248179999996,
+              "X_c_sec": 17.13038473100002,
+              "Y_c_sec": 44.713299483000014,
+              "W_sec_mean": 29.666165486000025,
+              "H_dam": 74.0
+            },
+            "current_feature_values": {
+              "soft_eccentric_area_fraction": 0.0066432492347000575,
+              "soft_core_eccentricity": 0.07687258515752997,
+              "cap_shell_over_soft_depth_factor": 0.44646809324243153
+            },
+            "loo_prediction_m": 0.05732943752781793,
+            "observed_m": 0.049864421905795264,
+            "observed_minus_loo_m": -0.007465015622022668
+          }
+        },
+        {
+          "high_residual": {
+            "sample_index": 2,
+            "design_id": "lhs_002",
+            "original_variables": {
+              "upstream_slope": 1.569363259687807,
+              "downstream_slope": 1.4665851746995955,
+              "crest_width": 6.669684274972619,
+              "modulus_zone_height": 7.144992267623804,
+              "secondary_top_width": 15.054269429416003,
+              "secondary_height": 22.4629175393885,
+              "secondary_bottom_width": 51.30574787263373,
+              "secondary_right_slope_distance": 5.155855220570123
+            },
+            "geometric_primitives": {
+              "A_tot": 8083.082706026641,
+              "A_mod": 106.02391874393064,
+              "A_sec": 745.3197982798283,
+              "A_drain": 3894.8369460715667,
+              "A_main": 3336.9020429313186,
+              "A_ds_shell": 202.66168602689874,
+              "B_bot": 223.92986391,
+              "B_mod_bot": 25.91713976700001,
+              "h_drain": 41.392090193,
+              "d_ds_perp": 5.155855220570123,
+              "d_us_min": 1.969850661999999,
+              "X_c_sec": 9.817879002000012,
+              "Y_c_sec": 50.578356681,
+              "W_sec_mean": 33.18000865150002,
+              "H_dam": 74.0
+            },
+            "current_feature_values": {
+              "soft_eccentric_area_fraction": 0.004042697952430482,
+              "soft_core_eccentricity": 0.04384354471784939,
+              "cap_shell_over_soft_depth_factor": 0.1310869209348317
+            },
+            "loo_prediction_m": 0.07246187234604903,
+            "observed_m": 0.058805404918518496,
+            "observed_minus_loo_m": -0.013656467427530537
+          },
+          "matched_low_residual": {
+            "sample_index": 15,
+            "design_id": "lhs_015",
+            "original_variables": {
+              "upstream_slope": 1.330067888507769,
+              "downstream_slope": 1.6538643380389764,
+              "crest_width": 10.105264623039737,
+              "modulus_zone_height": 8.088284809986758,
+              "secondary_top_width": 16.701126741418904,
+              "secondary_height": 21.205121572254274,
+              "secondary_bottom_width": 55.28494324306234,
+              "secondary_right_slope_distance": 6.607914647939461
+            },
+            "geometric_primitives": {
+              "A_tot": 8184.754006807319,
+              "A_mod": 156.67531762998547,
+              "A_sec": 763.2366827567953,
+              "A_drain": 4430.871938240758,
+              "A_main": 2833.9700681797785,
+              "A_ds_shell": 268.2284303453537,
+              "B_bot": 223.51624487799998,
+              "B_mod_bot": 31.70107872799997,
+              "h_drain": 41.706593618,
+              "d_ds_perp": 6.607914647939461,
+              "d_us_min": 2.472503617000001,
+              "X_c_sec": 11.089266749000018,
+              "Y_c_sec": 50.41486541199998,
+              "W_sec_mean": 35.9930349925,
+              "H_dam": 74.0
+            },
+            "current_feature_values": {
+              "soft_eccentric_area_fraction": 0.004626444343483997,
+              "soft_core_eccentricity": 0.04961279997815273,
+              "cap_shell_over_soft_depth_factor": 0.1774344586245528
+            },
+            "loo_prediction_m": 0.03971991744794987,
+            "observed_m": 0.04613864520985835,
+            "observed_minus_loo_m": 0.00641872776190848
+          }
+        },
+        {
+          "high_residual": {
+            "sample_index": 27,
+            "design_id": "eval_0027",
+            "original_variables": {
+              "upstream_slope": 1.3056473664939403,
+              "downstream_slope": 1.4340507615357638,
+              "crest_width": 7.228919478133321,
+              "modulus_zone_height": 14.876976828090847,
+              "secondary_top_width": 10.501496735960245,
+              "secondary_height": 30.423801876604557,
+              "secondary_bottom_width": 45.867973673157394,
+              "secondary_right_slope_distance": 6.909062474966049
+            },
+            "geometric_primitives": {
+              "A_tot": 7313.767408192272,
+              "A_mod": 361.42258919969555,
+              "A_sec": 857.4867998220822,
+              "A_drain": 1876.491797867288,
+              "A_main": 4218.3662213032085,
+              "A_ds_shell": 361.80544623935,
+              "B_bot": 202.56657644299997,
+              "B_mod_bot": 45.156990612000016,
+              "h_drain": 25.699221294999973,
+              "d_ds_perp": 6.909062474966049,
+              "d_us_min": 22.954138701000005,
+              "X_c_sec": 27.340317226000025,
+              "Y_c_sec": 37.729782288000024,
+              "W_sec_mean": 28.184735203999978,
+              "H_dam": 74.0
+            },
+            "current_feature_values": {
+              "soft_eccentric_area_fraction": 0.01582421079427936,
+              "soft_core_eccentricity": 0.1349695379469144,
+              "cap_shell_over_soft_depth_factor": 0.41339598316027587
+            },
+            "loo_prediction_m": 0.09035462251086665,
+            "observed_m": 0.07772136710422413,
+            "observed_minus_loo_m": -0.012633255406642521
+          },
+          "matched_low_residual": {
+            "sample_index": 17,
+            "design_id": "lhs_017",
+            "original_variables": {
+              "upstream_slope": 1.6844315309886524,
+              "downstream_slope": 1.4551043198867881,
+              "crest_width": 6.360159107004971,
+              "modulus_zone_height": 7.447526494976314,
+              "secondary_top_width": 10.016459459486484,
+              "secondary_height": 38.77411950955866,
+              "secondary_bottom_width": 37.57497790629451,
+              "secondary_right_slope_distance": 3.53078965948255
+            },
+            "geometric_primitives": {
+              "A_tot": 8343.997175873314,
+              "A_mod": 116.8886371461942,
+              "A_sec": 922.65804003732,
+              "A_drain": 1307.3043572125432,
+              "A_main": 5997.146141477255,
+              "A_ds_shell": 233.24576754904328,
+              "B_bot": 231.285807562,
+              "B_mod_bot": 27.62799936600001,
+              "h_drain": 24.778353994999975,
+              "d_ds_perp": 3.53078965948255,
+              "d_us_min": 11.816037340999998,
+              "X_c_sec": 32.28448626599999,
+              "Y_c_sec": 40.423293504000014,
+              "W_sec_mean": 23.795718683499985,
+              "H_dam": 74.0
+            },
+            "current_feature_values": {
+              "soft_eccentric_area_fraction": 0.015435173594292478,
+              "soft_core_eccentricity": 0.13958697512101167,
+              "cap_shell_over_soft_depth_factor": 0.17218701266977882
+            },
+            "loo_prediction_m": 0.08284554482460835,
+            "observed_m": 0.0807759804523365,
+            "observed_minus_loo_m": -0.002069564372271848
+          }
+        }
+      ]
+    }
+  }
+}

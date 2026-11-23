@@ -10,10 +10,8 @@
     <option name="selectedModelId" value="auto" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="03cc5731-443d-4c81-9cf3-31d9856830d6" name="更改" comment="让大模型自己构造物理衍生特征，这是第一步，搭建“确定性几何原语库”">
+    <list default="true" id="03cc5731-443d-4c81-9cf3-31d9856830d6" name="更改" comment="让大模型完整的生成衍生物理特征，参与GP训练">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/llm_guided_sequential_gp/sequential_gp_model.py" beforeDir="false" afterPath="$PROJECT_DIR$/llm_guided_sequential_gp/sequential_gp_model.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pyproject.toml" beforeDir="false" afterPath="$PROJECT_DIR$/pyproject.toml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -56,23 +54,23 @@
   </component>
   <component name="NextEditCompletionFeaturesState">
     <decayedCancelled>
-      <entry key="MS100" value="1.0" />
-      <entry key="MS500" value="1.0" />
-      <entry key="S2" value="1.0" />
-      <entry key="S5" value="1.0" />
-      <entry key="S10" value="1.0" />
-      <entry key="S30" value="1.0" />
-      <entry key="S60" value="1.0" />
-      <entry key="M2" value="1.0" />
-      <entry key="M5" value="1.0" />
-      <entry key="M10" value="1.0" />
-      <entry key="M15" value="1.0" />
-      <entry key="M30" value="1.0" />
-      <entry key="H1" value="1.0000000000007245" />
-      <entry key="H2" value="1.0000049189066949" />
-      <entry key="H4" value="1.0129053429314885" />
-      <entry key="D1" value="10.146214924962388" />
-      <entry key="W1" value="29.184710363537068" />
+      <entry key="MS100" value="1.7571970494132498" />
+      <entry key="MS500" value="4.20451787032963" />
+      <entry key="S2" value="6.957952498130342" />
+      <entry key="S5" value="9.211657587623687" />
+      <entry key="S10" value="13.29285832149542" />
+      <entry key="S30" value="24.480672381653797" />
+      <entry key="S60" value="30.767452393446156" />
+      <entry key="M2" value="34.933465230648636" />
+      <entry key="M5" value="37.87403985141047" />
+      <entry key="M10" value="39.19808567212574" />
+      <entry key="M15" value="39.965607590435894" />
+      <entry key="M30" value="41.305987312577166" />
+      <entry key="H1" value="42.44665580629273" />
+      <entry key="H2" value="43.33555506492566" />
+      <entry key="H4" value="44.006409056898086" />
+      <entry key="D1" value="52.83378058239526" />
+      <entry key="W1" value="72.63814325327381" />
     </decayedCancelled>
     <decayedSelected>
       <entry key="MS100" value="0.0" />
@@ -94,23 +92,23 @@
       <entry key="W1" value="0.0" />
     </decayedSelected>
     <decayedShown>
-      <entry key="MS100" value="0.8705505632961241" />
-      <entry key="MS500" value="0.9726549474122855" />
-      <entry key="S2" value="0.9930924954370359" />
-      <entry key="S5" value="0.9972312513520695" />
-      <entry key="S10" value="0.9986146661010289" />
-      <entry key="S30" value="0.9995380086305193" />
-      <entry key="S60" value="0.9997689776295918" />
-      <entry key="M2" value="0.9998844821426083" />
-      <entry key="M5" value="0.9999537912556196" />
-      <entry key="M10" value="0.9999768953608976" />
-      <entry key="M15" value="0.9999845968479506" />
-      <entry key="M30" value="0.9999922983943179" />
-      <entry key="H1" value="0.9999961491904692" />
-      <entry key="H2" value="1.000002993496307" />
-      <entry key="H4" value="1.0129043757455758" />
-      <entry key="D1" value="10.146214233857668" />
-      <entry key="W1" value="29.18471010691735" />
+      <entry key="MS100" value="1.7218059662050116" />
+      <entry key="MS500" value="4.18524324753089" />
+      <entry key="S2" value="6.9490134569903725" />
+      <entry key="S5" value="9.206608189609675" />
+      <entry key="S10" value="13.288719297753424" />
+      <entry key="S30" value="24.47698618253664" />
+      <entry key="S60" value="30.764805258070872" />
+      <entry key="M2" value="34.93185525354445" />
+      <entry key="M5" value="37.87331213335471" />
+      <entry key="M10" value="39.19770437871855" />
+      <entry key="M15" value="39.96534776071264" />
+      <entry key="M30" value="41.305853064987616" />
+      <entry key="H1" value="42.44658687844316" />
+      <entry key="H2" value="43.33551975720519" />
+      <entry key="H4" value="44.00639101308079" />
+      <entry key="D1" value="52.833777019632244" />
+      <entry key="W1" value="72.63814257855327" />
     </decayedShown>
   </component>
   <component name="ProjectColorInfo"><![CDATA[{
@@ -158,7 +156,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1795159502193</updated>
-      <workItem from="1795159503504" duration="9398000" />
+      <workItem from="1795159503504" duration="16889000" />
     </task>
     <task id="LOCAL-00001" summary="LLM引导高斯过程建模，具体是通过改变核函数长度尺度先验来引导GP代理模型构建">
       <option name="closed" value="true" />
@@ -224,7 +222,15 @@
       <option name="project" value="LOCAL" />
       <updated>1795258222180</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="让大模型完整的生成衍生物理特征，参与GP训练">
+      <option name="closed" value="true" />
+      <created>1795432892001</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1795432892001</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -260,6 +266,7 @@
     <MESSAGE value="LLM引导高斯过程建模，具体是通过改变核函数长度尺度先验来引导GP代理模型构建" />
     <MESSAGE value="增加一个基础数据集" />
     <MESSAGE value="让大模型自己构造物理衍生特征，这是第一步，搭建“确定性几何原语库”" />
-    <option name="LAST_COMMIT_MESSAGE" value="让大模型自己构造物理衍生特征，这是第一步，搭建“确定性几何原语库”" />
+    <MESSAGE value="让大模型完整的生成衍生物理特征，参与GP训练" />
+    <option name="LAST_COMMIT_MESSAGE" value="让大模型完整的生成衍生物理特征，参与GP训练" />
   </component>
 </project>

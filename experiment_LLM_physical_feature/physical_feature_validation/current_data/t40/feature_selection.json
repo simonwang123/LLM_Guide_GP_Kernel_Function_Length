@@ -1,0 +1,933 @@
+{
+  "schema_version": 1,
+  "train_count": 40,
+  "replay_requested": true,
+  "inputs_sha256": {
+    "E:\\LLM_Guide_GP\\llm_guided_sequential_gp\\outputs\\experiments\\standardGP_summary_taylor_v1\\data\\initial20.csv": "dea8db7fb52276b9476269a16b0774ba919b3316de1fa35462e0559de05693f2",
+    "E:\\LLM_Guide_GP\\llm_guided_sequential_gp\\outputs\\experiments\\physical_feature_validation\\candidate_request\\responses\\a49ac993c2fd44a3e6276799fb7b210cea55b9aedf99d8ebdc8b2fcac00b6810\\candidate_pool.json": "dd7277077613a1e8453fef50b505ad3466afaa1067dc8cc954ed6906719a5dfa",
+    "E:\\LLM_Guide_GP\\llm_guided_sequential_gp\\outputs\\experiments\\standardGP_summary_taylor_v1\\data\\sequential_designs.csv": "9273f58c65305978849b57f87cec50faf08ed202cc9070ff1e456128629e6c73",
+    "E:\\LLM_Guide_GP\\llm_guided_sequential_gp\\outputs\\experiments\\standardGP_summary_taylor_v1\\data\\sequential_truth.csv": "97456c8e0fc258109553ccf6f58a96c4885556a2e1911000bdb3c72dd3c903cc"
+  },
+  "geometry_template": "E:\\knowledge_true_engineering\\templates\\geo_studio_model_sample",
+  "settings": {
+    "model": "no-prior Constant * ARD Matérn 5/2 + WhiteKernel",
+    "optimizer_restarts": 3,
+    "base_seed": 2026,
+    "original_scaling": "fixed design bounds mapped to [0, 1]",
+    "feature_scaling": "min-max fitted within each training fold, without clipping",
+    "nrmse_denominator": "sample standard deviation of the first 20 responses",
+    "absolute_std_floor": 1e-08,
+    "relative_std_floor": 1e-08,
+    "candidate_redundancy_abs_rho_strictly_greater_than": 0.95,
+    "minimum_relative_gains": [
+      0.01,
+      0.02,
+      0.02
+    ]
+  },
+  "responses": {
+    "crest_max_settlement_m": {
+      "initial20_std_m": 0.01116685697959665,
+      "screening": [
+        {
+          "name": "crest_cap_area_ratio",
+          "expression": "A_mod / A_tot",
+          "physical_rationale": "增模区在主体断面中的占比反映坝顶高刚度帽盖的规模。",
+          "unit": "1",
+          "variance": 0.0004897220283236525,
+          "std_floor": 1e-08,
+          "status": "eligible",
+          "rho_response": -0.5947467166979362,
+          "rho_original": {
+            "upstream_slope": -0.06848030018761726,
+            "downstream_slope": -0.0776735459662289,
+            "crest_width": 0.16585365853658537,
+            "modulus_zone_height": 0.9913696060037523,
+            "secondary_top_width": 0.31163227016885553,
+            "secondary_height": -0.061163227016885556,
+            "secondary_bottom_width": -0.274859287054409,
+            "secondary_right_slope_distance": 0.524390243902439
+          },
+          "rho_candidates": {
+            "crest_cap_area_ratio": 1.0,
+            "crest_cap_relative_width": 0.99906191369606,
+            "crest_cap_aspect": 0.3195121951219512,
+            "soft_area_ratio": -0.10375234521575985,
+            "soft_core_relative_elevation": -0.6780487804878049,
+            "upstream_clearance_ratio": 0.7144465290806754
+          }
+        },
+        {
+          "name": "crest_cap_relative_width",
+          "expression": "B_mod_bot / B_bot",
+          "physical_rationale": "增模区底宽相对坝底宽度可表征帽盖的传力覆盖。",
+          "unit": "1",
+          "variance": 0.0030197430388573345,
+          "std_floor": 1e-08,
+          "status": "correlated_candidate",
+          "rho_response": -0.5808630393996248,
+          "rho_original": {
+            "upstream_slope": -0.06266416510318949,
+            "downstream_slope": -0.08405253283302064,
+            "crest_width": 0.18818011257035647,
+            "modulus_zone_height": 0.9881801125703564,
+            "secondary_top_width": 0.3166979362101313,
+            "secondary_height": -0.05065666041275797,
+            "secondary_bottom_width": -0.27598499061913695,
+            "secondary_right_slope_distance": 0.5328330206378987
+          },
+          "rho_candidates": {
+            "crest_cap_area_ratio": 0.99906191369606,
+            "crest_cap_relative_width": 1.0,
+            "crest_cap_aspect": 0.3076923076923077,
+            "soft_area_ratio": -0.09549718574108818,
+            "soft_core_relative_elevation": -0.6829268292682927,
+            "upstream_clearance_ratio": 0.7091932457786116
+          },
+          "retained_instead": "crest_cap_area_ratio",
+          "rho_with_retained": 0.99906191369606
+        },
+        {
+          "name": "crest_cap_aspect",
+          "expression": "x4 / B_mod_bot",
+          "physical_rationale": "增模区高度与底宽之比表征坝顶加强体的形状。",
+          "unit": "1",
+          "variance": 0.0011120951124880016,
+          "std_floor": 1e-08,
+          "status": "eligible",
+          "rho_response": -0.22945590994371481,
+          "rho_original": {
+            "upstream_slope": -0.7054409005628518,
+            "downstream_slope": -0.5313320825515947,
+            "crest_width": -0.6110694183864915,
+            "modulus_zone_height": 0.38424015009380863,
+            "secondary_top_width": -0.12701688555347093,
+            "secondary_height": -0.2168855534709193,
+            "secondary_bottom_width": -0.3395872420262664,
+            "secondary_right_slope_distance": 0.05084427767354597
+          },
+          "rho_candidates": {
+            "crest_cap_area_ratio": 0.3195121951219512,
+            "crest_cap_relative_width": 0.3076923076923077,
+            "crest_cap_aspect": 1.0,
+            "soft_area_ratio": -0.2583489681050657,
+            "soft_core_relative_elevation": -0.14615384615384616,
+            "upstream_clearance_ratio": 0.44634146341463415
+          }
+        },
+        {
+          "name": "soft_area_ratio",
+          "expression": "A_sec / A_tot",
+          "physical_rationale": "低模量次堆石占比表征主体断面的整体可压缩性。",
+          "unit": "1",
+          "variance": 0.0010626215663593428,
+          "std_floor": 1e-08,
+          "status": "eligible",
+          "rho_response": 0.39362101313320824,
+          "rho_original": {
+            "upstream_slope": 0.08461538461538462,
+            "downstream_slope": 0.05065666041275797,
+            "crest_width": 0.28123827392120077,
+            "modulus_zone_height": -0.14671669793621014,
+            "secondary_top_width": 0.23696060037523453,
+            "secondary_height": 0.6879924953095685,
+            "secondary_bottom_width": 0.6061913696060037,
+            "secondary_right_slope_distance": -0.12926829268292683
+          },
+          "rho_candidates": {
+            "crest_cap_area_ratio": -0.10375234521575985,
+            "crest_cap_relative_width": -0.09549718574108818,
+            "crest_cap_aspect": -0.2583489681050657,
+            "soft_area_ratio": 1.0,
+            "soft_core_relative_elevation": -0.40938086303939963,
+            "upstream_clearance_ratio": -0.14390243902439023
+          }
+        },
+        {
+          "name": "soft_core_relative_elevation",
+          "expression": "Y_c_sec / H_dam",
+          "physical_rationale": "次堆石相对形心高程表示软区与坝顶载荷传递路径的位置关系。",
+          "unit": "1",
+          "variance": 0.0037430101385427274,
+          "std_floor": 1e-08,
+          "status": "eligible",
+          "rho_response": 0.4176360225140713,
+          "rho_original": {
+            "upstream_slope": -0.049906191369606,
+            "downstream_slope": 0.011819887429643527,
+            "crest_width": -0.1622889305816135,
+            "modulus_zone_height": -0.6572232645403377,
+            "secondary_top_width": -0.09324577861163227,
+            "secondary_height": -0.624202626641651,
+            "secondary_bottom_width": 0.09962476547842401,
+            "secondary_right_slope_distance": -0.37185741088180113
+          },
+          "rho_candidates": {
+            "crest_cap_area_ratio": -0.6780487804878049,
+            "crest_cap_relative_width": -0.6829268292682927,
+            "crest_cap_aspect": -0.14615384615384616,
+            "soft_area_ratio": -0.40938086303939963,
+            "soft_core_relative_elevation": 1.0,
+            "upstream_clearance_ratio": -0.6129455909943715
+          }
+        },
+        {
+          "name": "upstream_clearance_ratio",
+          "expression": "d_us_min / B_bot",
+          "physical_rationale": "上游最窄净宽相对主体宽度反映软区一侧的约束尺度。",
+          "unit": "1",
+          "variance": 0.0017866402353236281,
+          "std_floor": 1e-08,
+          "status": "eligible",
+          "rho_response": -0.7219512195121951,
+          "rho_original": {
+            "upstream_slope": -0.17035647279549718,
+            "downstream_slope": -0.14165103189493433,
+            "crest_width": -0.14821763602251406,
+            "modulus_zone_height": 0.7337711069418387,
+            "secondary_top_width": -0.20581613508442775,
+            "secondary_height": 0.01801125703564728,
+            "secondary_bottom_width": -0.19924953095684803,
+            "secondary_right_slope_distance": 0.06904315196998125
+          },
+          "rho_candidates": {
+            "crest_cap_area_ratio": 0.7144465290806754,
+            "crest_cap_relative_width": 0.7091932457786116,
+            "crest_cap_aspect": 0.44634146341463415,
+            "soft_area_ratio": -0.14390243902439023,
+            "soft_core_relative_elevation": -0.6129455909943715,
+            "upstream_clearance_ratio": 1.0
+          }
+        }
+      ],
+      "baseline_loo": {
+        "rmse_m": 0.002659296068684642,
+        "nrmse": 0.23814185795909573,
+        "mae_m": 0.0020545704703878375,
+        "warning_count": 14
+      },
+      "selected_loo": {
+        "rmse_m": 0.002289013984616318,
+        "nrmse": 0.2049828334685986,
+        "mae_m": 0.0017884399699247433,
+        "warning_count": 42
+      },
+      "relative_loo_gain": 0.1392406390656138,
+      "rounds": [
+        {
+          "step": 1,
+          "threshold": 0.01,
+          "best_candidate": "upstream_clearance_ratio",
+          "accepted": true,
+          "previous_loo_nrmse": 0.23814185795909573,
+          "trials": {
+            "upstream_clearance_ratio": {
+              "rmse_m": 0.002289013984616318,
+              "nrmse": 0.2049828334685986,
+              "mae_m": 0.0017884399699247433,
+              "warning_count": 42,
+              "relative_gain": 0.1392406390656138
+            },
+            "crest_cap_area_ratio": {
+              "rmse_m": 0.0026589119598396634,
+              "nrmse": 0.2381074607383128,
+              "mae_m": 0.002054199087020641,
+              "warning_count": 54,
+              "relative_gain": 0.00014444004543223699
+            },
+            "soft_core_relative_elevation": {
+              "rmse_m": 0.002925755953746955,
+              "nrmse": 0.26200353054513953,
+              "mae_m": 0.002229127741617923,
+              "warning_count": 53,
+              "relative_gain": -0.1001994054742883
+            },
+            "soft_area_ratio": {
+              "rmse_m": 0.0028195981000461697,
+              "nrmse": 0.25249701909838684,
+              "mae_m": 0.0021310508268515124,
+              "warning_count": 48,
+              "relative_gain": -0.06027987377908506
+            },
+            "crest_cap_aspect": {
+              "rmse_m": 0.0026582884922778417,
+              "nrmse": 0.23805162877387007,
+              "mae_m": 0.0020533101328646377,
+              "warning_count": 54,
+              "relative_gain": 0.0003788883903020901
+            }
+          }
+        },
+        {
+          "step": 2,
+          "threshold": 0.02,
+          "best_candidate": "soft_area_ratio",
+          "accepted": false,
+          "previous_loo_nrmse": 0.2049828334685986,
+          "trials": {
+            "crest_cap_area_ratio": {
+              "rmse_m": 0.002288959247503406,
+              "nrmse": 0.2049779317211318,
+              "mae_m": 0.001788388311529203,
+              "warning_count": 82,
+              "relative_gain": 2.391296570480872e-05
+            },
+            "soft_core_relative_elevation": {
+              "rmse_m": 0.002320905976523465,
+              "nrmse": 0.20783878407004516,
+              "mae_m": 0.0018108292345054519,
+              "warning_count": 81,
+              "relative_gain": -0.013932633055753207
+            },
+            "soft_area_ratio": {
+              "rmse_m": 0.0022595739127868695,
+              "nrmse": 0.20234645405734264,
+              "mae_m": 0.0016870352274612865,
+              "warning_count": 119,
+              "relative_gain": 0.012861464380429899
+            },
+            "crest_cap_aspect": {
+              "rmse_m": 0.0037432145557393113,
+              "nrmse": 0.3352075308727127,
+              "mae_m": 0.00273187678761892,
+              "warning_count": 102,
+              "relative_gain": -0.6352956254947235
+            }
+          }
+        }
+      ],
+      "selected": [
+        "upstream_clearance_ratio"
+      ],
+      "stop_reason": "insufficient_gain",
+      "sequential_replay": {
+        "count": 20,
+        "first_target": 41,
+        "last_target": 60,
+        "baseline": {
+          "rmse_m": 0.0017395304143711756,
+          "nrmse": 0.15577618819239217,
+          "mae_m": 0.0014332205297322965
+        },
+        "selected": {
+          "rmse_m": 0.0016484163532874685,
+          "nrmse": 0.1476168590946716,
+          "mae_m": 0.001438819811964411
+        },
+        "relative_gain": 0.05237853867398112,
+        "targets_with_lower_absolute_error": 9,
+        "fallback_count": 0
+      }
+    },
+    "dam_max_settlement_m": {
+      "initial20_std_m": 0.018720292482864376,
+      "screening": [
+        {
+          "name": "soft_area_ratio",
+          "expression": "A_sec / A_tot",
+          "physical_rationale": "低模量次堆石面积占比表征主体断面的软弱材料尺度。",
+          "unit": "1",
+          "variance": 0.0010626215663593428,
+          "std_floor": 1e-08,
+          "status": "eligible",
+          "rho_response": 0.6125703564727955,
+          "rho_original": {
+            "upstream_slope": 0.08461538461538462,
+            "downstream_slope": 0.05065666041275797,
+            "crest_width": 0.28123827392120077,
+            "modulus_zone_height": -0.14671669793621014,
+            "secondary_top_width": 0.23696060037523453,
+            "secondary_height": 0.6879924953095685,
+            "secondary_bottom_width": 0.6061913696060037,
+            "secondary_right_slope_distance": -0.12926829268292683
+          },
+          "rho_candidates": {
+            "soft_area_ratio": 1.0,
+            "soft_to_main_ratio": 0.8386491557223265,
+            "soft_core_relative_elevation": -0.40938086303939963,
+            "drain_support_fraction": -0.03564727954971857,
+            "soft_zone_aspect": 0.0600375234521576,
+            "soft_core_eccentricity": 0.08818011257035648
+          }
+        },
+        {
+          "name": "soft_to_main_ratio",
+          "expression": "A_sec / A_main",
+          "physical_rationale": "次堆石与主堆石的面积比刻画软弱材料和主承载骨架的配比。",
+          "unit": "1",
+          "variance": 0.006800374663478806,
+          "std_floor": 1e-08,
+          "status": "eligible",
+          "rho_response": 0.6086303939962476,
+          "rho_original": {
+            "upstream_slope": 0.04690431519699812,
+            "downstream_slope": 0.13076923076923078,
+            "crest_width": 0.2146341463414634,
+            "modulus_zone_height": -0.249906191369606,
+            "secondary_top_width": 0.08555347091932458,
+            "secondary_height": 0.29174484052532834,
+            "secondary_bottom_width": 0.8864915572232646,
+            "secondary_right_slope_distance": -0.06303939962476549
+          },
+          "rho_candidates": {
+            "soft_area_ratio": 0.8386491557223265,
+            "soft_to_main_ratio": 1.0,
+            "soft_core_relative_elevation": -0.11407129455909944,
+            "drain_support_fraction": 0.44840525328330205,
+            "soft_zone_aspect": 0.45422138836772985,
+            "soft_core_eccentricity": -0.28123827392120077
+          }
+        },
+        {
+          "name": "soft_core_relative_elevation",
+          "expression": "Y_c_sec / H_dam",
+          "physical_rationale": "软区相对高程表征其在坝体竖向应力传递路径上的位置。",
+          "unit": "1",
+          "variance": 0.0037430101385427274,
+          "std_floor": 1e-08,
+          "status": "eligible",
+          "rho_response": -0.27598499061913695,
+          "rho_original": {
+            "upstream_slope": -0.049906191369606,
+            "downstream_slope": 0.011819887429643527,
+            "crest_width": -0.1622889305816135,
+            "modulus_zone_height": -0.6572232645403377,
+            "secondary_top_width": -0.09324577861163227,
+            "secondary_height": -0.624202626641651,
+            "secondary_bottom_width": 0.09962476547842401,
+            "secondary_right_slope_distance": -0.37185741088180113
+          },
+          "rho_candidates": {
+            "soft_area_ratio": -0.40938086303939963,
+            "soft_to_main_ratio": -0.11407129455909944,
+            "soft_core_relative_elevation": 1.0,
+            "drain_support_fraction": 0.5756097560975609,
+            "soft_zone_aspect": 0.4622889305816135,
+            "soft_core_eccentricity": -0.49043151969981236
+          }
+        },
+        {
+          "name": "drain_support_fraction",
+          "expression": "A_drain / A_tot",
+          "physical_rationale": "底部排水区面积占比刻画软区下方较高刚度支承的相对规模。",
+          "unit": "1",
+          "variance": 0.013008840464809785,
+          "std_floor": 1e-08,
+          "status": "eligible",
+          "rho_response": 0.124765478424015,
+          "rho_original": {
+            "upstream_slope": -0.10919324577861163,
+            "downstream_slope": 0.07954971857410882,
+            "crest_width": -0.13283302063789867,
+            "modulus_zone_height": -0.3771106941838649,
+            "secondary_top_width": -0.36604127579737333,
+            "secondary_height": -0.5780487804878048,
+            "secondary_bottom_width": 0.7088180112570357,
+            "secondary_right_slope_distance": 0.005065666041275798
+          },
+          "rho_candidates": {
+            "soft_area_ratio": -0.03564727954971857,
+            "soft_to_main_ratio": 0.44840525328330205,
+            "soft_core_relative_elevation": 0.5756097560975609,
+            "drain_support_fraction": 1.0,
+            "soft_zone_aspect": 0.7613508442776735,
+            "soft_core_eccentricity": -0.6943714821763602
+          }
+        },
+        {
+          "name": "soft_zone_aspect",
+          "expression": "W_sec_mean / x6",
+          "physical_rationale": "软区平均宽高比表征次堆石材料的几何约束条件。",
+          "unit": "1",
+          "variance": 0.10651549512638074,
+          "std_floor": 1.9303087900100368e-08,
+          "status": "eligible",
+          "rho_response": 0.07861163227016886,
+          "rho_original": {
+            "upstream_slope": -0.05121951219512195,
+            "downstream_slope": 0.14240150093808632,
+            "crest_width": 0.05290806754221388,
+            "modulus_zone_height": -0.05609756097560976,
+            "secondary_top_width": 0.20581613508442775,
+            "secondary_height": -0.6433395872420262,
+            "secondary_bottom_width": 0.6564727954971857,
+            "secondary_right_slope_distance": 0.003377110694183865
+          },
+          "rho_candidates": {
+            "soft_area_ratio": 0.0600375234521576,
+            "soft_to_main_ratio": 0.45422138836772985,
+            "soft_core_relative_elevation": 0.4622889305816135,
+            "drain_support_fraction": 0.7613508442776735,
+            "soft_zone_aspect": 1.0,
+            "soft_core_eccentricity": -0.6363977485928706
+          }
+        },
+        {
+          "name": "soft_core_eccentricity",
+          "expression": "X_c_sec / B_bot",
+          "physical_rationale": "软区相对坝轴线的有符号偏心反映骨架承载分布的不对称性。",
+          "unit": "1",
+          "variance": 0.0014460671695610463,
+          "std_floor": 1e-08,
+          "status": "eligible",
+          "rho_response": -0.37429643527204504,
+          "rho_original": {
+            "upstream_slope": -0.14690431519699812,
+            "downstream_slope": 0.07842401500938086,
+            "crest_width": -0.1878048780487805,
+            "modulus_zone_height": 0.2272045028142589,
+            "secondary_top_width": -0.049155722326454036,
+            "secondary_height": 0.5129455909943715,
+            "secondary_bottom_width": -0.39118198874296434,
+            "secondary_right_slope_distance": -0.4210131332082552
+          },
+          "rho_candidates": {
+            "soft_area_ratio": 0.08818011257035648,
+            "soft_to_main_ratio": -0.28123827392120077,
+            "soft_core_relative_elevation": -0.49043151969981236,
+            "drain_support_fraction": -0.6943714821763602,
+            "soft_zone_aspect": -0.6363977485928706,
+            "soft_core_eccentricity": 1.0
+          }
+        }
+      ],
+      "baseline_loo": {
+        "rmse_m": 0.0054372087551365035,
+        "nrmse": 0.290444647705876,
+        "mae_m": 0.0041732448687094486,
+        "warning_count": 40
+      },
+      "selected_loo": {
+        "rmse_m": 0.005150559059020787,
+        "nrmse": 0.2751324031788153,
+        "mae_m": 0.003971129878686668,
+        "warning_count": 79
+      },
+      "relative_loo_gain": 0.0527200092961152,
+      "rounds": [
+        {
+          "step": 1,
+          "threshold": 0.01,
+          "best_candidate": "soft_core_relative_elevation",
+          "accepted": true,
+          "previous_loo_nrmse": 0.290444647705876,
+          "trials": {
+            "soft_area_ratio": {
+              "rmse_m": 0.006536087377769162,
+              "nrmse": 0.3491445116977724,
+              "mae_m": 0.005515035339618555,
+              "warning_count": 136,
+              "relative_gain": -0.20210344537434843
+            },
+            "soft_to_main_ratio": {
+              "rmse_m": 0.007235555178225975,
+              "nrmse": 0.38650866084752905,
+              "mae_m": 0.005951114439230098,
+              "warning_count": 119,
+              "relative_gain": -0.3307480922799926
+            },
+            "soft_core_eccentricity": {
+              "rmse_m": 0.0059908734552105445,
+              "nrmse": 0.32002029138670196,
+              "mae_m": 0.00460007949994074,
+              "warning_count": 43,
+              "relative_gain": -0.10182884730165953
+            },
+            "soft_core_relative_elevation": {
+              "rmse_m": 0.005150559059020787,
+              "nrmse": 0.2751324031788153,
+              "mae_m": 0.003971129878686668,
+              "warning_count": 79,
+              "relative_gain": 0.0527200092961152
+            },
+            "drain_support_fraction": {
+              "rmse_m": 0.005437307095632294,
+              "nrmse": 0.29044990085541317,
+              "mae_m": 0.004173242528494095,
+              "warning_count": 80,
+              "relative_gain": -1.8086577179721175e-05
+            },
+            "soft_zone_aspect": {
+              "rmse_m": 0.0055351779334532015,
+              "nrmse": 0.2956779622177286,
+              "mae_m": 0.004225966711237196,
+              "warning_count": 81,
+              "relative_gain": -0.018018285250524402
+            }
+          }
+        },
+        {
+          "step": 2,
+          "threshold": 0.02,
+          "best_candidate": "drain_support_fraction",
+          "accepted": false,
+          "previous_loo_nrmse": 0.2751324031788153,
+          "trials": {
+            "soft_area_ratio": {
+              "rmse_m": 0.007599059003653082,
+              "nrmse": 0.4059262968572143,
+              "mae_m": 0.006209798014448558,
+              "warning_count": 152,
+              "relative_gain": -0.4753852769329856
+            },
+            "soft_to_main_ratio": {
+              "rmse_m": 0.006209280591242082,
+              "nrmse": 0.3316871569675393,
+              "mae_m": 0.00473838323060661,
+              "warning_count": 112,
+              "relative_gain": -0.2055546825284975
+            },
+            "soft_core_eccentricity": {
+              "rmse_m": 0.005497054985533583,
+              "nrmse": 0.2936415117747393,
+              "mae_m": 0.004346014807548059,
+              "warning_count": 81,
+              "relative_gain": -0.06727345954919906
+            },
+            "drain_support_fraction": {
+              "rmse_m": 0.005150743765638008,
+              "nrmse": 0.2751422698311334,
+              "mae_m": 0.003971170929595185,
+              "warning_count": 119,
+              "relative_gain": -3.586146961986891e-05
+            },
+            "soft_zone_aspect": {
+              "rmse_m": 0.0051793810371231624,
+              "nrmse": 0.27667201470618635,
+              "mae_m": 0.004004395299872714,
+              "warning_count": 83,
+              "relative_gain": -0.005595893139385799
+            }
+          }
+        }
+      ],
+      "selected": [
+        "soft_core_relative_elevation"
+      ],
+      "stop_reason": "insufficient_gain",
+      "sequential_replay": {
+        "count": 20,
+        "first_target": 41,
+        "last_target": 60,
+        "baseline": {
+          "rmse_m": 0.0057074442746699585,
+          "nrmse": 0.3048800802601919,
+          "mae_m": 0.00493134295838136
+        },
+        "selected": {
+          "rmse_m": 0.006909845545281951,
+          "nrmse": 0.36910991383317754,
+          "mae_m": 0.00556078306840094
+        },
+        "relative_gain": -0.21067245035546556,
+        "targets_with_lower_absolute_error": 8,
+        "fallback_count": 0
+      }
+    },
+    "dam_max_horizontal_displacement_m": {
+      "initial20_std_m": 0.022340300265683594,
+      "screening": [
+        {
+          "name": "downstream_shell_to_soft_ratio",
+          "expression": "A_ds_shell / A_sec",
+          "physical_rationale": "次堆石下游保护壳与软区的面积比刻画沿横向承载路径的刚柔配比。",
+          "unit": "1",
+          "variance": 0.07924591951364823,
+          "std_floor": 1.4384451175945872e-08,
+          "status": "eligible",
+          "rho_response": -0.2544090056285178,
+          "rho_original": {
+            "upstream_slope": 0.001125703564727955,
+            "downstream_slope": 0.03977485928705441,
+            "crest_width": 0.22439024390243903,
+            "modulus_zone_height": 0.45422138836772985,
+            "secondary_top_width": -0.0035647279549718574,
+            "secondary_height": -0.11763602251407129,
+            "secondary_bottom_width": -0.3071294559099437,
+            "secondary_right_slope_distance": 0.9470919324577861
+          },
+          "rho_candidates": {
+            "downstream_shell_to_soft_ratio": 1.0,
+            "downstream_shell_fraction": 0.9091932457786116,
+            "downstream_clearance_ratio": 0.9424015009380863,
+            "soft_core_eccentricity": -0.3,
+            "slope_asymmetry_ratio": 0.08217636022514072,
+            "soft_eccentric_area_fraction": -0.3735459662288931
+          }
+        },
+        {
+          "name": "downstream_shell_fraction",
+          "expression": "A_ds_shell / A_tot",
+          "physical_rationale": "下游保护壳面积占比表征主堆石横向抗推骨架的相对尺度。",
+          "unit": "1",
+          "variance": 0.0006494498627085028,
+          "std_floor": 1e-08,
+          "status": "eligible",
+          "rho_response": -0.06735459662288931,
+          "rho_original": {
+            "upstream_slope": 0.04596622889305816,
+            "downstream_slope": 0.05609756097560976,
+            "crest_width": 0.299812382739212,
+            "modulus_zone_height": 0.4525328330206379,
+            "secondary_top_width": 0.0774859287054409,
+            "secondary_height": 0.18105065666041276,
+            "secondary_bottom_width": -0.1052532833020638,
+            "secondary_right_slope_distance": 0.9478424015009381
+          },
+          "rho_candidates": {
+            "downstream_shell_to_soft_ratio": 0.9091932457786116,
+            "downstream_shell_fraction": 1.0,
+            "downstream_clearance_ratio": 0.9333958724202627,
+            "soft_core_eccentricity": -0.2326454033771107,
+            "slope_asymmetry_ratio": 0.05365853658536585,
+            "soft_eccentric_area_fraction": -0.09606003752345216
+          }
+        },
+        {
+          "name": "downstream_clearance_ratio",
+          "expression": "d_ds_perp / B_bot",
+          "physical_rationale": "下游参考线的相对法向净距表征软区下游侧保护层的几何尺度。",
+          "unit": "1",
+          "variance": 0.00027861891939720627,
+          "std_floor": 1e-08,
+          "status": "eligible",
+          "rho_response": -0.1778611632270169,
+          "rho_original": {
+            "upstream_slope": -0.030393996247654785,
+            "downstream_slope": -0.043339587242026266,
+            "crest_width": 0.24146341463414633,
+            "modulus_zone_height": 0.4924953095684803,
+            "secondary_top_width": 0.05872420262664165,
+            "secondary_height": -0.13658536585365855,
+            "secondary_bottom_width": -0.10450281425891182,
+            "secondary_right_slope_distance": 0.9883677298311445
+          },
+          "rho_candidates": {
+            "downstream_shell_to_soft_ratio": 0.9424015009380863,
+            "downstream_shell_fraction": 0.9333958724202627,
+            "downstream_clearance_ratio": 1.0,
+            "soft_core_eccentricity": -0.4395872420262664,
+            "slope_asymmetry_ratio": 0.05722326454033771,
+            "soft_eccentric_area_fraction": -0.3726078799249531
+          }
+        },
+        {
+          "name": "soft_core_eccentricity",
+          "expression": "X_c_sec / B_bot",
+          "physical_rationale": "有符号次堆石偏心率刻画软区相对轴线向下游或上游偏移。",
+          "unit": "1",
+          "variance": 0.0014460671695610463,
+          "std_floor": 1e-08,
+          "status": "eligible",
+          "rho_response": 0.32682926829268294,
+          "rho_original": {
+            "upstream_slope": -0.14690431519699812,
+            "downstream_slope": 0.07842401500938086,
+            "crest_width": -0.1878048780487805,
+            "modulus_zone_height": 0.2272045028142589,
+            "secondary_top_width": -0.049155722326454036,
+            "secondary_height": 0.5129455909943715,
+            "secondary_bottom_width": -0.39118198874296434,
+            "secondary_right_slope_distance": -0.4210131332082552
+          },
+          "rho_candidates": {
+            "downstream_shell_to_soft_ratio": -0.3,
+            "downstream_shell_fraction": -0.2326454033771107,
+            "downstream_clearance_ratio": -0.4395872420262664,
+            "soft_core_eccentricity": 1.0,
+            "slope_asymmetry_ratio": 0.12401500938086304,
+            "soft_eccentric_area_fraction": 0.748030018761726
+          }
+        },
+        {
+          "name": "slope_asymmetry_ratio",
+          "expression": "(x2 - x1) / (x1 + x2)",
+          "physical_rationale": "上下游坡比的相对差异表征两侧坝体几何和承载路径的不对称性。",
+          "unit": "1",
+          "variance": 0.002608021106292232,
+          "std_floor": 1e-08,
+          "status": "eligible",
+          "rho_response": -0.4234521575984991,
+          "rho_original": {
+            "upstream_slope": -0.6806754221388368,
+            "downstream_slope": 0.5148217636022514,
+            "crest_width": -0.23433395872420262,
+            "modulus_zone_height": 0.04671669793621013,
+            "secondary_top_width": 0.02645403377110694,
+            "secondary_height": -0.16585365853658537,
+            "secondary_bottom_width": 0.05647279549718574,
+            "secondary_right_slope_distance": 0.028142589118198873
+          },
+          "rho_candidates": {
+            "downstream_shell_to_soft_ratio": 0.08217636022514072,
+            "downstream_shell_fraction": 0.05365853658536585,
+            "downstream_clearance_ratio": 0.05722326454033771,
+            "soft_core_eccentricity": 0.12401500938086304,
+            "slope_asymmetry_ratio": 1.0,
+            "soft_eccentric_area_fraction": 0.10337711069418387
+          }
+        },
+        {
+          "name": "soft_eccentric_area_fraction",
+          "expression": "(X_c_sec / B_bot) * (A_sec / A_tot)",
+          "physical_rationale": "将次堆石的相对面积与有符号偏心相乘以刻画软区对断面不对称的贡献。",
+          "unit": "1",
+          "variance": 3.454613502696946e-05,
+          "std_floor": 1e-08,
+          "status": "eligible",
+          "rho_response": 0.4849906191369606,
+          "rho_original": {
+            "upstream_slope": -0.057598499061913694,
+            "downstream_slope": 0.08424015009380863,
+            "crest_width": 0.022138836772983114,
+            "modulus_zone_height": 0.05928705440900563,
+            "secondary_top_width": 0.06360225140712945,
+            "secondary_height": 0.8183864915572233,
+            "secondary_bottom_width": 0.08686679174484052,
+            "secondary_right_slope_distance": -0.35834896810506567
+          },
+          "rho_candidates": {
+            "downstream_shell_to_soft_ratio": -0.3735459662288931,
+            "downstream_shell_fraction": -0.09606003752345216,
+            "downstream_clearance_ratio": -0.3726078799249531,
+            "soft_core_eccentricity": 0.748030018761726,
+            "slope_asymmetry_ratio": 0.10337711069418387,
+            "soft_eccentric_area_fraction": 1.0
+          }
+        }
+      ],
+      "baseline_loo": {
+        "rmse_m": 0.005833508857216854,
+        "nrmse": 0.26112043203723495,
+        "mae_m": 0.00458101206371835,
+        "warning_count": 76
+      },
+      "selected_loo": {
+        "rmse_m": 0.005261775181358992,
+        "nrmse": 0.23552840019081928,
+        "mae_m": 0.00428021352709391,
+        "warning_count": 150
+      },
+      "relative_loo_gain": 0.09800853823176248,
+      "rounds": [
+        {
+          "step": 1,
+          "threshold": 0.01,
+          "best_candidate": "soft_core_eccentricity",
+          "accepted": true,
+          "previous_loo_nrmse": 0.26112043203723495,
+          "trials": {
+            "soft_eccentric_area_fraction": {
+              "rmse_m": 0.005785767835816952,
+              "nrmse": 0.2589834410016562,
+              "mae_m": 0.004786103776306011,
+              "warning_count": 129,
+              "relative_gain": 0.008183928844273658
+            },
+            "slope_asymmetry_ratio": {
+              "rmse_m": 0.0058381252671045845,
+              "nrmse": 0.2613270724956365,
+              "mae_m": 0.004584880604112496,
+              "warning_count": 117,
+              "relative_gain": -0.00079136074028896
+            },
+            "soft_core_eccentricity": {
+              "rmse_m": 0.005261775181358992,
+              "nrmse": 0.23552840019081928,
+              "mae_m": 0.00428021352709391,
+              "warning_count": 150,
+              "relative_gain": 0.09800853823176248
+            },
+            "downstream_shell_to_soft_ratio": {
+              "rmse_m": 0.006197236784548388,
+              "nrmse": 0.2774016781711666,
+              "mae_m": 0.004812986917570597,
+              "warning_count": 118,
+              "relative_gain": -0.06235148282693559
+            },
+            "downstream_clearance_ratio": {
+              "rmse_m": 0.005853129443780071,
+              "nrmse": 0.261998691788889,
+              "mae_m": 0.0045994488007061836,
+              "warning_count": 116,
+              "relative_gain": -0.0033634279202203743
+            },
+            "downstream_shell_fraction": {
+              "rmse_m": 0.005873382117682115,
+              "nrmse": 0.26290524513245145,
+              "mae_m": 0.004610007046716701,
+              "warning_count": 116,
+              "relative_gain": -0.006835210409585901
+            }
+          }
+        },
+        {
+          "step": 2,
+          "threshold": 0.02,
+          "best_candidate": "downstream_clearance_ratio",
+          "accepted": false,
+          "previous_loo_nrmse": 0.23552840019081928,
+          "trials": {
+            "soft_eccentric_area_fraction": {
+              "rmse_m": 0.005832856878580606,
+              "nrmse": 0.26109124806797335,
+              "mae_m": 0.00484116962988603,
+              "warning_count": 170,
+              "relative_gain": -0.10853403605019052
+            },
+            "slope_asymmetry_ratio": {
+              "rmse_m": 0.005271424098859032,
+              "nrmse": 0.23596030653877745,
+              "mae_m": 0.00429080769180188,
+              "warning_count": 190,
+              "relative_gain": -0.0018337760864857167
+            },
+            "downstream_shell_to_soft_ratio": {
+              "rmse_m": 0.005284661704652453,
+              "nrmse": 0.23655285031106305,
+              "mae_m": 0.004296010152993768,
+              "warning_count": 190,
+              "relative_gain": -0.004349582128583052
+            },
+            "downstream_clearance_ratio": {
+              "rmse_m": 0.005258568948417644,
+              "nrmse": 0.23538488229252708,
+              "mae_m": 0.004284813191704725,
+              "warning_count": 191,
+              "relative_gain": 0.0006093443430852385
+            },
+            "downstream_shell_fraction": {
+              "rmse_m": 0.005262633124675146,
+              "nrmse": 0.23556680358316187,
+              "mae_m": 0.0042853004521413735,
+              "warning_count": 191,
+              "relative_gain": -0.00016305206638134173
+            }
+          }
+        }
+      ],
+      "selected": [
+        "soft_core_eccentricity"
+      ],
+      "stop_reason": "insufficient_gain",
+      "sequential_replay": {
+        "count": 20,
+        "first_target": 41,
+        "last_target": 60,
+        "baseline": {
+          "rmse_m": 0.007779931311527923,
+          "nrmse": 0.34824649709290123,
+          "mae_m": 0.005664544520878317
+        },
+        "selected": {
+          "rmse_m": 0.008104483288615275,
+          "nrmse": 0.36277414324033863,
+          "mae_m": 0.005749038437105679
+        },
+        "relative_gain": -0.04171656073704,
+        "targets_with_lower_absolute_error": 9,
+        "fallback_count": 0
+      }
+    }
+  }
+}

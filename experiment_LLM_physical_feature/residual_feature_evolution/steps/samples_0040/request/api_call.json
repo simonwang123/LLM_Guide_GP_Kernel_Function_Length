@@ -1,0 +1,34 @@
+{
+  "status": "complete",
+  "provider": "openrouter",
+  "model": "tencent/hy4-flash",
+  "style": "chat-completions",
+  "endpoint": "https://openrouter.ai/api/v1/chat/completions",
+  "request_sha256": "ab726f7dfd82d73ed09a69b337e186ea57eb261c6d449d3843587a0984935256",
+  "http_status": 200,
+  "provider_id": "gen-1795437781-CIyX7LCMdAUTP5h9MiJS",
+  "provider_model": "tencent/hy4-flash",
+  "usage": {
+    "prompt_tokens": 17771,
+    "completion_tokens": 20858,
+    "total_tokens": 38629,
+    "cost": 0.00351700866,
+    "is_byok": false,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "cache_write_tokens": 0,
+      "audio_tokens": 0,
+      "video_tokens": 0
+    },
+    "cost_details": {
+      "upstream_inference_cost": 0.003552534,
+      "upstream_inference_prompt_cost": 0.000621985,
+      "upstream_inference_completions_cost": 0.002930549
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 19725,
+      "image_tokens": 0,
+      "audio_tokens": 0
+    }
+  }
+}

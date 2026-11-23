@@ -1,0 +1,38 @@
+{
+  "crest_max_settlement_m": [
+    {
+      "name": "downstream_cover_containment_fraction",
+      "expression": "d_ds_perp / (d_ds_perp + d_us_min + W_sec_mean)",
+      "physical_rationale": "候选假设：五个高残差断面相对各自低残差对照均有更大的该值，表现为次堆石区右侧到下游参考线的净距相对于软区平均宽度和上游净宽更大，即下游侧包覆更突出。正残差的 lhs_011、lhs_019、lhs_015 中，较强下游包覆可能改变拱架路径并使坝顶下方局部压缩增大，导致模型低估沉降；负残差的 lhs_007、lhs_014 也有该几何，但若帽盖或排水支承同时增强，模型可能反过来高估。因符号混合，此式主要表征下游几何约束而非单向符号修正。"
+    },
+    {
+      "name": "downstream_shell_cap_transfer_index",
+      "expression": "(d_ds_perp / H_dam) * (A_ds_shell / (A_ds_shell + A_mod))",
+      "physical_rationale": "候选假设：所有高残差断面的该值均高于对照，说明下游壳体面积相对顶部增模帽盖并不弱，且软区右侧净距更大。其机制不同于单纯包覆几何：它强调下游高刚度壳体与顶部帽盖之间的承载竞争。正残差子组中，壳体相对帽盖占优可能使坝顶竖向应力扩散不足，真实沉降超过预测；负残差子组中，当壳体或排水路径提供更强约束时，模型可能高估沉降。该方向解释仅作为符号混合下的候选机制。"
+    }
+  ],
+  "dam_max_settlement_m": [
+    {
+      "name": "downstream_shell_slope_support",
+      "expression": "downstream_slope * A_ds_shell / A_tot",
+      "physical_rationale": "候选假设：五个高残差断面相对对照均同时具有较小的下游坡比和较小的 A_ds_shell 占比，因此该下游坡面—壳体支承指标降低。正残差的 lhs_019、eval_0034 中，较弱的下游壳体支承可能使整体竖向变形沿偏下游剪切路径增加，模型低估沉降；负残差的 lhs_010、eval_0023、eval_0035 中，同一几何可能伴随主骨架或帽盖重分配，使模型过度利用约束而高估。符号混合时，它主要捕捉下游面附近支承缺失。"
+    },
+    {
+      "name": "soft_wedge_spread_area_index",
+      "expression": "(W_sec_mean / (secondary_height + H_dam)) * (A_sec / A_tot)",
+      "physical_rationale": "候选假设：除 eval_0034 外，多数高残差断面的软区更宽且相对高度不高，使宽浅软夹层与其面积占比的耦合指标偏大。力学上，宽浅低模量楔体会形成更长的压缩夹层并改变整体拱架路径；在软区—排水比例较大的正残差子组中可能使真实整体沉降大于预测，在主骨架或帽盖较强的负残差子组中则可能表现为模型高估。eval_0034 不服从，因此该式作为局部一致的候选假设。"
+    }
+  ],
+  "dam_max_horizontal_displacement_m": [
+    {
+      "name": "upstream_clearance_asymmetry_index",
+      "expression": "(upstream_slope - downstream_slope) * (d_us_min / H_dam)",
+      "physical_rationale": "候选假设：五个高残差断面的该指标均高于对照；它把上下游坡比不对称与软区上游净距结合，而不是单纯使用总体底宽。正残差的 lhs_019、eval_0034 中，更大的不对称和有效上游净距可能使自重合力与水平推力线偏移，模型低估水平位移；负残差的 lhs_001、eval_0031、lhs_002 中，即使主骨架或排水占优，局部不对称仍改变剪切路径，模型可能对约束估计过强而高估。该式是上游约束—推力线偏移的候选机制。"
+    },
+    {
+      "name": "soft_basal_footprint_index",
+      "expression": "(secondary_bottom_width / H_dam) * (A_sec / A_tot)",
+      "physical_rationale": "候选假设：五个高残差断面的 secondary_bottom_width 均小于对照，且该基底弱区足迹指标也均降低。较窄的软区底宽会减少底部软弱接触范围，并把水平推力转向更集中的主骨架或排水边界；在正残差子组中，模型可能漏掉这种局部剪切集中而低估水平位移，在负残差子组中若刚性骨架约束被模型高估则会出现高估。该机制与坡比不对称不同，主要表征软弱楔体底部几何与面积耦合。"
+    }
+  ]
+}

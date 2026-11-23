@@ -1,0 +1,38 @@
+{
+  "crest_max_settlement_m": [
+    {
+      "name": "upper_cap_crest_reach",
+      "expression": "(A_mod / A_tot) * (B_mod_bot / crest_width)",
+      "physical_rationale": "候选假设：五个高绝对残差断面相对各自低残差对照几乎都有更大的坝顶增模区面积和底面宽度；正残差的 eval_0025、lhs_019、lhs_015 尤其表现为宽而厚的帽盖与较大主骨架并存。该无量纲量把帽盖相对全断面的面积和相对坝顶的展开宽度合成，表征坝顶竖向荷载在顶部刚度突变处的扩散尺度。若模型把帽盖处理得过于连续，可能低估其边缘下方压缩带的沉降；负残差 lhs_007、lhs_014 也具有较大帽盖，但排水支承更强或软区形心更低时同一几何可转为模型高估。"
+    },
+    {
+      "name": "downstream_shell_main_reach",
+      "expression": "(A_ds_shell / A_main) * (d_ds_perp / H_dam)",
+      "physical_rationale": "候选假设：所有匹配对中，高残差断面的下游壳体面积 A_ds_shell 和右腰净距 d_ds_perp 均高于对照，且多数下游壳体相对主骨架的比例提高。正残差 eval_0025、lhs_019、lhs_015 中，远离下游参考线的次堆石和加厚下游壳体可能形成更长的竖向—剪切传递路径，使模型低估坝顶沉降。负残差 lhs_007、lhs_014 也显示同一壳体—净距几何，但底部排水占比高或软区形心更低时，下游壳体更像刚性支承，模型可能高估；因此该指标标记缺失的壳体约束路径而非固定符号。"
+    }
+  ],
+  "dam_max_settlement_m": [
+    {
+      "name": "soft_lateral_clearance_share",
+      "expression": "(d_us_min + d_ds_perp) / B_bot",
+      "physical_rationale": "候选假设：五个高绝对残差对中，高残差断面的上游净宽与下游净距之和都大于对照，说明次堆石两侧净空更大、侧向约束更弱；正残差 eval_0025、eval_0037 同时伴随更低形心或较弱排水支承，竖向压缩更易发展，模型低估整体沉降。负残差 eval_0031、lhs_009、eval_0023 也有较大净空，但帽盖或主骨架占优时模型可能把拱架约束估得过强而高估；本特征用于侧向自由变形机制。"
+    },
+    {
+      "name": "deep_soft_slenderness_index",
+      "expression": "(H_dam - Y_c_sec) / W_sec_mean",
+      "physical_rationale": "候选假设：多数高残差断面相对对照表现为软区形心更低或平均水平宽度更小，使软区上方覆土深度相对软区宽度增大；该量衡量深窄软柱的竖向压缩尺度，不直接使用排水面积比。正残差 eval_0025、eval_0037 中，深窄软柱会延长压缩路径并集中竖向应力，模型低估；负残差 eval_0031、lhs_009 中同向几何若与强帽盖、主骨架并存，可能让模型高估。以上仅为解释残差的候选假设。"
+    }
+  ],
+  "dam_max_horizontal_displacement_m": [
+    {
+      "name": "drain_slope_asymmetry_shear",
+      "expression": "abs(upstream_slope - downstream_slope) * (A_drain / A_tot)",
+      "physical_rationale": "候选假设：正残差 lhs_019、eval_0037、eval_0034 的坡比不对称与底部排水面积占比组合均高于对照，负残差 lhs_017 亦高，负残差 lhs_001 不服从。该无量纲量表征坡比不对称引起的推力偏移与刚性底部排水约束的耦合：排水越强，偏移推力越可能沿底部剪切带转化为下游水平位移；正残差子组中模型可能低估该剪切转化，负残差子组中若主骨架很厚则可能高估。"
+    },
+    {
+      "name": "flared_soft_wedge_thrust",
+      "expression": "(secondary_bottom_width / secondary_top_width) * abs(upstream_slope - downstream_slope)",
+      "physical_rationale": "候选假设：正残差 lhs_019、eval_0037、eval_0034 与负残差 lhs_017 的高残差断面相对对照具有更大的次堆石底/顶宽比，并且坡比不对称不可忽略；lhs_001 不服从。底宽远大于顶宽的软弱楔体在竖向荷载下可能产生向下游的楔劈和侧向挤出，坡比不对称给出偏向量。正残差子组中模型可能低估这种楔体推力，负残差 lhs_017 中强主骨架并存时则可能高估；这是针对内部软弱楔体的候选机制。"
+    }
+  ]
+}

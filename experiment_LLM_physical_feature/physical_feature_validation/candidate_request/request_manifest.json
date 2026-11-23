@@ -1,0 +1,9 @@
+{
+  "schema_version": 1,
+  "stage": "feature_initial",
+  "sample_count": 20,
+  "initial_csv_sha256": "dea8db7fb52276b9476269a16b0774ba919b3316de1fa35462e0559de05693f2",
+  "template_sha256": "a9452e25daa2b852b72c3a2f0647a12245fb714560be79941cc44519ce2a23b6",
+  "context_sha256": "ddc4a5c208c4276791b2b91adbbdc278ce1106d04d936dda51cf8d26bca1d504",
+  "prompt_sha256": "182e243cc2994fe3bdf7ff5ffd6c01f9c495f3a02e73d7c8c0a743cf82e4e82c"
+}

@@ -1,0 +1,98 @@
+{
+  "crest_max_settlement": [
+    {
+      "name": "crest_cap_area_ratio",
+      "expression": "A_mod / A_tot",
+      "physical_rationale": "增模区在主体断面中的占比反映坝顶高刚度帽盖的规模。"
+    },
+    {
+      "name": "crest_cap_relative_width",
+      "expression": "B_mod_bot / B_bot",
+      "physical_rationale": "增模区底宽相对坝底宽度可表征帽盖的传力覆盖。"
+    },
+    {
+      "name": "crest_cap_aspect",
+      "expression": "x4 / B_mod_bot",
+      "physical_rationale": "增模区高度与底宽之比表征坝顶加强体的形状。"
+    },
+    {
+      "name": "soft_area_ratio",
+      "expression": "A_sec / A_tot",
+      "physical_rationale": "低模量次堆石占比表征主体断面的整体可压缩性。"
+    },
+    {
+      "name": "soft_core_relative_elevation",
+      "expression": "Y_c_sec / H_dam",
+      "physical_rationale": "次堆石相对形心高程表示软区与坝顶载荷传递路径的位置关系。"
+    },
+    {
+      "name": "upstream_clearance_ratio",
+      "expression": "d_us_min / B_bot",
+      "physical_rationale": "上游最窄净宽相对主体宽度反映软区一侧的约束尺度。"
+    }
+  ],
+  "body_max_settlement": [
+    {
+      "name": "soft_area_ratio",
+      "expression": "A_sec / A_tot",
+      "physical_rationale": "低模量次堆石面积占比表征主体断面的软弱材料尺度。"
+    },
+    {
+      "name": "soft_to_main_ratio",
+      "expression": "A_sec / A_main",
+      "physical_rationale": "次堆石与主堆石的面积比刻画软弱材料和主承载骨架的配比。"
+    },
+    {
+      "name": "soft_core_relative_elevation",
+      "expression": "Y_c_sec / H_dam",
+      "physical_rationale": "软区相对高程表征其在坝体竖向应力传递路径上的位置。"
+    },
+    {
+      "name": "drain_support_fraction",
+      "expression": "A_drain / A_tot",
+      "physical_rationale": "底部排水区面积占比刻画软区下方较高刚度支承的相对规模。"
+    },
+    {
+      "name": "soft_zone_aspect",
+      "expression": "W_sec_mean / x6",
+      "physical_rationale": "软区平均宽高比表征次堆石材料的几何约束条件。"
+    },
+    {
+      "name": "soft_core_eccentricity",
+      "expression": "X_c_sec / B_bot",
+      "physical_rationale": "软区相对坝轴线的有符号偏心反映骨架承载分布的不对称性。"
+    }
+  ],
+  "body_max_horizontal_displacement": [
+    {
+      "name": "downstream_shell_to_soft_ratio",
+      "expression": "A_ds_shell / A_sec",
+      "physical_rationale": "次堆石下游保护壳与软区的面积比刻画沿横向承载路径的刚柔配比。"
+    },
+    {
+      "name": "downstream_shell_fraction",
+      "expression": "A_ds_shell / A_tot",
+      "physical_rationale": "下游保护壳面积占比表征主堆石横向抗推骨架的相对尺度。"
+    },
+    {
+      "name": "downstream_clearance_ratio",
+      "expression": "d_ds_perp / B_bot",
+      "physical_rationale": "下游参考线的相对法向净距表征软区下游侧保护层的几何尺度。"
+    },
+    {
+      "name": "soft_core_eccentricity",
+      "expression": "X_c_sec / B_bot",
+      "physical_rationale": "有符号次堆石偏心率刻画软区相对轴线向下游或上游偏移。"
+    },
+    {
+      "name": "slope_asymmetry_ratio",
+      "expression": "(x2 - x1) / (x1 + x2)",
+      "physical_rationale": "上下游坡比的相对差异表征两侧坝体几何和承载路径的不对称性。"
+    },
+    {
+      "name": "soft_eccentric_area_fraction",
+      "expression": "(X_c_sec / B_bot) * (A_sec / A_tot)",
+      "physical_rationale": "将次堆石的相对面积与有符号偏心相乘以刻画软区对断面不对称的贡献。"
+    }
+  ]
+}

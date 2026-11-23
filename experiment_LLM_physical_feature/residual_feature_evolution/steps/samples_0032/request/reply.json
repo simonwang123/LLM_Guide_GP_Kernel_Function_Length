@@ -1,0 +1,38 @@
+{
+  "crest_max_settlement_m": [
+    {
+      "name": "soft_cover_asymmetry_index",
+      "expression": "(d_ds_perp - d_us_min) / (d_ds_perp + d_us_min + B_mod_bot)",
+      "physical_rationale": "候选假设：高绝对残差断面相对低残差对照多为 d_us_min 更小、d_ds_perp 更大，且 B_mod_bot 常更小，因此该覆盖不对称指标变大。正残差即低估沉降子组中，软区上游覆盖薄且离下游面较远、帽盖较窄时，坝顶荷载可能更容易绕过下游刚壳并在软区上方形成局部压缩，使实际沉降高于预测；负残差即高估沉降断面也出现该几何，但伴随软区形心偏高与排水支承很大，方向会被抵消。该指标主要表征水平覆盖与拱效应。"
+    },
+    {
+      "name": "elevated_drain_soft_cap_deficit",
+      "expression": "(A_drain / A_tot) * (Y_c_sec / H_dam) * (A_sec / (A_mod + A_sec))",
+      "physical_rationale": "候选假设：高绝对残差中的多数负残差断面以及一个正残差断面，相对对照表现为底部排水面积占比更大、软区形心更高、顶部帽盖相对软区更弱，因此该指标增大；其他正残差断面不完全支持。力学上，高位软区上方帽盖不足而底部排水刚体支承占比大，会改变竖向拱架与压缩柱路径：在排水支承占主导时模型可能把坝顶沉降算得过高，在帽盖极薄时又可能低估局部沉降，所以此解释仅作为符号混合子组的候选假设。"
+    }
+  ],
+  "dam_max_settlement_m": [
+    {
+      "name": "main_frame_to_soft_drain_ratio",
+      "expression": "A_main / (A_sec + A_drain)",
+      "physical_rationale": "候选假设：高绝对残差断面相对低残差对照普遍 A_main 偏小，且多数断面的软区与排水区合计不小，主骨架相对软排水复合体的比值降低；正残差子组均表现为该比值降低。主堆石是抗压缩承载骨架，骨架不足以绕开软区和排水过渡区时，坝体整体压缩链更软，实际沉降可能高于模型预测；负残差中该趋势可能被大排水刚度或局部几何差异抵消，因此作为候选机制。"
+    },
+    {
+      "name": "soft_wedge_flatness_index",
+      "expression": "W_sec_mean / (W_sec_mean + secondary_height)",
+      "physical_rationale": "候选假设：高绝对残差断面多为 W_sec_mean 相对 secondary_height 更大，尤其两个正残差断面很一致。软区呈宽浅楔形时，压缩影响带横向展开，更多坝体宽度参与竖向压缩，模型可能低估整体沉降；两个负残差断面也有类似宽浅软楔，但其主骨架和排水支承差异使残差方向转为高估，因此该指标应理解为候选的软楔几何机制。"
+    }
+  ],
+  "dam_max_horizontal_displacement_m": [
+    {
+      "name": "downstream_shell_density_factor",
+      "expression": "A_ds_shell / (H_dam * max(d_ds_perp, 1.0))",
+      "physical_rationale": "候选假设：五个高绝对残差断面相对各自低残差对照均表现为 A_ds_shell 相对下游净距的密度更高，即在一定 d_ds_perp 内下游壳体面积更大；三个正残差断面尤其一致。下游壳体是传递水平推力的刚性旁侧路径，单位净距壳体面积越大，可能把更多不相容剪切带到软区并形成更大的下游位移，使模型低估；负残差断面中也出现该几何，说明还受排水和主骨架约束调制。"
+    },
+    {
+      "name": "slope_asymmetry_thrust_index",
+      "expression": "(upstream_slope - downstream_slope) * (B_bot / H_dam)",
+      "physical_rationale": "候选假设：高绝对残差断面多数具有更大的上游坡比相对下游坡比差，并与较大的坝底宽度耦合；正残差中的两个断面明显，负残差中的两个断面也如此，另一个正残差不服从。坡比不对称会移动自重合力与推力作用线，改变向下游剪切路径；当模型未充分捕捉这种几何偏心时，可能低估水平位移，而在主骨架或排水约束占优的负残差子组也可能转为高估，因此仅作为候选机制。"
+    }
+  ]
+}

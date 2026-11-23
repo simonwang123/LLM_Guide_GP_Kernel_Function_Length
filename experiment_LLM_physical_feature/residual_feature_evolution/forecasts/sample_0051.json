@@ -1,0 +1,117 @@
+{
+  "signature": "b2bda23c575ed5ed66221c6f6e3cf6262765e7b3814ab0c9e46bcd2dbef525e5",
+  "training_sample_count": 50,
+  "sample_index": 51,
+  "design_id": "eval_0051",
+  "responses": {
+    "crest_max_settlement_m": {
+      "dynamic": {
+        "mean_m": 0.08249133908639107,
+        "observed_std_m": 0.0015821236452351463,
+        "model": "additive",
+        "active_features": [
+          "narrow_crest_broad_base_index",
+          "soft_area_ratio",
+          "combined_cap_shell_area_fraction"
+        ],
+        "physical_signal_share": 0.011233002792361606,
+        "formula_fallback": null
+      },
+      "frozen": {
+        "mean_m": 0.08359002026964014,
+        "observed_std_m": 0.0016097288683989124,
+        "model": "additive",
+        "active_features": [
+          "upstream_clearance_ratio",
+          "soft_area_ratio"
+        ],
+        "physical_signal_share": 0.23631664945928668,
+        "formula_fallback": null
+      },
+      "shadow": {
+        "mean_m": 0.08303202998723534,
+        "observed_std_m": 0.0015287388631899624,
+        "model": "additive",
+        "active_features": [
+          "narrow_crest_broad_base_index",
+          "soft_area_ratio",
+          "elevated_drain_soft_cap_deficit"
+        ],
+        "physical_signal_share": 0.20951191786673787,
+        "formula_fallback": null
+      }
+    },
+    "dam_max_settlement_m": {
+      "dynamic": {
+        "mean_m": 0.1556588059985103,
+        "observed_std_m": 0.004100266732670853,
+        "model": "additive",
+        "active_features": [
+          "soft_core_eccentricity",
+          "deep_soft_drainage_deficit"
+        ],
+        "physical_signal_share": 0.49049786920513044,
+        "formula_fallback": null
+      },
+      "frozen": {
+        "mean_m": 0.15770903210955003,
+        "observed_std_m": 0.004057896508817282,
+        "model": "additive",
+        "active_features": [
+          "soft_core_eccentricity"
+        ],
+        "physical_signal_share": 0.31815017251444816,
+        "formula_fallback": null
+      },
+      "shadow": {
+        "mean_m": 0.1556588059985103,
+        "observed_std_m": 0.004100266732670853,
+        "model": "additive",
+        "active_features": [
+          "soft_core_eccentricity",
+          "deep_soft_drainage_deficit"
+        ],
+        "physical_signal_share": 0.49049786920513044,
+        "formula_fallback": null
+      }
+    },
+    "dam_max_horizontal_displacement_m": {
+      "dynamic": {
+        "mean_m": 0.10713039802726042,
+        "observed_std_m": 0.004670592127304901,
+        "model": "additive",
+        "active_features": [
+          "soft_eccentric_area_fraction",
+          "upstream_clearance_asymmetry_index",
+          "drain_slope_asymmetry_shear"
+        ],
+        "physical_signal_share": 0.5287474912972245,
+        "formula_fallback": null
+      },
+      "frozen": {
+        "mean_m": 0.10730434950339948,
+        "observed_std_m": 0.004679427342268144,
+        "model": "additive",
+        "active_features": [
+          "soft_eccentric_area_fraction",
+          "soft_core_eccentricity",
+          "slope_asymmetry_ratio"
+        ],
+        "physical_signal_share": 0.5414600330682084,
+        "formula_fallback": null
+      },
+      "shadow": {
+        "mean_m": 0.10713039802726042,
+        "observed_std_m": 0.004670592127304901,
+        "model": "additive",
+        "active_features": [
+          "soft_eccentric_area_fraction",
+          "upstream_clearance_asymmetry_index",
+          "drain_slope_asymmetry_shear"
+        ],
+        "physical_signal_share": 0.5287474912972245,
+        "formula_fallback": null
+      }
+    }
+  }
+}

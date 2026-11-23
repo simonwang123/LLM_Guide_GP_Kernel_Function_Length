@@ -1,0 +1,38 @@
+{
+  "crest_max_settlement_m": [
+    {
+      "name": "cap_soft_width_mismatch",
+      "expression": "(0.5 * (x5 + x7) - B_mod_bot) / H_dam",
+      "physical_rationale": "候选假设：正残差三对中，高残差断面普遍具有更小的坝顶/增模区底宽和更宽的次堆石平均宽度，表示顶部刚性帽盖跨越软区的能力不足；负残差子组不总按此方向，尤其当帽盖和整体尺寸同时增大时可能反向。力学上，帽盖相对软区过窄会削弱拱效应，把更多竖向应力传入可压缩次堆石，使坝顶沉降被低估。"
+    },
+    {
+      "name": "stiff_support_to_soft_area",
+      "expression": "(A_mod + A_ds_shell) / A_sec",
+      "physical_rationale": "候选假设：高残差断面相对对照通常降低 A_mod 与 A_ds_shell 之和相对于 A_sec 的比例，正残差子组尤其明显；负残差中帽盖显著增大的断面可能反向。力学上，顶部增模区和下游壳体构成绕过软区的刚度骨架，骨架面积不足会使软区承担更大压缩应变，导致观测沉降高于预测。"
+    }
+  ],
+  "dam_max_settlement_m": [
+    {
+      "name": "deep_soft_drainage_deficit",
+      "expression": "((H_dam - Y_c_sec) / H_dam) * (A_sec / (A_sec + A_drain))",
+      "physical_rationale": "候选假设：正残差断面的次堆石形心更低且 A_sec/(A_sec+A_drain) 更大，而多数负残差对照形心更高或底部排水支承更强；个别负残差断面因主骨架和帽盖很大而不服从该方向。力学上，低位软区若缺少底部高刚度排水支承，会形成更长的压缩柱并增大整体沉降，使模型低估。"
+    },
+    {
+      "name": "deep_soft_upstream_clearance",
+      "expression": "(d_us_min / B_bot) * ((H_dam - Y_c_sec) / H_dam)",
+      "physical_rationale": "候选假设：正残差两对中，高残差断面在软区形心较低的同时具有更大的上游净宽比例；负残差中上游贴边且形心较高的断面更容易被模型高估。力学上，低位软区若离上游边界仍有足够覆盖宽度，会参与更宽的整体压缩柱；若软区贴近上游边界或位置较高，边界约束和拱效应可能降低最大沉降。"
+    }
+  ],
+  "dam_max_horizontal_displacement_m": [
+    {
+      "name": "upstream_bias_deep_soft_factor",
+      "expression": "((x1 - x2) / (x1 + x2)) * ((H_dam - Y_c_sec) / H_dam)",
+      "physical_rationale": "候选假设：正残差断面的 x1-x2 更大且软区形心更低，即上游坡相对更陡、软区更深；负残差断面多为 x2 不小于 x1 或形心较高，少数近对称断面需由其他几何项解释。力学上，上游偏斜的坝壳叠加深位软区会增强向下游的侧向推挤，使水平位移被低估。"
+    },
+    {
+      "name": "cap_shell_over_soft_depth_factor",
+      "expression": "((A_mod + A_ds_shell) / A_sec) * ((H_dam - Y_c_sec) / H_dam)",
+      "physical_rationale": "候选假设：正残差两对中，高残差断面的 A_mod+A_ds_shell 相对 A_sec 及软区埋深因子更大；负残差中有一对帽盖和下游壳体相对软区明显减小，另有断面呈高位或顶部偏重软区。力学上，较大的顶部增模区与下游壳体在低位软区上方形成更宽的变形传递路径，可能增加向下游的相容位移；该解释只对深位软区子组作为候选假设成立。"
+    }
+  ]
+}

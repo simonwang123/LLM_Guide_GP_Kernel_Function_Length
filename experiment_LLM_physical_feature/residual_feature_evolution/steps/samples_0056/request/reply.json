@@ -1,0 +1,38 @@
+{
+  "crest_max_settlement_m": [
+    {
+      "name": "upper_skeleton_to_main_skeleton_fraction",
+      "expression": "(A_mod + A_ds_shell) / (A_main + A_mod + A_ds_shell)",
+      "physical_rationale": "候选假设：五个高残差断面的 A_main 均低于对照，而顶部帽盖加下游壳体相对于主骨架的占比均更高；正残差 eval_0028、lhs_019 中这种“壳体/帽盖强、主骨架弱”的组合尤能解释沉降被低估，因为模型可能过度计入上部拱架和下游壳体的侧限。负残差 lhs_013、lhs_007、lhs_006 也出现该组合，但伴随更强底部排水或帽盖刚度变化，说明该特征主要刻画承载路径对主骨架的偏离，符号需由子组机制调节。"
+    },
+    {
+      "name": "basal_drain_support_index",
+      "expression": "(h_drain / H_dam) * (A_drain / A_tot)",
+      "physical_rationale": "候选假设：负残差高估组 lhs_013、lhs_007、lhs_006 相对对照同时有更高的 h_drain 和 A_drain/A_tot，而正残差 eval_0028、lhs_019 不表现出同等程度的底部支承增强。高而宽的底部高刚度排水区可缩短软区压缩柱并提高基底约束，若模型低估该支承，会给出过大的坝顶沉降；正残差断面则更多由上部骨架偏离或大软区控制。"
+    }
+  ],
+  "dam_max_settlement_m": [
+    {
+      "name": "downstream_shell_soft_fraction",
+      "expression": "A_ds_shell / (A_sec + A_ds_shell)",
+      "physical_rationale": "候选假设：eval_0031、lhs_009、eval_0025、eval_0026 的高残差断面相对对照具有更高的 A_ds_shell 在软区加壳体中的占比，eval_0051 为例外。该量表征下游壳体相对于软弱压缩区的侧向约束份额；正残差 eval_0025 中该份额远高于对照，模型可能过度相信壳体包覆而低估整体沉降。负残差 lhs_009、eval_0031、eval_0026 中类似壳体份额伴随不同的排水和主骨架组合，实际沉降低于预测，说明方向取决于支承子组。"
+    },
+    {
+      "name": "soft_width_clearance_over_crest_index",
+      "expression": "(W_sec_mean / crest_width) * (d_ds_perp / B_bot)",
+      "physical_rationale": "候选假设：eval_0031、lhs_009、eval_0025、eval_0026 的高残差断面相对对照有更大的宽软区与坝顶喉部之比并伴随更大的下游净距，eval_0051 为例外。该量表征窄坝顶传力下更宽软区被下游包覆隔开的程度；正残差 eval_0025 中模型可能低估宽软区的竖向压缩而给出偏小沉降。负残差 lhs_009、eval_0031、eval_0026 中该组合虽高，但主骨架、排水高度或坡形不对称改变了压缩路径，使预测偏高。"
+    }
+  ],
+  "dam_max_horizontal_displacement_m": [
+    {
+      "name": "low_soft_wedge_thrust_index",
+      "expression": "(A_sec / A_tot) * (W_sec_mean / B_bot) * (1 - h_drain / H_dam)",
+      "physical_rationale": "候选假设：正残差 lhs_019、eval_0055 相对对照具有更大的软区面积和平均宽度，且 h_drain 较低或基底约束相对不足，使该指数明显升高；负残差 lhs_015、lhs_017 该指数较低，lhs_001 近似相当但伴随更强排水支承。宽而低的软弱楔体更容易把竖向压缩转化为下游水平挤压，若模型低估这种楔体推力，就会低估位移；在强排水或强骨架子组中，同一软区几何的实际位移低于预测。"
+    },
+    {
+      "name": "upstream_face_soft_push_index",
+      "expression": "max(upstream_slope - downstream_slope, 0) * (A_sec / A_tot) * ((H_dam - Y_c_sec) / H_dam)",
+      "physical_rationale": "候选假设：两个正残差断面 lhs_019、eval_0055 均表现为 upstream_slope 大于 downstream_slope，且软区面积占比和距坝顶深度共同放大下游推力；其对照 eval_0027、lhs_007 的坡比差为相反方向或不具备同等软区占比。负残差 lhs_015 的坡比差为负而该指数近零，lhs_001、lhs_017 虽有正坡比差但被更强排水或主骨架抵消。该量表征上游面相对推力偏移在中低位软区上的作用，模型在正残差子组可能低估这种推移机制。"
+    }
+  ]
+}

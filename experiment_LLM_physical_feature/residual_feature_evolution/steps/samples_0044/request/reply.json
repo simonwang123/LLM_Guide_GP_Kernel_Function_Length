@@ -1,0 +1,38 @@
+{
+  "crest_max_settlement_m": [
+    {
+      "name": "downstream_shell_settlement_focus",
+      "expression": "(A_ds_shell / A_tot) * (secondary_right_slope_distance / H_dam)",
+      "physical_rationale": "候选假设：高绝对残差的多数断面相对对照有更大的下游壳区面积占比和更远的下游参考线距离，例如 eval_0025、lhs_019、eval_0028；lhs_015 不服从，负残差 lhs_007 也呈高值。正残差子组中，较大的 A_ds_shell 与 d_ds_perp 可能使坝顶竖向荷载跨过刚度突变的下游壳体—软区过渡带，实际压缩带更宽且沉降被 LOO 低估；在排水很强或其他支承占优的负残差断面，模型可能反而高估，因此该特征只表征壳区—边界几何。"
+    },
+    {
+      "name": "cap_focused_soft_footprint_index",
+      "expression": "(B_mod_bot / (secondary_bottom_width + H_dam)) * (modulus_zone_height / H_dam)",
+      "physical_rationale": "候选假设：正残差 eval_0025、lhs_019、eval_0028 相对对照表现为帽盖宽度或高度更大且次堆石底宽更窄，使该指标升高；lhs_015 和负残差 lhs_007 方向相反。力学上，较强帽盖作用在较窄软楔上会把竖向应力聚焦到底部软区附近，真实坝顶沉降可能大于平滑模型预测；若帽盖很薄或软楔底宽较大则聚焦减弱，模型高估风险上升。"
+    }
+  ],
+  "dam_max_settlement_m": [
+    {
+      "name": "soft_depth_upstream_clearance_index",
+      "expression": "((H_dam - Y_c_sec) / H_dam) * (d_us_min / B_bot)",
+      "physical_rationale": "候选假设：五个高绝对残差断面的 d_us_min 均高于对照，除 eval_0035 外 Y_c_sec 更低，因此软区深度乘上游净距的指标普遍升高。正残差 eval_0025、eval_0037 中，低位软区加上较大上游净距可能拉长从坝顶到软区的压缩路径并把推力传向较弱内部，模型低估整体沉降；负残差 eval_0031、lhs_009、eval_0035 中，若排水、主骨架或帽盖更刚，模型会把这种路径的压缩量算得过大而高估。"
+    },
+    {
+      "name": "tall_soft_over_main_skeleton_fraction",
+      "expression": "(secondary_height / H_dam) * (A_sec / (A_main + A_sec))",
+      "physical_rationale": "候选假设：eval_0037 的正残差以及 lhs_009、eval_0031、eval_0035 的负残差相对对照多表现为更高的次堆石高度占坝高比和更大的 A_sec/(A_main+A_sec)，而 eval_0025 是例外。力学上，该量表征软弱压缩体相对主承重骨架的发育程度；软体高而骨架占比低时实际最大沉降更可能超出预测，若已有强排水或宽帽盖抵消，则同一指标也可对应模型高估，符号需结合子组判断。"
+    }
+  ],
+  "dam_max_horizontal_displacement_m": [
+    {
+      "name": "upstream_clearance_soft_centroid_lever",
+      "expression": "(d_us_min / B_bot) * (X_c_sec / H_dam)",
+      "physical_rationale": "候选假设：五项高绝对残差相对对照均有更大的上游净距，且多数有更偏下游的软区形心；eval_0037 的 X_c_sec 略低但净距更高。该无量纲杠杆臂 d_us_min/B_bot 乘 X_c_sec/H_dam 在正残差 lhs_019、eval_0037、eval_0025 中升高，对应真实水平位移大于预测；在负残差 lhs_001、lhs_017 中，较大的主骨架或低帽盖、低软区面积可能使模型过高估计该杠杆效应。"
+    },
+    {
+      "name": "downstream_shell_soft_footprint_shear",
+      "expression": "(A_ds_shell / (A_sec + A_ds_shell)) * (secondary_bottom_width / B_bot)",
+      "physical_rationale": "候选假设：正残差 lhs_019、eval_0037、eval_0025 的下游壳体相对软区比例或软区底宽占底宽比高于对照，lhs_001 也高而 lhs_017 不高。该式描述下游高刚度壳体与软楔底部宽度形成的剪切转换带：壳体比例大而软楔底宽适中时，竖向力和偏心力更容易沿软区—壳体界面转为下游水平位移，模型会低估；若主骨架连续且排水或壳体路径不强，模型可能高估，故为候选假设。"
+    }
+  ]
+}

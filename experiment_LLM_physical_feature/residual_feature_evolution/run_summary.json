@@ -1,0 +1,758 @@
+{
+  "status": "complete",
+  "completed_predictions_per_response": 40,
+  "pending": null,
+  "interventions": [
+    {
+      "sample_count": 24,
+      "decision": "E:\\LLM_Guide_GP\\experiment_LLM_physical_feature\\residual_feature_evolution\\steps\\samples_0024\\decision.json",
+      "adopted_responses": [
+        "crest_max_settlement_m",
+        "dam_max_settlement_m",
+        "dam_max_horizontal_displacement_m"
+      ]
+    },
+    {
+      "sample_count": 28,
+      "decision": "E:\\LLM_Guide_GP\\experiment_LLM_physical_feature\\residual_feature_evolution\\steps\\samples_0028\\decision.json",
+      "adopted_responses": [
+        "crest_max_settlement_m",
+        "dam_max_horizontal_displacement_m"
+      ]
+    },
+    {
+      "sample_count": 32,
+      "decision": "E:\\LLM_Guide_GP\\experiment_LLM_physical_feature\\residual_feature_evolution\\steps\\samples_0032\\decision.json",
+      "adopted_responses": [
+        "crest_max_settlement_m",
+        "dam_max_horizontal_displacement_m"
+      ]
+    },
+    {
+      "sample_count": 36,
+      "decision": "E:\\LLM_Guide_GP\\experiment_LLM_physical_feature\\residual_feature_evolution\\steps\\samples_0036\\decision.json",
+      "adopted_responses": [
+        "dam_max_horizontal_displacement_m"
+      ]
+    },
+    {
+      "sample_count": 40,
+      "decision": "E:\\LLM_Guide_GP\\experiment_LLM_physical_feature\\residual_feature_evolution\\steps\\samples_0040\\decision.json",
+      "adopted_responses": [
+        "dam_max_horizontal_displacement_m"
+      ]
+    },
+    {
+      "sample_count": 44,
+      "decision": "E:\\LLM_Guide_GP\\experiment_LLM_physical_feature\\residual_feature_evolution\\steps\\samples_0044\\decision.json",
+      "adopted_responses": []
+    },
+    {
+      "sample_count": 48,
+      "decision": "E:\\LLM_Guide_GP\\experiment_LLM_physical_feature\\residual_feature_evolution\\steps\\samples_0048\\decision.json",
+      "adopted_responses": [
+        "crest_max_settlement_m"
+      ]
+    },
+    {
+      "sample_count": 52,
+      "decision": "E:\\LLM_Guide_GP\\experiment_LLM_physical_feature\\residual_feature_evolution\\steps\\samples_0052\\decision.json",
+      "adopted_responses": [
+        "dam_max_settlement_m",
+        "dam_max_horizontal_displacement_m"
+      ]
+    },
+    {
+      "sample_count": 56,
+      "decision": "E:\\LLM_Guide_GP\\experiment_LLM_physical_feature\\residual_feature_evolution\\steps\\samples_0056\\decision.json",
+      "adopted_responses": [
+        "dam_max_settlement_m",
+        "dam_max_horizontal_displacement_m"
+      ]
+    }
+  ],
+  "online_metrics": {
+    "crest_max_settlement_m": {
+      "count": 40,
+      "dynamic": {
+        "rmse_m": 0.002275933282365918,
+        "nrmse": 0.20381144726079634,
+        "mae_m": 0.0018499838200631857
+      },
+      "frozen": {
+        "rmse_m": 0.002204914862250695,
+        "nrmse": 0.19745169713191196,
+        "mae_m": 0.0017739184193595562
+      },
+      "shadow": {
+        "rmse_m": 0.0024986761578473216,
+        "nrmse": 0.22375823048622717,
+        "mae_m": 0.002006438768388568
+      },
+      "relative_nrmse_gain_vs_frozen": -0.032209143913488836,
+      "relative_nrmse_gain_vs_shadow": 0.08914435541471
+    },
+    "dam_max_settlement_m": {
+      "count": 40,
+      "dynamic": {
+        "rmse_m": 0.007707247338716266,
+        "nrmse": 0.41170549796543493,
+        "mae_m": 0.006149472972292375
+      },
+      "frozen": {
+        "rmse_m": 0.009193557663075032,
+        "nrmse": 0.4911011765168924,
+        "mae_m": 0.007032054564492513
+      },
+      "shadow": {
+        "rmse_m": 0.00791336128212463,
+        "nrmse": 0.42271568616612837,
+        "mae_m": 0.00614882563596573
+      },
+      "relative_nrmse_gain_vs_frozen": 0.16166867918046313,
+      "relative_nrmse_gain_vs_shadow": 0.026046320401666878
+    },
+    "dam_max_horizontal_displacement_m": {
+      "count": 40,
+      "dynamic": {
+        "rmse_m": 0.008141239655813707,
+        "nrmse": 0.36441943747368843,
+        "mae_m": 0.005904792528931608
+      },
+      "frozen": {
+        "rmse_m": 0.007585899414497636,
+        "nrmse": 0.339561211097514,
+        "mae_m": 0.0056915883640837
+      },
+      "shadow": {
+        "rmse_m": 0.007816192792083971,
+        "nrmse": 0.34986963913328595,
+        "mae_m": 0.005867297887492238
+      },
+      "relative_nrmse_gain_vs_frozen": -0.07320690810304509,
+      "relative_nrmse_gain_vs_shadow": -0.04158634163411823
+    }
+  },
+  "online_metrics_by_window": {
+    "20": {
+      "crest_max_settlement_m": {
+        "count": 4,
+        "dynamic": {
+          "rmse_m": 0.0029795886279618037,
+          "nrmse": 0.2668242848821215,
+          "mae_m": 0.002956651344849709
+        },
+        "frozen": {
+          "rmse_m": 0.0029795886279618037,
+          "nrmse": 0.2668242848821215,
+          "mae_m": 0.002956651344849709
+        },
+        "shadow": {
+          "rmse_m": 0.0029795886279618037,
+          "nrmse": 0.2668242848821215,
+          "mae_m": 0.002956651344849709
+        },
+        "relative_nrmse_gain_vs_frozen": 0.0,
+        "relative_nrmse_gain_vs_shadow": 0.0
+      },
+      "dam_max_settlement_m": {
+        "count": 4,
+        "dynamic": {
+          "rmse_m": 0.013770356325803725,
+          "nrmse": 0.7355844647410517,
+          "mae_m": 0.011578291875170989
+        },
+        "frozen": {
+          "rmse_m": 0.013770356325803725,
+          "nrmse": 0.7355844647410517,
+          "mae_m": 0.011578291875170989
+        },
+        "shadow": {
+          "rmse_m": 0.013770356325803725,
+          "nrmse": 0.7355844647410517,
+          "mae_m": 0.011578291875170989
+        },
+        "relative_nrmse_gain_vs_frozen": 0.0,
+        "relative_nrmse_gain_vs_shadow": 0.0
+      },
+      "dam_max_horizontal_displacement_m": {
+        "count": 4,
+        "dynamic": {
+          "rmse_m": 0.012881142830697639,
+          "nrmse": 0.5765877216289728,
+          "mae_m": 0.0113032274635128
+        },
+        "frozen": {
+          "rmse_m": 0.012881142830697639,
+          "nrmse": 0.5765877216289728,
+          "mae_m": 0.0113032274635128
+        },
+        "shadow": {
+          "rmse_m": 0.012881142830697639,
+          "nrmse": 0.5765877216289728,
+          "mae_m": 0.0113032274635128
+        },
+        "relative_nrmse_gain_vs_frozen": 0.0,
+        "relative_nrmse_gain_vs_shadow": 0.0
+      }
+    },
+    "24": {
+      "crest_max_settlement_m": {
+        "count": 4,
+        "dynamic": {
+          "rmse_m": 0.0038358598883397577,
+          "nrmse": 0.34350398642593793,
+          "mae_m": 0.0033641070592465346
+        },
+        "frozen": {
+          "rmse_m": 0.004100806456020547,
+          "nrmse": 0.3672301403620797,
+          "mae_m": 0.0034996670551603274
+        },
+        "shadow": {
+          "rmse_m": 0.004100806456020547,
+          "nrmse": 0.3672301403620797,
+          "mae_m": 0.0034996670551603274
+        },
+        "relative_nrmse_gain_vs_frozen": 0.06460840581535154,
+        "relative_nrmse_gain_vs_shadow": 0.06460840581535154
+      },
+      "dam_max_settlement_m": {
+        "count": 4,
+        "dynamic": {
+          "rmse_m": 0.008460911230560978,
+          "nrmse": 0.4519646922346793,
+          "mae_m": 0.007745016674212509
+        },
+        "frozen": {
+          "rmse_m": 0.010187245135279887,
+          "nrmse": 0.5441819429159445,
+          "mae_m": 0.00835313049250578
+        },
+        "shadow": {
+          "rmse_m": 0.010187245135279887,
+          "nrmse": 0.5441819429159445,
+          "mae_m": 0.00835313049250578
+        },
+        "relative_nrmse_gain_vs_frozen": 0.16946032826287527,
+        "relative_nrmse_gain_vs_shadow": 0.16946032826287527
+      },
+      "dam_max_horizontal_displacement_m": {
+        "count": 4,
+        "dynamic": {
+          "rmse_m": 0.012896586151148762,
+          "nrmse": 0.577278997944307,
+          "mae_m": 0.009823701732988103
+        },
+        "frozen": {
+          "rmse_m": 0.008574276661256718,
+          "nrmse": 0.38380310735695267,
+          "mae_m": 0.006414655647758638
+        },
+        "shadow": {
+          "rmse_m": 0.008574276661256718,
+          "nrmse": 0.38380310735695267,
+          "mae_m": 0.006414655647758638
+        },
+        "relative_nrmse_gain_vs_frozen": -0.504101938933532,
+        "relative_nrmse_gain_vs_shadow": -0.504101938933532
+      }
+    },
+    "28": {
+      "crest_max_settlement_m": {
+        "count": 4,
+        "dynamic": {
+          "rmse_m": 0.0014142772905715508,
+          "nrmse": 0.12664953918149266,
+          "mae_m": 0.0012294936819447141
+        },
+        "frozen": {
+          "rmse_m": 0.002100534586149533,
+          "nrmse": 0.18810436902590336,
+          "mae_m": 0.0018778786402862957
+        },
+        "shadow": {
+          "rmse_m": 0.002097358196388682,
+          "nrmse": 0.18781992105933099,
+          "mae_m": 0.0018759134757120842
+        },
+        "relative_nrmse_gain_vs_frozen": 0.326706020506881,
+        "relative_nrmse_gain_vs_shadow": 0.32568633578817785
+      },
+      "dam_max_settlement_m": {
+        "count": 4,
+        "dynamic": {
+          "rmse_m": 0.009624484209538767,
+          "nrmse": 0.5141203973361282,
+          "mae_m": 0.008113570118591873
+        },
+        "frozen": {
+          "rmse_m": 0.011944526075849315,
+          "nrmse": 0.6380523213930946,
+          "mae_m": 0.008714337427194581
+        },
+        "shadow": {
+          "rmse_m": 0.009624484209538767,
+          "nrmse": 0.5141203973361282,
+          "mae_m": 0.008113570118591873
+        },
+        "relative_nrmse_gain_vs_frozen": 0.19423473577586714,
+        "relative_nrmse_gain_vs_shadow": 0.0
+      },
+      "dam_max_horizontal_displacement_m": {
+        "count": 4,
+        "dynamic": {
+          "rmse_m": 0.004785598701492562,
+          "nrmse": 0.21421371443442982,
+          "mae_m": 0.00430537460707245
+        },
+        "frozen": {
+          "rmse_m": 0.005415468036812367,
+          "nrmse": 0.24240802372432474,
+          "mae_m": 0.004662243934045834
+        },
+        "shadow": {
+          "rmse_m": 0.007528092130610445,
+          "nrmse": 0.3369736324526564,
+          "mae_m": 0.006630147292333495
+        },
+        "relative_nrmse_gain_vs_frozen": 0.11630930716203736,
+        "relative_nrmse_gain_vs_shadow": 0.3643012574150706
+      }
+    },
+    "32": {
+      "crest_max_settlement_m": {
+        "count": 4,
+        "dynamic": {
+          "rmse_m": 0.0020673312850212227,
+          "nrmse": 0.18513098974926562,
+          "mae_m": 0.0018846595575030024
+        },
+        "frozen": {
+          "rmse_m": 0.0014218093641571292,
+          "nrmse": 0.12732404173841988,
+          "mae_m": 0.0012380663993559644
+        },
+        "shadow": {
+          "rmse_m": 0.0031999589635487644,
+          "nrmse": 0.2865586054693384,
+          "mae_m": 0.0024602400290916794
+        },
+        "relative_nrmse_gain_vs_frozen": -0.4540143968222976,
+        "relative_nrmse_gain_vs_shadow": 0.3539506885649103
+      },
+      "dam_max_settlement_m": {
+        "count": 4,
+        "dynamic": {
+          "rmse_m": 0.006073863063265526,
+          "nrmse": 0.32445342768149793,
+          "mae_m": 0.005354988479699285
+        },
+        "frozen": {
+          "rmse_m": 0.009344341707977651,
+          "nrmse": 0.4991557539248383,
+          "mae_m": 0.008874042637212275
+        },
+        "shadow": {
+          "rmse_m": 0.006073863063265526,
+          "nrmse": 0.32445342768149793,
+          "mae_m": 0.005354988479699285
+        },
+        "relative_nrmse_gain_vs_frozen": 0.3499956173392056,
+        "relative_nrmse_gain_vs_shadow": 0.0
+      },
+      "dam_max_horizontal_displacement_m": {
+        "count": 4,
+        "dynamic": {
+          "rmse_m": 0.0056807650425590725,
+          "nrmse": 0.2542832896156352,
+          "mae_m": 0.005077556824366895
+        },
+        "frozen": {
+          "rmse_m": 0.005783574369783064,
+          "nrmse": 0.25888525673341445,
+          "mae_m": 0.005219985788897187
+        },
+        "shadow": {
+          "rmse_m": 0.005614110598746653,
+          "nrmse": 0.251299693020257,
+          "mae_m": 0.0048980288276013265
+        },
+        "relative_nrmse_gain_vs_frozen": 0.017776088047061434,
+        "relative_nrmse_gain_vs_shadow": -0.011872663111998527
+      }
+    },
+    "36": {
+      "crest_max_settlement_m": {
+        "count": 4,
+        "dynamic": {
+          "rmse_m": 0.001617086485122352,
+          "nrmse": 0.14481124707489193,
+          "mae_m": 0.0013211159253840483
+        },
+        "frozen": {
+          "rmse_m": 0.001467127830509554,
+          "nrmse": 0.13138234269411653,
+          "mae_m": 0.001297193815676674
+        },
+        "shadow": {
+          "rmse_m": 0.001617086485122352,
+          "nrmse": 0.14481124707489193,
+          "mae_m": 0.0013211159253840483
+        },
+        "relative_nrmse_gain_vs_frozen": -0.10221239860245523,
+        "relative_nrmse_gain_vs_shadow": 0.0
+      },
+      "dam_max_settlement_m": {
+        "count": 4,
+        "dynamic": {
+          "rmse_m": 0.00701610256736013,
+          "nrmse": 0.3747859481245991,
+          "mae_m": 0.006244082681499376
+        },
+        "frozen": {
+          "rmse_m": 0.013409971700609445,
+          "nrmse": 0.7163334500721218,
+          "mae_m": 0.010220083030892904
+        },
+        "shadow": {
+          "rmse_m": 0.00701610256736013,
+          "nrmse": 0.3747859481245991,
+          "mae_m": 0.006244082681499376
+        },
+        "relative_nrmse_gain_vs_frozen": 0.47679959928317606,
+        "relative_nrmse_gain_vs_shadow": 0.0
+      },
+      "dam_max_horizontal_displacement_m": {
+        "count": 4,
+        "dynamic": {
+          "rmse_m": 0.0057189007537209804,
+          "nrmse": 0.25599032625831125,
+          "mae_m": 0.003740753938206741
+        },
+        "frozen": {
+          "rmse_m": 0.005653082789935522,
+          "nrmse": 0.25304417231218185,
+          "mae_m": 0.0036605918410456025
+        },
+        "shadow": {
+          "rmse_m": 0.0057886441749862546,
+          "nrmse": 0.2591121921435431,
+          "mae_m": 0.0038615882882210052
+        },
+        "relative_nrmse_gain_vs_frozen": -0.011642844485249437,
+        "relative_nrmse_gain_vs_shadow": 0.012048317215047843
+      }
+    },
+    "40": {
+      "crest_max_settlement_m": {
+        "count": 4,
+        "dynamic": {
+          "rmse_m": 0.0014109693806515422,
+          "nrmse": 0.12635331349094675,
+          "mae_m": 0.001315607152613349
+        },
+        "frozen": {
+          "rmse_m": 0.001442938790268507,
+          "nrmse": 0.1292161969034752,
+          "mae_m": 0.0013254398833311282
+        },
+        "shadow": {
+          "rmse_m": 0.0014109693806515422,
+          "nrmse": 0.12635331349094675,
+          "mae_m": 0.001315607152613349
+        },
+        "relative_nrmse_gain_vs_frozen": 0.022155762831087,
+        "relative_nrmse_gain_vs_shadow": 0.0
+      },
+      "dam_max_settlement_m": {
+        "count": 4,
+        "dynamic": {
+          "rmse_m": 0.006058588260896486,
+          "nrmse": 0.32363747876494003,
+          "mae_m": 0.0057130272563918755
+        },
+        "frozen": {
+          "rmse_m": 0.0058680588502979724,
+          "nrmse": 0.3134597846518318,
+          "mae_m": 0.005432867553261118
+        },
+        "shadow": {
+          "rmse_m": 0.006058588260896486,
+          "nrmse": 0.32363747876494003,
+          "mae_m": 0.0057130272563918755
+        },
+        "relative_nrmse_gain_vs_frozen": -0.03246889907875383,
+        "relative_nrmse_gain_vs_shadow": 0.0
+      },
+      "dam_max_horizontal_displacement_m": {
+        "count": 4,
+        "dynamic": {
+          "rmse_m": 0.003100206510713036,
+          "nrmse": 0.1387719266904926,
+          "mae_m": 0.0021788741603667276
+        },
+        "frozen": {
+          "rmse_m": 0.0030989395267127006,
+          "nrmse": 0.1387152137553365,
+          "mae_m": 0.002166100204019729
+        },
+        "shadow": {
+          "rmse_m": 0.0031049760768759056,
+          "nrmse": 0.1389854227539361,
+          "mae_m": 0.0021829527737171894
+        },
+        "relative_nrmse_gain_vs_frozen": -0.000408844377056905,
+        "relative_nrmse_gain_vs_shadow": 0.0015361039971902857
+      }
+    },
+    "44": {
+      "crest_max_settlement_m": {
+        "count": 4,
+        "dynamic": {
+          "rmse_m": 0.00331544837075053,
+          "nrmse": 0.2969007641817479,
+          "mae_m": 0.0028733763786245696
+        },
+        "frozen": {
+          "rmse_m": 0.0015572366453115057,
+          "nrmse": 0.13945165127096967,
+          "mae_m": 0.001335429616683429
+        },
+        "shadow": {
+          "rmse_m": 0.00331544837075053,
+          "nrmse": 0.2969007641817479,
+          "mae_m": 0.0028733763786245696
+        },
+        "relative_nrmse_gain_vs_frozen": -1.1290587918879318,
+        "relative_nrmse_gain_vs_shadow": 0.0
+      },
+      "dam_max_settlement_m": {
+        "count": 4,
+        "dynamic": {
+          "rmse_m": 0.0022409218094211385,
+          "nrmse": 0.11970549132564925,
+          "mae_m": 0.001898770812350667
+        },
+        "frozen": {
+          "rmse_m": 0.003975704130801537,
+          "nrmse": 0.21237403926464818,
+          "mae_m": 0.003576271727932838
+        },
+        "shadow": {
+          "rmse_m": 0.0022409218094211385,
+          "nrmse": 0.11970549132564925,
+          "mae_m": 0.001898770812350667
+        },
+        "relative_nrmse_gain_vs_frozen": 0.436345931262911,
+        "relative_nrmse_gain_vs_shadow": 0.0
+      },
+      "dam_max_horizontal_displacement_m": {
+        "count": 4,
+        "dynamic": {
+          "rmse_m": 0.005559163086717962,
+          "nrmse": 0.2488401239287397,
+          "mae_m": 0.005075644179711358
+        },
+        "frozen": {
+          "rmse_m": 0.004502594595269298,
+          "nrmse": 0.20154584055370225,
+          "mae_m": 0.0043107592423113315
+        },
+        "shadow": {
+          "rmse_m": 0.005559163086717962,
+          "nrmse": 0.2488401239287397,
+          "mae_m": 0.005075644179711358
+        },
+        "relative_nrmse_gain_vs_frozen": -0.2346576999312262,
+        "relative_nrmse_gain_vs_shadow": 0.0
+      }
+    },
+    "48": {
+      "crest_max_settlement_m": {
+        "count": 4,
+        "dynamic": {
+          "rmse_m": 0.0017343593933532415,
+          "nrmse": 0.15531311957537824,
+          "mae_m": 0.00136935720371454
+        },
+        "frozen": {
+          "rmse_m": 0.0020561240613456056,
+          "nrmse": 0.18412737488287179,
+          "mae_m": 0.0017097725951089673
+        },
+        "shadow": {
+          "rmse_m": 0.0017820500786968,
+          "nrmse": 0.15958385443216883,
+          "mae_m": 0.0015763464256985209
+        },
+        "relative_nrmse_gain_vs_frozen": 0.15649088206369666,
+        "relative_nrmse_gain_vs_shadow": 0.026761697616508262
+      },
+      "dam_max_settlement_m": {
+        "count": 4,
+        "dynamic": {
+          "rmse_m": 0.00835063310649873,
+          "nrmse": 0.4460738588428831,
+          "mae_m": 0.006995848450698346
+        },
+        "frozen": {
+          "rmse_m": 0.006457294679723126,
+          "nrmse": 0.3449355658109408,
+          "mae_m": 0.005550689005596944
+        },
+        "shadow": {
+          "rmse_m": 0.00835063310649873,
+          "nrmse": 0.4460738588428831,
+          "mae_m": 0.006995848450698346
+        },
+        "relative_nrmse_gain_vs_frozen": -0.2932092340033621,
+        "relative_nrmse_gain_vs_shadow": 0.0
+      },
+      "dam_max_horizontal_displacement_m": {
+        "count": 4,
+        "dynamic": {
+          "rmse_m": 0.009197546461838046,
+          "nrmse": 0.41170200724500466,
+          "mae_m": 0.006861180211113878
+        },
+        "frozen": {
+          "rmse_m": 0.008778733917336731,
+          "nrmse": 0.392955054897876,
+          "mae_m": 0.006466935906453142
+        },
+        "shadow": {
+          "rmse_m": 0.009197546461838046,
+          "nrmse": 0.41170200724500466,
+          "mae_m": 0.006861180211113878
+        },
+        "relative_nrmse_gain_vs_frozen": -0.04770762486310476,
+        "relative_nrmse_gain_vs_shadow": 0.0
+      }
+    },
+    "52": {
+      "crest_max_settlement_m": {
+        "count": 4,
+        "dynamic": {
+          "rmse_m": 0.0011901488718662264,
+          "nrmse": 0.10657867957302476,
+          "mae_m": 0.0009423064973118761
+        },
+        "frozen": {
+          "rmse_m": 0.001090563889287272,
+          "nrmse": 0.09766077341904521,
+          "mae_m": 0.0007947422914229424
+        },
+        "shadow": {
+          "rmse_m": 0.0011901488718662264,
+          "nrmse": 0.10657867957302476,
+          "mae_m": 0.0009423064973118761
+        },
+        "relative_nrmse_gain_vs_frozen": -0.09131512931721719,
+        "relative_nrmse_gain_vs_shadow": 0.0
+      },
+      "dam_max_settlement_m": {
+        "count": 4,
+        "dynamic": {
+          "rmse_m": 0.005228553460285087,
+          "nrmse": 0.2792987056730574,
+          "mae_m": 0.004772983417521873
+        },
+        "frozen": {
+          "rmse_m": 0.005898852113837144,
+          "nrmse": 0.315104698243185,
+          "mae_m": 0.004942028179449276
+        },
+        "shadow": {
+          "rmse_m": 0.005623077613760176,
+          "nrmse": 0.30037338459894586,
+          "mae_m": 0.004888390094459738
+        },
+        "relative_nrmse_gain_vs_frozen": 0.1136320491879621,
+        "relative_nrmse_gain_vs_shadow": 0.07016160554313766
+      },
+      "dam_max_horizontal_displacement_m": {
+        "count": 4,
+        "dynamic": {
+          "rmse_m": 0.009228648141209304,
+          "nrmse": 0.41309418546111537,
+          "mae_m": 0.005757014750833098
+        },
+        "frozen": {
+          "rmse_m": 0.008987555116385,
+          "nrmse": 0.40230234193362974,
+          "mae_m": 0.005887875024182636
+        },
+        "shadow": {
+          "rmse_m": 0.009261912179375697,
+          "nrmse": 0.4145831555184019,
+          "mae_m": 0.005825546971508382
+        },
+        "relative_nrmse_gain_vs_frozen": -0.026825206822350678,
+        "relative_nrmse_gain_vs_shadow": 0.0035914871057043385
+      }
+    },
+    "56": {
+      "crest_max_settlement_m": {
+        "count": 4,
+        "dynamic": {
+          "rmse_m": 0.0013821926968302688,
+          "nrmse": 0.12377634094855167,
+          "mae_m": 0.0012431633994395147
+        },
+        "frozen": {
+          "rmse_m": 0.0021003923336428473,
+          "nrmse": 0.18809163021256087,
+          "mae_m": 0.0017043425517201255
+        },
+        "shadow": {
+          "rmse_m": 0.0013821926968302688,
+          "nrmse": 0.12377634094855167,
+          "mae_m": 0.0012431633994395147
+        },
+        "relative_nrmse_gain_vs_frozen": 0.34193594468465716,
+        "relative_nrmse_gain_vs_shadow": 0.0
+      },
+      "dam_max_settlement_m": {
+        "count": 4,
+        "dynamic": {
+          "rmse_m": 0.003906355376351541,
+          "nrmse": 0.20866956966229158,
+          "mae_m": 0.0030781499567869505
+        },
+        "frozen": {
+          "rmse_m": 0.003906806018449701,
+          "nrmse": 0.2086936420478364,
+          "mae_m": 0.003078803715708428
+        },
+        "shadow": {
+          "rmse_m": 0.0033138632411416607,
+          "nrmse": 0.17701984326233183,
+          "mae_m": 0.0023481560982893737
+        },
+        "relative_nrmse_gain_vs_frozen": 0.00011534795841694478,
+        "relative_nrmse_gain_vs_shadow": -0.1787919694011757
+      },
+      "dam_max_horizontal_displacement_m": {
+        "count": 4,
+        "dynamic": {
+          "rmse_m": 0.005691643177325166,
+          "nrmse": 0.2547702183783073,
+          "mae_m": 0.004924597421144022
+        },
+        "frozen": {
+          "rmse_m": 0.007318686108907164,
+          "nrmse": 0.3276001674941328,
+          "mae_m": 0.006823508588610097
+        },
+        "shadow": {
+          "rmse_m": 0.006234162142284401,
+          "nrmse": 0.2790545367852799,
+          "mae_m": 0.00562000721944431
+        },
+        "relative_nrmse_gain_vs_frozen": 0.22231352832604956,
+        "relative_nrmse_gain_vs_shadow": 0.08702355706783693
+      }
+    }
+  }
+}

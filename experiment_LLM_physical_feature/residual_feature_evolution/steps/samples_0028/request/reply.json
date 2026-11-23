@@ -1,0 +1,38 @@
+{
+  "crest_max_settlement_m": [
+    {
+      "name": "narrow_crest_broad_base_index",
+      "expression": "B_bot / crest_width",
+      "physical_rationale": "候选假设：高残差断面相对低残差对照多数表现为坝顶更窄、坝底更宽，即更大的坝底宽度与坝顶宽度之比。正残差子组中这种几何可能使坝顶竖向荷载向更宽、更深的坝体扩散，放大坝顶下方压缩区而让模型低估沉降；负残差子组也出现该几何，说明方向会被帽盖和壳体刚度调节，单独使用时主要表征荷载扩散尺度。"
+    },
+    {
+      "name": "soft_wedge_flare_ratio",
+      "expression": "(secondary_bottom_width - secondary_top_width) / (secondary_height + crest_width)",
+      "physical_rationale": "候选假设：高残差断面中正残差多数具有更大的次堆石上下宽度差相对于高度和坝顶宽度的比值，表现为低模量软区向下更明显张开的楔形。更张开的软楔会削弱坝顶下方的拱效应并增加可压缩体积，从而在正残差子组中导致沉降被低估；负残差中若顶部增模区与下游壳体更强，可能产生反向补偿。"
+    }
+  ],
+  "dam_max_settlement_m": [
+    {
+      "name": "upper_stiff_support_area_fraction",
+      "expression": "(A_mod + A_ds_shell) / A_tot",
+      "physical_rationale": "候选假设：五组高残差断面相对对照均具有更小的顶部增模区加下游壳体面积份额。该上部和下游侧刚度骨架越小，软区越难被拱效应绕过，整体压缩柱承担的竖向应力越大；在正残差低估子组中这会使观测沉降高于预测。负残差高估子组中同样偏低，表明该机制可能与底部排水和软区高程共同作用，因而作为候选假设保留。"
+    },
+    {
+      "name": "downstream_clearance_offset_ratio",
+      "expression": "d_ds_perp / (B_bot + abs(X_c_sec))",
+      "physical_rationale": "候选假设：五组高残差断面相对对照均有更小的下游法向净距，说明次堆石更靠近下游侧；相对坝底尺度和软区偏心幅度后，这种约束缺失更明显。软区贴近下游边界会降低侧向约束并改变整体压缩路径，在低上部支撑子组中对应正残差低估，在底部排水较强子组中可能转为负残差高估，因此是机制性候选特征。"
+    }
+  ],
+  "dam_max_horizontal_displacement_m": [
+    {
+      "name": "deep_soft_eccentric_moment",
+      "expression": "X_c_sec * (H_dam - Y_c_sec) / (B_bot * H_dam)",
+      "physical_rationale": "候选假设：高残差中多组断面的次堆石形心更偏低且保留向下游偏心，使偏心软区具有更大的竖向力臂；该无量纲量刻画低位偏心软区对水平推力的杠杆效应。正残差低估时，宽软区与低形心可能放大向下游位移；若干负残差高估断面也呈较大值，说明其最终方向可能受帽壳传力和主骨架强度调制。"
+    },
+    {
+      "name": "main_drain_load_balance",
+      "expression": "(A_main - A_drain) / A_tot",
+      "physical_rationale": "候选假设：负残差高估子组中，高残断面相对对照表现为高刚度主堆石骨架面积相对底部排水支承更占优，即更大的主骨架与排水面积差占整体断面比例。主骨架占优可能把水平推力更多传给刚性承载路径，使实际水平位移小于模型预测；正残差和另一负残子组呈相反或较弱趋势，所以该解释仅作为特定刚度分配子组的候选假设。"
+    }
+  ]
+}

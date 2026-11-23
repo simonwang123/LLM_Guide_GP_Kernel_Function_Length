@@ -1,0 +1,105 @@
+{
+  "schema_version": 1,
+  "prompt_sha256": "182e243cc2994fe3bdf7ff5ffd6c01f9c495f3a02e73d7c8c0a743cf82e4e82c",
+  "response_sha256": "a49ac993c2fd44a3e6276799fb7b210cea55b9aedf99d8ebdc8b2fcac00b6810",
+  "valid": true,
+  "errors": [],
+  "checks": {
+    "crest_max_settlement_m": [
+      {
+        "position": 1,
+        "name": "crest_cap_area_ratio",
+        "valid": true
+      },
+      {
+        "position": 2,
+        "name": "crest_cap_relative_width",
+        "valid": true
+      },
+      {
+        "position": 3,
+        "name": "crest_cap_aspect",
+        "valid": true
+      },
+      {
+        "position": 4,
+        "name": "soft_area_ratio",
+        "valid": true
+      },
+      {
+        "position": 5,
+        "name": "soft_core_relative_elevation",
+        "valid": true
+      },
+      {
+        "position": 6,
+        "name": "upstream_clearance_ratio",
+        "valid": true
+      }
+    ],
+    "dam_max_settlement_m": [
+      {
+        "position": 1,
+        "name": "soft_area_ratio",
+        "valid": true
+      },
+      {
+        "position": 2,
+        "name": "soft_to_main_ratio",
+        "valid": true
+      },
+      {
+        "position": 3,
+        "name": "soft_core_relative_elevation",
+        "valid": true
+      },
+      {
+        "position": 4,
+        "name": "drain_support_fraction",
+        "valid": true
+      },
+      {
+        "position": 5,
+        "name": "soft_zone_aspect",
+        "valid": true
+      },
+      {
+        "position": 6,
+        "name": "soft_core_eccentricity",
+        "valid": true
+      }
+    ],
+    "dam_max_horizontal_displacement_m": [
+      {
+        "position": 1,
+        "name": "downstream_shell_to_soft_ratio",
+        "valid": true
+      },
+      {
+        "position": 2,
+        "name": "downstream_shell_fraction",
+        "valid": true
+      },
+      {
+        "position": 3,
+        "name": "downstream_clearance_ratio",
+        "valid": true
+      },
+      {
+        "position": 4,
+        "name": "soft_core_eccentricity",
+        "valid": true
+      },
+      {
+        "position": 5,
+        "name": "slope_asymmetry_ratio",
+        "valid": true
+      },
+      {
+        "position": 6,
+        "name": "soft_eccentric_area_fraction",
+        "valid": true
+      }
+    ]
+  }
+}

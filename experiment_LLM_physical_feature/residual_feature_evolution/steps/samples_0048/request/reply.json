@@ -1,0 +1,38 @@
+{
+  "crest_max_settlement_m": [
+    {
+      "name": "inset_low_soft_lens_index",
+      "expression": "((H_dam - Y_c_sec) / H_dam) * (d_us_min / H_dam) * (d_ds_perp / H_dam)",
+      "physical_rationale": "候选假设：三条正残差低估断面（lhs_019、eval_0028、eval_0045）相对对照总体表现为软区形心更低、上游净距或下游右距更大，即软弱透镜更低且更侧向内嵌；两条负残差高估断面（lhs_013、lhs_007）则软区更高、d_us_min 更小，指标反而降低。力学上，低位且侧向内嵌的软弱透镜会在坝顶下方形成更长、受侧限的压缩柱，模型若低估局部压缩会把沉降算小；软区上移或贴近上游边界时则可能把沉降算大。"
+    },
+    {
+      "name": "combined_cap_shell_area_fraction",
+      "expression": "(A_mod + A_ds_shell) / A_tot",
+      "physical_rationale": "候选假设：三条正残差低估断面的顶部增模帽盖加下游壳体面积相对坝体总面积均高于对照，尤其 lhs_019 与 eval_0028；两条负残差高估断面则低于对照。该量比单一帽盖面积更稳定，代表顶部帽盖与下游壳体的组合刚度骨架。若模型把这种高刚度骨架的拱架和侧限作用估计过强，会低估坝顶沉降；组合刚度不足时，软区压缩路径更直接，LOO 预测又可能偏高。"
+    }
+  ],
+  "dam_max_settlement_m": [
+    {
+      "name": "flank_slope_base_scale",
+      "expression": "((upstream_slope + downstream_slope) * B_bot) / H_dam",
+      "physical_rationale": "候选假设：正残差低估断面 eval_0025、eval_0041、eval_0045 的上下游坡比之和与底宽组合均高于对照，负残差高估断面 eval_0031、lhs_009 则低于对照，其中 lhs_009 是明显低值。该无量纲量代表边坡陡度和坝底展开共同控制的自重扩散尺度。较大尺度使中下部压缩区参与更多，模型倾向低估整体沉降；较小尺度下模型则可能对已有软区与排水路径的高刚度约束估计过强而高估整体沉降。"
+    },
+    {
+      "name": "soft_over_cap_shell_ratio",
+      "expression": "A_sec / (A_mod + A_ds_shell)",
+      "physical_rationale": "候选假设：正残差低估断面 eval_0045、eval_0041 的软区面积相对顶部帽盖与下游壳体面积高于对照，而负残差高估断面 eval_0031、lhs_009 低于对照；eval_0025 虽为正残差但不服从，因其绝对帽盖和下游壳体均很大，说明该指标主要刻画软区与加劲壳体的相对竞争。力学上，软区相对加劲骨架越占优，竖向拱架越难绕过软弱压缩体，模型更易低估整体沉降；加劲壳体占优时则可能高估。"
+    }
+  ],
+  "dam_max_horizontal_displacement_m": [
+    {
+      "name": "tall_soft_downstream_lever_index",
+      "expression": "(secondary_height / H_dam) * (d_ds_perp / H_dam)",
+      "physical_rationale": "候选假设：两条正残差低估断面 lhs_019、eval_0025 的 secondary_height/H_dam 与 d_ds_perp/H_dam 均同时高于对照，三条负残差高估断面 lhs_001、lhs_017、eval_0045 均较低，其中 lhs_017 的高度仅略低但右距显著更小。该量刻画软弱区竖向延伸与其到下游参考线净距的耦合；更大的右距提供较长的水平剪切或转动杠杆，模型容易低估最大水平位移，较小右距使下游约束更近，模型倾向高估。"
+    },
+    {
+      "name": "tall_soft_crest_load_index",
+      "expression": "(secondary_height / H_dam) * (crest_width / H_dam)",
+      "physical_rationale": "候选假设：正残差断面 lhs_019、eval_0025 中 secondary_height 与 crest_width 的归一化乘积均高于对照，负残差断面 lhs_001、lhs_017、eval_0045 均低于对照。该量把坝顶荷载作用宽度和软弱区高度结合，表示有多少竖向荷载被传递到较高的可压缩柱并转化为侧向膨胀；乘积大时模型的侧向膨胀估计不足而低估水平位移，乘积小时则可能对偏心剪切路径估计过进而高估。"
+    }
+  ]
+}

@@ -1,0 +1,20 @@
+{
+  "schema_version": 1,
+  "initial_count": 20,
+  "steps": 40,
+  "interval": 4,
+  "fit_settings": {
+    "restarts": 3,
+    "seed": 2026,
+    "min_gain": 0.02
+  },
+  "geometry_template": "E:\\knowledge_true_engineering\\templates\\geo_studio_model_sample",
+  "geometry_template_sha256": null,
+  "prompt_template_sha256": "69c2d028cf313b7d5f9e4017b59b074579ef6b50ae9303022046f2ac53c2b1ef",
+  "inputs_sha256": {
+    "E:\\LLM_Guide_GP\\experiment_LLM_physical_feature\\physical_feature_validation\\current_data\\t20\\feature_selection.json": "cb77d1d825ee5174e3c15cbc42b44168b08cba45fd9f0fce70d0f26593e86085",
+    "E:\\LLM_Guide_GP\\llm_guided_sequential_gp\\outputs\\experiments\\standardGP_summary_taylor_v1\\data\\initial20.csv": "dea8db7fb52276b9476269a16b0774ba919b3316de1fa35462e0559de05693f2",
+    "E:\\LLM_Guide_GP\\llm_guided_sequential_gp\\outputs\\experiments\\standardGP_summary_taylor_v1\\data\\sequential_designs.csv": "9273f58c65305978849b57f87cec50faf08ed202cc9070ff1e456128629e6c73",
+    "E:\\LLM_Guide_GP\\llm_guided_sequential_gp\\outputs\\experiments\\standardGP_summary_taylor_v1\\data\\sequential_truth.csv": "97456c8e0fc258109553ccf6f58a96c4885556a2e1911000bdb3c72dd3c903cc"
+  }
+}

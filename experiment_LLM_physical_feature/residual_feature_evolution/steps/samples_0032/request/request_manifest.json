@@ -1,0 +1,7 @@
+{
+  "schema_version": 1,
+  "stage": "feature_evolution",
+  "sample_count": 32,
+  "context_sha256": "d63c810efcf48178252c53b7d2ee0c35b2075f33e504cab5778e2dcd1ba73809",
+  "prompt_sha256": "a4b6d9ce80ef5c2483c270877500d36ad1624fa7656976ff030b9bd45252264c"
+}
