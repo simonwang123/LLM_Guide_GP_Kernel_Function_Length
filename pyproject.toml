@@ -1,5 +1,13 @@
 [project]
 name = "llm-guide-gp"
 version = "0.1.0"
-requires-python = ">=3.12"
-dependencies = []
+requires-python = ">=3.12.1,<3.13"
+dependencies = [
+    "knowledge-true-engineering",
+    "numpy>=2.5.5",
+    "pandas>=3.1.1",
+    "shapely>=2,<3",
+]
+
+[tool.uv.sources]
+knowledge-true-engineering = { path = "../knowledge_true_engineering", editable = true }

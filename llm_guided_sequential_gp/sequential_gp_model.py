@@ -223,19 +223,11 @@ def rules_from_initial_decision(path: Path, initial_rows: list[dict[str, str]]) 
     })
 
 
-def fit_one(
-    x: np.ndarray, y: np.ndarray, rules: dict, response: str,
-    *, restarts: int, seed: int, prior_config: PriorConfig = DEFAULT_PRIOR_CONFIG,
-) -> tuple[GaussianProcessRegressor, float, float, list[str]]:
-    mean = float(np.mean(y))
-    scale = float(np.std(y, ddof=1))
-    if not np.isfinite(scale) or scale <= 1e-12 * max(1.0, float(np.max(np.abs(y)))):
-        raise ValueError(f"{response} has nearly constant training values")
-    centers = log_centers(rules["lengthscale_prior_categories"][response],
-                          VARIABLES, prior_config)
+def ard_kernel(dimensions: int, prior_config: PriorConfig):
+    # Keep the original coordinates' starting length scale when appending features.
     common_start = prior_config.base_factor * math.sqrt(len(VARIABLES))
-    kernel = ConstantKernel(1.0, (1e-2, 1e2)) * Matern(
-        length_scale=np.full(len(VARIABLES), common_start),
+    return ConstantKernel(1.0, (1e-2, 1e2)) * Matern(
+        length_scale=np.full(dimensions, common_start),
         length_scale_bounds=(prior_config.length_scale_lower,
                              prior_config.length_scale_upper),
         nu=2.5,
@@ -243,9 +235,13 @@ def fit_one(
         noise_level=prior_config.noise_initial,
         noise_level_bounds=(prior_config.noise_lower, prior_config.noise_upper),
     )
-    optimizer = LengthscaleMAPOptimizer(
-        centers, prior_config.log_std, lengthscale_theta_indices(kernel, len(VARIABLES))
-    )
+
+
+def _fit_gp(x, y, response, kernel, optimizer, *, restarts, seed):
+    mean = float(np.mean(y))
+    scale = float(np.std(y, ddof=1))
+    if not np.isfinite(scale) or scale <= 1e-12 * max(1.0, float(np.max(np.abs(y)))):
+        raise ValueError(f"{response} has nearly constant training values")
     model = GaussianProcessRegressor(
         kernel=kernel,
         alpha=NUMERICAL_JITTER,
@@ -261,6 +257,28 @@ def fit_one(
     # script was invoked, so sklearn does not pickle a custom optimizer class.
     model.optimizer = None
     return model, mean, scale, [str(item.message) for item in captured]
+
+
+def fit_one(
+    x: np.ndarray, y: np.ndarray, rules: dict, response: str,
+    *, restarts: int, seed: int, prior_config: PriorConfig = DEFAULT_PRIOR_CONFIG,
+) -> tuple[GaussianProcessRegressor, float, float, list[str]]:
+    centers = log_centers(rules["lengthscale_prior_categories"][response],
+                          VARIABLES, prior_config)
+    kernel = ard_kernel(len(VARIABLES), prior_config)
+    optimizer = LengthscaleMAPOptimizer(
+        centers, prior_config.log_std, lengthscale_theta_indices(kernel, len(VARIABLES))
+    )
+    return _fit_gp(x, y, response, kernel, optimizer, restarts=restarts, seed=seed)
+
+
+def fit_standard(
+    x: np.ndarray, y: np.ndarray, response: str,
+    *, restarts: int, seed: int, prior_config: PriorConfig = DEFAULT_PRIOR_CONFIG,
+) -> tuple[GaussianProcessRegressor, float, float, list[str]]:
+    """Fit the no-prior ARD Matérn GP with any number of input coordinates."""
+    return _fit_gp(x, y, response, ard_kernel(x.shape[1], prior_config),
+                   "fmin_l_bfgs_b", restarts=restarts, seed=seed)
 
 
 def predict_one(

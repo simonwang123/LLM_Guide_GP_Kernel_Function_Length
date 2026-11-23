@@ -6,14 +6,14 @@
   <component name="AutoImportSettings">
     <option name="autoReloadType" value="ALL" />
   </component>
+  <component name="BackgroundAgentGlobalSettings">
+    <option name="selectedModelId" value="auto" />
+  </component>
   <component name="ChangeListManager">
-    <list default="true" id="03cc5731-443d-4c81-9cf3-31d9856830d6" name="更改" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/llm-guide-gp.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pyproject.toml" afterDir="false" />
+    <list default="true" id="03cc5731-443d-4c81-9cf3-31d9856830d6" name="更改" comment="让大模型自己构造物理衍生特征，这是第一步，搭建“确定性几何原语库”">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/llm_guided_sequential_gp/sequential_gp_model.py" beforeDir="false" afterPath="$PROJECT_DIR$/llm_guided_sequential_gp/sequential_gp_model.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pyproject.toml" beforeDir="false" afterPath="$PROJECT_DIR$/pyproject.toml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -28,12 +28,90 @@
   <component name="EmbeddingIndexingInfo">
     <option name="cachedIndexableFilesCount" value="17" />
   </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Python Script" />
+      </list>
+    </option>
+  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
+  "lastFilter": {
+    "state": "OPEN",
+    "assignee": "simonwang123"
+  }
+}]]></component>
+  <component name="GithubPullRequestsUISettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "url": "https://github.com/simonwang123/LLM_Guide_GP_Kernel_Function_Length.git",
+    "accountId": "d98b8932-543a-4591-ae87-544488467b30"
+  }
+}]]></component>
   <component name="McpProjectServerCommands">
     <commands />
     <urls />
+  </component>
+  <component name="NextEditCompletionFeaturesState">
+    <decayedCancelled>
+      <entry key="MS100" value="1.0" />
+      <entry key="MS500" value="1.0" />
+      <entry key="S2" value="1.0" />
+      <entry key="S5" value="1.0" />
+      <entry key="S10" value="1.0" />
+      <entry key="S30" value="1.0" />
+      <entry key="S60" value="1.0" />
+      <entry key="M2" value="1.0" />
+      <entry key="M5" value="1.0" />
+      <entry key="M10" value="1.0" />
+      <entry key="M15" value="1.0" />
+      <entry key="M30" value="1.0" />
+      <entry key="H1" value="1.0000000000007245" />
+      <entry key="H2" value="1.0000049189066949" />
+      <entry key="H4" value="1.0129053429314885" />
+      <entry key="D1" value="10.146214924962388" />
+      <entry key="W1" value="29.184710363537068" />
+    </decayedCancelled>
+    <decayedSelected>
+      <entry key="MS100" value="0.0" />
+      <entry key="MS500" value="0.0" />
+      <entry key="S2" value="0.0" />
+      <entry key="S5" value="0.0" />
+      <entry key="S10" value="0.0" />
+      <entry key="S30" value="0.0" />
+      <entry key="S60" value="0.0" />
+      <entry key="M2" value="0.0" />
+      <entry key="M5" value="0.0" />
+      <entry key="M10" value="0.0" />
+      <entry key="M15" value="0.0" />
+      <entry key="M30" value="0.0" />
+      <entry key="H1" value="0.0" />
+      <entry key="H2" value="0.0" />
+      <entry key="H4" value="0.0" />
+      <entry key="D1" value="0.0" />
+      <entry key="W1" value="0.0" />
+    </decayedSelected>
+    <decayedShown>
+      <entry key="MS100" value="0.8705505632961241" />
+      <entry key="MS500" value="0.9726549474122855" />
+      <entry key="S2" value="0.9930924954370359" />
+      <entry key="S5" value="0.9972312513520695" />
+      <entry key="S10" value="0.9986146661010289" />
+      <entry key="S30" value="0.9995380086305193" />
+      <entry key="S60" value="0.9997689776295918" />
+      <entry key="M2" value="0.9998844821426083" />
+      <entry key="M5" value="0.9999537912556196" />
+      <entry key="M10" value="0.9999768953608976" />
+      <entry key="M15" value="0.9999845968479506" />
+      <entry key="M30" value="0.9999922983943179" />
+      <entry key="H1" value="0.9999961491904692" />
+      <entry key="H2" value="1.000002993496307" />
+      <entry key="H4" value="1.0129043757455758" />
+      <entry key="D1" value="10.146214233857668" />
+      <entry key="W1" value="29.18471010691735" />
+    </decayedShown>
   </component>
   <component name="ProjectColorInfo"><![CDATA[{
   "associatedIndex": 1,
@@ -49,6 +127,7 @@
     "ModuleVcsDetector.initialDetectionPerformed": "true",
     "RunOnceActivity.MCP Project settings loaded": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
     "RunOnceActivity.typescript.service.memoryLimit.init": "true",
     "codeWithMe.voiceChat.enabledByDefault": "false",
     "com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1": "true",
@@ -79,14 +158,94 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1795159502193</updated>
-      <workItem from="1795159503504" duration="495000" />
+      <workItem from="1795159503504" duration="9398000" />
     </task>
+    <task id="LOCAL-00001" summary="LLM引导高斯过程建模，具体是通过改变核函数长度尺度先验来引导GP代理模型构建">
+      <option name="closed" value="true" />
+      <created>1795160453107</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1795160453107</updated>
+    </task>
+    <task id="LOCAL-00002" summary="LLM引导高斯过程建模，具体是通过改变核函数长度尺度先验来引导GP代理模型构建">
+      <option name="closed" value="true" />
+      <created>1795160632729</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1795160632729</updated>
+    </task>
+    <task id="LOCAL-00003" summary="增加一个基础数据集">
+      <option name="closed" value="true" />
+      <created>1795160921331</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1795160921331</updated>
+    </task>
+    <task id="LOCAL-00004" summary="增加一个基础数据集">
+      <option name="closed" value="true" />
+      <created>1795160934723</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1795160934723</updated>
+    </task>
+    <task id="LOCAL-00005" summary="让大模型自己构造物理衍生特征，这是第一步，搭建“确定性几何原语库”">
+      <option name="closed" value="true" />
+      <created>1795257886281</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1795257886281</updated>
+    </task>
+    <task id="LOCAL-00006" summary="让大模型自己构造物理衍生特征，这是第一步，搭建“确定性几何原语库”">
+      <option name="closed" value="true" />
+      <created>1795257903524</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1795257903524</updated>
+    </task>
+    <task id="LOCAL-00007" summary="让大模型自己构造物理衍生特征，这是第一步，搭建“确定性几何原语库”">
+      <option name="closed" value="true" />
+      <created>1795257974670</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1795257974670</updated>
+    </task>
+    <task id="LOCAL-00008" summary="让大模型自己构造物理衍生特征，这是第一步，搭建“确定性几何原语库”">
+      <option name="closed" value="true" />
+      <created>1795258222180</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1795258222180</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
+    <option name="RECENT_FILTERS">
+      <map>
+        <entry key="User">
+          <value>
+            <list>
+              <RecentGroup>
+                <option name="FILTER_VALUES">
+                  <option value="*" />
+                </option>
+              </RecentGroup>
+            </list>
+          </value>
+        </entry>
+      </map>
+    </option>
     <option name="TAB_STATES">
       <map>
         <entry key="MAIN">
@@ -96,5 +255,11 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="LLM引导高斯过程建模，具体是通过改变核函数长度尺度先验来引导GP代理模型构建" />
+    <MESSAGE value="增加一个基础数据集" />
+    <MESSAGE value="让大模型自己构造物理衍生特征，这是第一步，搭建“确定性几何原语库”" />
+    <option name="LAST_COMMIT_MESSAGE" value="让大模型自己构造物理衍生特征，这是第一步，搭建“确定性几何原语库”" />
   </component>
 </project>
