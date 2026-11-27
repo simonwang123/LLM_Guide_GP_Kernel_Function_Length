@@ -179,10 +179,8 @@ def verify_saved_answer(request_dir: Path) -> dict:
     if validation.get("valid") is not True:
         raise ValueError(f"LLM output is invalid: {validation.get('error')}")
     try:
-        answer = json.loads(raw.decode("utf-8-sig"),
-                            object_pairs_hook=prompt_io.unique_pairs,
-                            parse_constant=prompt_io.reject_constant)
-    except (UnicodeError, json.JSONDecodeError) as error:
+        answer = prompt_io.parse_llm_json(raw)
+    except (UnicodeError, ValueError) as error:
         raise ValueError(f"cannot decode saved LLM answer: {error}") from error
     if manifest["stage"] == "initial":
         prompt_io.validate_initial(answer)
@@ -230,7 +228,7 @@ def ensure_initial_model(data_dir: Path, request_dir: Path, model_dir: Path,
             raise ValueError(f"cold-start model directory is incomplete: {model_dir}")
         return gp_model.run(
             train, train, model_dir, rules_path=None, initial_decision=decision,
-            predict_path=designs, predict_index=21, restarts=restarts, seed=seed, loo=False,
+            predict_path=designs, predict_index=21, restarts=restarts, seed=seed, validate=False,
             prior_config=prior_config,
         )
     report = gp_model.read_json(report_path)
@@ -238,7 +236,7 @@ def ensure_initial_model(data_dir: Path, request_dir: Path, model_dir: Path,
         decision, gp_model.read_csv(train, ("sample_index", "design_id", *gp_model.UNIT_FIELDS,
                                             *gp_model.RESPONSES))
     )
-    if (report.get("schema_version") != 2
+    if (report.get("schema_version") not in (2, 3)
             or report.get("training_sample_count") != 20
             or report.get("train_sha256") != gp_model.file_sha256(train)
             or report.get("reference_initial_sha256") != gp_model.file_sha256(train)
@@ -385,7 +383,7 @@ def ensure_policy_record(policy_dir: Path, request_dir: Path, train: Path,
     baseline_report = gp_model.read_json(baseline / "fit_report.json")
     if (baseline_report.get("train_sha256") != gp_model.file_sha256(new_train)
             or baseline_report.get("rules_sha256") != previous_report.get("rules_sha256")
-            or baseline_report.get("loo_metrics") != record.get("baseline_loo_metrics")):
+            or baseline_report.get("validation_metrics") != record.get("baseline_validation_metrics")):
         raise ValueError("saved baseline fit does not match this policy step")
     passing = []
     for comparison, subset in zip(comparisons, subsets, strict=True):
@@ -396,15 +394,15 @@ def ensure_policy_record(policy_dir: Path, request_dir: Path, train: Path,
                 != candidate_dir):
             raise ValueError("saved candidate comparison does not match the proposed subset")
         candidate_report = gp_model.read_json(candidate_dir / "fit_report.json")
-        passed, gate = policy.compare_loo(baseline_report, candidate_report, settings)
+        passed, gate = policy.compare_validation(baseline_report, candidate_report, settings)
         if (candidate_report.get("train_sha256") != baseline_report["train_sha256"]
                 or candidate_report.get("fit_settings") != baseline_report.get("fit_settings")
                 or candidate_report.get("rules_sha256") != comparison.get("rules_sha256")
-                or candidate_report.get("loo_metrics") != comparison.get("loo_metrics")
+                or candidate_report.get("validation_metrics") != comparison.get("validation_metrics")
                 or gate != comparison.get("gate")):
             raise ValueError("saved candidate comparison differs from its fitted model")
         if passed:
-            passing.append((gate["candidate_mean_loo_nrmse"], len(indices),
+            passing.append((gate["candidate_mean_composite_nrmse"], len(indices),
                             tuple(index - 1 for index in indices), candidate_dir))
     winner = min(passing) if passing else None
     if (chosen != (winner[3] if winner else baseline)
@@ -481,7 +479,7 @@ def evaluate_independent_test(model_dir: Path, holdout: Path,
     """Read the independent test truths only after all online steps are complete."""
     report = gp_model.read_json(model_dir / "fit_report.json")
     rules = gp_model.validate_rules(gp_model.read_json(model_dir / "rules_used.json"))
-    if (report.get("schema_version") != 2
+    if (report.get("schema_version") not in (2, 3)
             or report.get("rules_sha256") != gp_model.canonical_sha256(rules)):
         raise ValueError("final model report and prior rules disagree")
     with (model_dir / "gp_models.pkl").open("rb") as stream:
@@ -576,7 +574,7 @@ def run_experiment(*, source_run: Path, output_root: Path,
     output_root = output_root.resolve()
     test_dataset = test_dataset.resolve() if test_dataset else None
     config = {
-        "schema_version": 3,
+        "schema_version": 4,
         "source_run": str(source_run),
         "source_dataset_sha256": gp_model.file_sha256(source_run / "dataset.csv"),
         "source_history_sha256": gp_model.file_sha256(source_run / "optimization_history.csv"),
@@ -599,7 +597,7 @@ def run_experiment(*, source_run: Path, output_root: Path,
                 "sequential_gp_llm.py", "sequential_gp_model.py",
                 "sequential_gp_prior.py",
                 "sequential_gp_diagnostics.py", "sequential_gp_policy.py",
-                "run_llm_guided_sequential_gp.py",
+                "sequential_gp_validation.py", "run_llm_guided_sequential_gp.py",
                 "prompts/gp_common_rules.md", "prompts/gp_initial_tiers.md",
                 "prompts/gp_sequential_diagnosis.md",
             )
@@ -685,8 +683,8 @@ def run_experiment(*, source_run: Path, output_root: Path,
             "outcome": record["outcome"],
             "proposed_candidates": record["proposed_candidates"],
             "adopted_candidates": record["adopted_candidates"],
-            "baseline_loo_metrics": record["baseline_loo_metrics"],
-            "adopted_loo_metrics": adopted_report["loo_metrics"],
+            "baseline_validation_metrics": record["baseline_validation_metrics"],
+            "adopted_validation_metrics": adopted_report["validation_metrics"],
             "adopted_prior_categories": adopted_rules["lengthscale_prior_categories"],
             "sealed_prediction": sealed_prediction,
             "decision_record": str(policy_dir / "decision_record.json"),
@@ -771,9 +769,12 @@ def main() -> int:
                         default=gp_model.DEFAULT_PRIOR_CONFIG.base_factor)
     parser.add_argument("--prior-log-std", type=float,
                         default=gp_model.DEFAULT_PRIOR_CONFIG.log_std)
-    parser.add_argument("--min-absolute-loo-gain", type=float, default=0.001)
-    parser.add_argument("--min-relative-loo-gain", type=float, default=0.01)
+    parser.add_argument("--min-absolute-nrmse-gain", type=float, default=0.0005)
+    parser.add_argument("--min-relative-nrmse-gain", type=float, default=0.003)
     parser.add_argument("--max-response-relative-worsening", type=float, default=0.02)
+    parser.add_argument("--max-nlpd-increase", type=float, default=0.02)
+    parser.add_argument("--min-nlpd-gain-for-tie", type=float, default=0.005)
+    parser.add_argument("--min-delta-map", type=float, default=-0.25)
     args = parser.parse_args()
     try:
         if args.provider == "custom":
@@ -804,9 +805,12 @@ def main() -> int:
             "extra_headers": extra_headers,
         }
         gate_settings = policy.GateSettings(
-            min_absolute_loo_gain=args.min_absolute_loo_gain,
-            min_relative_loo_gain=args.min_relative_loo_gain,
+            min_absolute_nrmse_gain=args.min_absolute_nrmse_gain,
+            min_relative_nrmse_gain=args.min_relative_nrmse_gain,
             max_response_relative_worsening=args.max_response_relative_worsening,
+            max_nlpd_increase=args.max_nlpd_increase,
+            min_nlpd_gain_for_tie=args.min_nlpd_gain_for_tie,
+            min_delta_map=args.min_delta_map,
         )
         prior_config = gp_model.PriorConfig(
             base_factor=args.prior_base_factor,

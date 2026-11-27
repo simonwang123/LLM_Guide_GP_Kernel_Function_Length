@@ -9,6 +9,7 @@ from __future__ import annotations
 
 import ast
 from dataclasses import dataclass
+from itertools import islice
 from pathlib import Path
 from typing import Any, Mapping, Sequence
 
@@ -211,6 +212,27 @@ def _measure_primitives(geometry: GeometryBuild) -> dict[str, float]:
     }
 
 
+def _primitive_rows(X, cols, config, *, skip_infeasible=False):
+    if not len(next(iter(cols.values()))):
+        return
+    template = TemplateArchive.load(Path(config.template_path))
+    model = GeoStudioXmlModel(template.root(), reference_design=template.reference_design)
+    for position, row in enumerate(zip(*cols.values(), strict=True)):
+        if isinstance(X, pd.DataFrame) and "design_id" in X:
+            design_id = str(X["design_id"].iat[position])
+        else:
+            design_id = f"sample_{position + 1}"
+        design = DesignVariables(design_id, *map(float, row))
+        try:
+            geometry = build_geometry(model.original_regions, design, reference_design=model.reference_design)
+            measurements = _measure_primitives(geometry)
+        except GeometryError as exc:
+            if skip_infeasible:
+                continue
+            raise GeometryError(f"{design_id}: {exc}") from exc
+        yield position, measurements
+
+
 def compute_geometric_primitives(
     X: pd.DataFrame | np.ndarray | Mapping[str, float | np.ndarray],
     config: DamGeometryConfig | None = None,
@@ -222,24 +244,7 @@ def compute_geometric_primitives(
     cols = _extract_design_columns(X, feature_names=feature_names)
     index = X.index if isinstance(X, pd.DataFrame) else None
 
-    rows = []
-    if len(next(iter(cols.values()))):
-        template = TemplateArchive.load(Path(cfg.template_path))
-        model = GeoStudioXmlModel(template.root(), reference_design=template.reference_design)
-        for position, row in enumerate(zip(*cols.values(), strict=True)):
-            if isinstance(X, pd.DataFrame) and "design_id" in X:
-                design_id = str(X["design_id"].iat[position])
-            else:
-                design_id = f"sample_{position + 1}"
-            design = DesignVariables(design_id, *map(float, row))
-            try:
-                geometry = build_geometry(
-                    model.original_regions, design, reference_design=model.reference_design
-                )
-                rows.append(_measure_primitives(geometry))
-            except GeometryError as exc:
-                raise GeometryError(f"{design_id}: {exc}") from exc
-
+    rows = [measurements for _, measurements in _primitive_rows(X, cols, cfg)]
     result = pd.DataFrame(rows, index=index, columns=list(PRIMITIVE_METADATA), dtype=float)
     if return_dataframe:
         return result
@@ -259,16 +264,34 @@ def build_formula_namespace(
     )
     assert isinstance(prim_cols, dict)
 
-    ns: dict[str, np.ndarray] = {}
-    ns.update(design_cols)
-    ns.update(prim_cols)
+    return _formula_namespace(design_cols, prim_cols, cfg)
 
-    if cfg.include_x_aliases:
+
+def _formula_namespace(design_cols, primitive_cols, config):
+    ns = {**design_cols, **primitive_cols}
+    if config.include_x_aliases:
         for idx, name in enumerate(CANONICAL_DESIGN_VARS, start=1):
             ns[f"x{idx}"] = design_cols[name]
         ns["secondary_right_dist"] = design_cols["secondary_right_slope_distance"]
 
     return ns
+
+
+def build_feasible_formula_namespace(
+    designs: np.ndarray, config: DamGeometryConfig, sample_count: int,
+) -> dict[str, np.ndarray]:
+    """取前 sample_count 个通过 GeoStudio 断面几何检查的纯输入设计。"""
+    if sample_count < 1:
+        raise ValueError("sample_count must be positive")
+    columns = _extract_design_columns(designs)
+    accepted = list(islice(_primitive_rows(designs, columns, config, skip_infeasible=True), sample_count))
+    if len(accepted) != sample_count:
+        raise ValueError(f"可行域参考样本不足: 需要 {sample_count} 个，实际获得 {len(accepted)} 个合法断面")
+    positions, records = zip(*accepted, strict=True)
+    indices = np.asarray(positions, dtype=int)
+    design_cols = {name: values[indices] for name, values in columns.items()}
+    primitive_cols = {name: np.array([row[name] for row in records]) for name in PRIMITIVE_METADATA}
+    return _formula_namespace(design_cols, primitive_cols, config)
 
 
 # =============================================================================

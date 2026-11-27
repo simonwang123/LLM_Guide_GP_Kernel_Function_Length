@@ -4,8 +4,9 @@ No arguments: fit M_20 from the prepared initial data and validated LLM priors,
 then make a blind prediction for sample 21. Later steps may pass --train and
 --rules. The caller must provide only responses already revealed at that step.
 
-Use --loo when a proposed rule change needs a same-data LOO comparison with
-the old rule. This script reports metrics but never adopts or rolls back rules.
+Use --validate when a proposed rule change needs same-data four-dimensional
+validation (MAP evidence, analytical GP LOO, spatial-cluster CV, and causal
+prequential validation). This script reports metrics without adopting rules.
 """
 
 from __future__ import annotations
@@ -26,11 +27,13 @@ from sklearn.gaussian_process.kernels import ConstantKernel, Matern, WhiteKernel
 from threadpoolctl import threadpool_limits
 
 try:
+    from llm_guided_sequential_gp import sequential_gp_validation as validation
     from llm_guided_sequential_gp.sequential_gp_prior import (
         CATEGORY_LOG_SHIFT, LengthscaleMAPOptimizer, PriorConfig,
         lengthscale_theta_indices, log_centers,
     )
 except ModuleNotFoundError:
+    import sequential_gp_validation as validation
     from sequential_gp_prior import (
         CATEGORY_LOG_SHIFT, LengthscaleMAPOptimizer, PriorConfig,
         lengthscale_theta_indices, log_centers,
@@ -306,41 +309,77 @@ def fit_all(x: np.ndarray, y: np.ndarray, rules: dict, *, restarts: int, seed: i
         ]
 
 
-def loo_validation(
-    x: np.ndarray, y: np.ndarray, rules: dict, reference_scale: np.ndarray,
-    *, restarts: int, seed: int, prior_config: PriorConfig = DEFAULT_PRIOR_CONFIG,
+def evaluate_validation(
+    fitted: list,
+    x: np.ndarray,
+    y: np.ndarray,
+    rules: dict,
+    reference_scale: np.ndarray,
+    *,
+    restarts: int,
+    seed: int,
+    prior_config: PriorConfig = DEFAULT_PRIOR_CONFIG,
+    n_clusters: int = validation.DEFAULT_CLUSTER_COUNT,
+    preq_max_steps: int = 16,
 ) -> tuple[dict, list[dict]]:
+    """Run four-dimensional validation: MAP/LML, analytical GP LOO, Clust-K, and Prequential."""
     rows = []
     metrics = {}
+    cv_restarts = max(1, min(restarts, 3))
+    preq_restarts = max(1, min(restarts, 2))
     with threadpool_limits(limits=1):
         for response_index, response in enumerate(RESPONSES):
-            predicted = np.empty(len(x))
-            predicted_std = np.empty(len(x))
-            fold_warnings = 0
-            for held in range(len(x)):
-                train_mask = np.arange(len(x)) != held
+            y_resp = y[:, response_index]
+            scale_val = float(reference_scale[response_index])
+            ev = validation.full_fit_evidence(fitted[response_index], y_resp, scale_val)
+
+            def _fit_pred(tr: np.ndarray, te: np.ndarray, fold_idx: int, *, rs: int) -> tuple[np.ndarray, np.ndarray, list[str]]:
                 model = fit_one(
-                    x[train_mask], y[train_mask, response_index], rules, response,
-                    restarts=restarts, seed=seed + response_index,
+                    x[tr], y_resp[tr], rules, response,
+                    restarts=rs, seed=seed + response_index + fold_idx,
                     prior_config=prior_config,
                 )
-                fold_warnings += len(model[3])
-                mu, std, _ = predict_one(model, x[held : held + 1])
-                predicted[held], predicted_std[held] = mu[0], std[0]
+                mu, std, _ = predict_one(model, x[te])
+                return mu, std, model[3]
+
+            cluster = validation.cluster_cv_evaluate(
+                lambda tr, te, fi: _fit_pred(tr, te, fi, rs=cv_restarts),
+                x, y_resp, scale_val, n_clusters=n_clusters,
+            )
+            preq = validation.prequential_evaluate(
+                lambda tr, te, fi: _fit_pred(tr, te, fi, rs=preq_restarts),
+                x, y_resp, scale_val, start_index=INITIAL_COUNT, max_steps=preq_max_steps,
+            )
+
+            for sample_pos in range(len(x)):
                 rows.append({
-                    "sample_index": held + 1,
+                    "sample_index": sample_pos + 1,
                     "response": response,
-                    "observed_m": float(y[held, response_index]),
-                    "loo_mean_m": float(mu[0]),
-                    "loo_observed_std_m": float(std[0]),
+                    "observed_m": float(y_resp[sample_pos]),
+                    "cluster_mean_m": float(cluster["predicted_m"][sample_pos]),
+                    "cluster_observed_std_m": float(cluster["predicted_std_m"][sample_pos]),
+                    "ana_loo_mean_m": float(ev["ana_loo"]["predicted_m"][sample_pos]),
                 })
-            rmse = float(np.sqrt(np.mean((y[:, response_index] - predicted) ** 2)))
+
             metrics[response] = {
-                "loo_rmse_m": rmse,
-                "loo_nrmse": rmse / float(reference_scale[response_index]),
-                "nrmse_denominator_initial20_std_m": float(reference_scale[response_index]),
-                "folds": len(x),
-                "fold_warning_count": fold_warnings,
+                "raw_lml": ev["raw_lml"],
+                "map_score": ev["map_score"],
+                "ana_loo_rmse_m": ev["ana_loo"]["rmse_m"],
+                "ana_loo_nrmse": ev["ana_loo"]["nrmse"],
+                "ana_loo_nlpd": ev["ana_loo"]["nlpd"],
+                "cluster_rmse_m": cluster["rmse_m"],
+                "cluster_nrmse": cluster["nrmse"],
+                "cluster_mae_m": cluster["mae_m"],
+                "cluster_nlpd": cluster["nlpd"],
+                "cluster_folds": cluster["folds"],
+                "prequential_rmse_m": None if preq is None else preq["rmse_m"],
+                "prequential_nrmse": None if preq is None else preq["nrmse"],
+                "prequential_nlpd": None if preq is None else preq["nlpd"],
+                "prequential_steps": 0 if preq is None else preq["steps"],
+                "prequential_explore_steps": 0 if preq is None else preq["explore_steps"],
+                "prequential_explore_nrmse": None if preq is None else preq["explore_nrmse"],
+                "nrmse_denominator_initial20_std_m": scale_val,
+                "warning_count": len(ev["fit_warnings"]) + len(cluster["fit_warnings"]) + (0 if preq is None else len(preq["fit_warnings"])),
             }
     return metrics, rows
 
@@ -363,7 +402,7 @@ def run(
     train_path: Path, reference_path: Path, output: Path, *,
     rules_path: Path | None, initial_decision: Path,
     predict_path: Path | None, predict_index: int | None,
-    restarts: int, seed: int, loo: bool,
+    restarts: int, seed: int, validate: bool = False,
     prior_config: PriorConfig = DEFAULT_PRIOR_CONFIG,
 ) -> dict:
     if restarts < 0:
@@ -417,8 +456,8 @@ def run(
         "rules_sha256": rules_hash,
         "prediction_sha256": file_sha256(prediction_source) if prediction_source else None,
         "prediction_index": predict_index if predict_index is not None else len(x) + 1,
-        "restarts": restarts, "seed": seed, "loo": loo,
-        "prior_config": asdict(prior_config), "model_schema_version": 2,
+        "restarts": restarts, "seed": seed, "validate": validate,
+        "prior_config": asdict(prior_config), "model_schema_version": 3,
     })
     report_path = output / "fit_report.json"
     if report_path.exists():
@@ -482,10 +521,10 @@ def run(
             })
         predictions.append(item)
 
-    loo_metrics, loo_rows = (
-        loo_validation(x, y, rules, reference_scale, restarts=restarts,
-                       seed=seed, prior_config=prior_config)
-        if loo else (None, [])
+    validation_metrics, validation_rows = (
+        evaluate_validation(fitted, x, y, rules, reference_scale, restarts=restarts,
+                            seed=seed, prior_config=prior_config)
+        if validate else (None, [])
     )
     output.mkdir(parents=True, exist_ok=True)
     write_json(output / "rules_used.json", rules)
@@ -502,10 +541,10 @@ def run(
         }, stream, protocol=pickle.HIGHEST_PROTOCOL)
     if predictions:
         write_csv(output / "blind_prediction.csv", list(predictions[0]), predictions)
-    if loo:
-        write_csv(output / "loo_predictions.csv", list(loo_rows[0]), loo_rows)
+    if validate:
+        write_csv(output / "validation_predictions.csv", list(validation_rows[0]), validation_rows)
     report = {
-        "schema_version": 2,
+        "schema_version": 3,
         "training_sample_count": len(x),
         "train_file": str(train_path),
         "train_sha256": file_sha256(train_path),
@@ -534,8 +573,8 @@ def run(
         "responses": fit_info,
         "blind_prediction_source": str(prediction_source) if prediction_source else None,
         "blind_prediction_sample_index": predictions[0]["sample_index"] if predictions else None,
-        "loo_metrics": loo_metrics,
-        "scope": "Only supplied training rows are fitted. LOO is diagnostic; this script does not adopt or roll back rules.",
+        "validation_metrics": validation_metrics,
+        "scope": "Only supplied training rows are fitted. 4D validation is diagnostic; this script does not adopt or roll back rules.",
     }
     write_json(report_path, report)
     print(f"Training: {len(x)} revealed samples from {train_path}")
@@ -551,9 +590,11 @@ def run(
         for response in RESPONSES:
             print(f"  {response}: mean={predictions[0][f'{response}_mean_m']:.6g} m, "
                   f"observed std={predictions[0][f'{response}_observed_std_m']:.6g} m")
-    if loo_metrics:
+    if validation_metrics:
         for response in RESPONSES:
-            print(f"  LOO {response}: NRMSE={loo_metrics[response]['loo_nrmse']:.6g}")
+            vm = validation_metrics[response]
+            print(f"  4D-Val {response}: ClustNRMSE={vm['cluster_nrmse']:.4f}, "
+                  f"PreqNRMSE={vm['prequential_nrmse']}, MAP={vm['map_score']:.2f}")
     print(f"Output: {output}")
     return report
 
@@ -561,7 +602,7 @@ def run(
 def main() -> int:
     parser = argparse.ArgumentParser(
         description="Fit three independent ARD GPs from revealed observations.",
-        epilog="No arguments fit M_20 and predict sample 21. Use --loo for same-data rule comparison.",
+        epilog="No arguments fit M_20 and predict sample 21. Use --validate for same-data 4D rule comparison.",
     )
     parser.add_argument("--train", type=Path, default=DATA_DIR / "initial20.csv",
                         help="CSV containing only the currently revealed training prefix")
@@ -577,8 +618,8 @@ def main() -> int:
                         help="must equal the current training count plus one")
     parser.add_argument("--no-predict", action="store_true",
                         help="fit without producing a blind prediction")
-    parser.add_argument("--loo", action="store_true",
-                        help="refit every held-out fold for rule-comparison metrics")
+    parser.add_argument("--validate", action="store_true",
+                        help="compute MAP, analytical LOO, spatial-cluster CV, and causal prequential metrics")
     parser.add_argument("--restarts", type=int, default=3)
     parser.add_argument("--seed", type=int, default=2026)
     parser.add_argument("--prior-base-factor", type=float,
@@ -612,7 +653,7 @@ def main() -> int:
             predict_index=args.predict_sample_index,
             restarts=args.restarts,
             seed=args.seed,
-            loo=args.loo,
+            validate=args.validate,
             prior_config=PriorConfig(base_factor=args.prior_base_factor,
                                      log_std=args.prior_log_std),
         )

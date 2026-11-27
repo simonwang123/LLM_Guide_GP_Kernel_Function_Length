@@ -2,8 +2,9 @@
 
 The sealed M_t prediction is verified against its snapshot before any new fit.
 Only the requested truth row joins the revealed prefix. The unchanged rules and
-all nonempty proposal subsets use identical fit settings and the same LOO folds.
-Independent test data never participate in selection.
+all nonempty proposal subsets use identical fit settings and the same four-dimensional
+validation protocol (MAP evidence, analytical GP LOO, spatial-cluster CV, and
+causal prequential validation). Independent test data never participate in selection.
 """
 
 from __future__ import annotations
@@ -35,18 +36,29 @@ DATA_DIR = HERE / "outputs" / "semiparametric_guarded_20_20261109"
 
 @dataclass(frozen=True)
 class GateSettings:
-    """Fixed selection thresholds shared by every subset in an experiment."""
+    """Fixed Stage-B 4D selection thresholds shared by every subset in an experiment."""
 
-    min_absolute_loo_gain: float = 0.001
-    min_relative_loo_gain: float = 0.01
+    min_absolute_nrmse_gain: float = 0.0005
+    min_relative_nrmse_gain: float = 0.003
     max_response_relative_worsening: float = 0.02
+    max_nlpd_increase: float = 0.02
+    min_nlpd_gain_for_tie: float = 0.005
+    min_delta_map: float = -0.25
 
     def validate(self) -> None:
-        for name, value in asdict(self).items():
+        nonneg_fields = (
+            "min_absolute_nrmse_gain", "min_relative_nrmse_gain",
+            "max_response_relative_worsening", "max_nlpd_increase",
+            "min_nlpd_gain_for_tie",
+        )
+        for name in nonneg_fields:
+            value = getattr(self, name)
             if type(value) not in (int, float) or not math.isfinite(value) or value < 0:
                 raise ValueError(f"{name} must be finite and nonnegative")
-        if self.min_relative_loo_gain >= 1 or self.max_response_relative_worsening >= 1:
-            raise ValueError("relative LOO thresholds must be below 1")
+        if type(self.min_delta_map) not in (int, float) or not math.isfinite(self.min_delta_map):
+            raise ValueError("min_delta_map must be finite")
+        if self.min_relative_nrmse_gain >= 1 or self.max_response_relative_worsening >= 1:
+            raise ValueError("relative thresholds must be below 1")
 
 
 def read_validated_answer(request_dir: Path) -> tuple[dict, dict, dict]:
@@ -67,10 +79,8 @@ def read_validated_answer(request_dir: Path) -> tuple[dict, dict, dict]:
     if validation.get("valid") is not True:
         raise ValueError(f"LLM answer was not validated: {validation.get('error')}")
     try:
-        answer = json.loads(raw.decode("utf-8-sig"),
-                            object_pairs_hook=prompt_io.unique_pairs,
-                            parse_constant=prompt_io.reject_constant)
-    except (UnicodeError, json.JSONDecodeError) as error:
+        answer = prompt_io.parse_llm_json(raw)
+    except (UnicodeError, ValueError) as error:
         raise ValueError(f"cannot decode the saved LLM answer: {error}") from error
     prompt_io.validate_sequential(answer, context)
     if validation.get("answer") != answer:
@@ -161,41 +171,108 @@ def propose_rules(current: dict, changes: list[dict]) -> dict:
     return gp_model.validate_rules(proposed)
 
 
-def loo_scores(report: dict) -> dict[str, float]:
-    metrics = report.get("loo_metrics")
+def validation_scores(report: dict) -> tuple[dict[str, dict[str, float]], float]:
+    """Extract Stage-B 4D metrics per response and compute causal prequential weight."""
+    metrics = report.get("validation_metrics")
     if not isinstance(metrics, dict) or set(metrics) != set(gp_model.RESPONSES):
-        raise ValueError("every rule set needs LOO metrics for all three responses")
+        raise ValueError("every rule set needs 4D validation_metrics for all three responses")
     scores = {}
+    preq_steps_list = []
     for response in gp_model.RESPONSES:
-        value = metrics[response].get("loo_nrmse")
-        if type(value) not in (int, float) or not math.isfinite(value) or value < 0:
-            raise ValueError(f"invalid LOO-NRMSE for {response}")
-        scores[response] = float(value)
-    return scores
+        item = metrics[response]
+        required = ("cluster_nrmse", "cluster_nlpd", "ana_loo_nrmse", "ana_loo_nlpd", "map_score", "raw_lml")
+        for key in required:
+            val = item.get(key)
+            if type(val) not in (int, float) or not math.isfinite(val):
+                raise ValueError(f"invalid {key} for {response}")
+        preq_steps = int(item.get("prequential_steps") or 0)
+        preq_steps_list.append(preq_steps)
+        preq_nrmse = item.get("prequential_nrmse")
+        preq_nlpd = item.get("prequential_nlpd")
+        if preq_steps > 0 and (
+            type(preq_nrmse) not in (int, float) or not math.isfinite(preq_nrmse)
+            or type(preq_nlpd) not in (int, float) or not math.isfinite(preq_nlpd)
+        ):
+            raise ValueError(f"invalid prequential metrics for {response}")
+        scores[response] = {
+            "cluster_nrmse": float(item["cluster_nrmse"]),
+            "cluster_nlpd": float(item["cluster_nlpd"]),
+            "prequential_nrmse": float(preq_nrmse) if preq_steps > 0 else float(item["cluster_nrmse"]),
+            "prequential_nlpd": float(preq_nlpd) if preq_steps > 0 else float(item["cluster_nlpd"]),
+            "ana_loo_nrmse": float(item["ana_loo_nrmse"]),
+            "ana_loo_nlpd": float(item["ana_loo_nlpd"]),
+            "map_score": float(item["map_score"]),
+            "raw_lml": float(item["raw_lml"]),
+        }
+    n_preq = min(preq_steps_list) if preq_steps_list else 0
+    w_preq = min(0.60, 0.15 * n_preq) if n_preq > 0 else 0.0
+    return scores, w_preq
 
 
-def compare_loo(baseline: dict, candidate: dict,
-                settings: GateSettings) -> tuple[bool, dict]:
-    old, new = loo_scores(baseline), loo_scores(candidate)
-    old_mean = sum(old.values()) / len(old)
-    new_mean = sum(new.values()) / len(new)
-    gain = old_mean - new_mean
-    required = max(settings.min_absolute_loo_gain,
-                   settings.min_relative_loo_gain * old_mean)
-    changes = {response: new[response] - old[response] for response in gp_model.RESPONSES}
-    tolerance = {
-        response: settings.max_response_relative_worsening * max(old[response], 1e-12)
-        for response in gp_model.RESPONSES
+def compare_validation(baseline: dict, candidate: dict,
+                       settings: GateSettings) -> tuple[bool, dict]:
+    """Compare baseline vs candidate rules using 4D composite NRMSE, NLPD, AnaLOO, and MAP."""
+    old, w_preq = validation_scores(baseline)
+    new, cand_w = validation_scores(candidate)
+    if not math.isclose(w_preq, cand_w, rel_tol=0.0, abs_tol=1e-12):
+        raise ValueError("baseline and candidate differ in prequential window length")
+    w_cluster = 1.0 - w_preq
+
+    old_comp = {
+        r: w_cluster * old[r]["cluster_nrmse"] + w_preq * old[r]["prequential_nrmse"]
+        for r in gp_model.RESPONSES
     }
-    passed = gain > 0 and gain >= required and all(
-        changes[response] <= tolerance[response] for response in gp_model.RESPONSES
+    new_comp = {
+        r: w_cluster * new[r]["cluster_nrmse"] + w_preq * new[r]["prequential_nrmse"]
+        for r in gp_model.RESPONSES
+    }
+    old_nlpd = {
+        r: w_cluster * old[r]["cluster_nlpd"] + w_preq * old[r]["prequential_nlpd"]
+        for r in gp_model.RESPONSES
+    }
+    new_nlpd = {
+        r: w_cluster * new[r]["cluster_nlpd"] + w_preq * new[r]["prequential_nlpd"]
+        for r in gp_model.RESPONSES
+    }
+
+    old_mean = sum(old_comp.values()) / len(old_comp)
+    new_mean = sum(new_comp.values()) / len(new_comp)
+    gain = old_mean - new_mean
+    required = max(settings.min_absolute_nrmse_gain,
+                   settings.min_relative_nrmse_gain * old_mean)
+
+    nlpd_gain = (sum(old_nlpd.values()) - sum(new_nlpd.values())) / len(gp_model.RESPONSES)
+    ana_nlpd_gain = sum(old[r]["ana_loo_nlpd"] - new[r]["ana_loo_nlpd"] for r in gp_model.RESPONSES) / len(gp_model.RESPONSES)
+    mean_delta_map = sum(new[r]["map_score"] - old[r]["map_score"] for r in gp_model.RESPONSES) / len(gp_model.RESPONSES)
+    mean_delta_lml = sum(new[r]["raw_lml"] - old[r]["raw_lml"] for r in gp_model.RESPONSES) / len(gp_model.RESPONSES)
+
+    changes = {r: new_comp[r] - old_comp[r] for r in gp_model.RESPONSES}
+    tolerance = {
+        r: settings.max_response_relative_worsening * max(old_comp[r], 1e-12)
+        for r in gp_model.RESPONSES
+    }
+
+    nrmse_ok = gain >= required
+    prob_tie_ok = nlpd_gain >= settings.min_nlpd_gain_for_tie and mean_delta_map >= 0.0 and gain >= 0.0
+    passed = (
+        (nrmse_ok or prob_tie_ok)
+        and mean_delta_map >= settings.min_delta_map
+        and nlpd_gain >= -settings.max_nlpd_increase
+        and ana_nlpd_gain >= -settings.max_nlpd_increase
+        and all(changes[r] <= tolerance[r] for r in gp_model.RESPONSES)
     )
     return passed, {
-        "baseline_mean_loo_nrmse": old_mean,
-        "candidate_mean_loo_nrmse": new_mean,
+        "prequential_weight": w_preq,
+        "cluster_weight": w_cluster,
+        "baseline_mean_composite_nrmse": old_mean,
+        "candidate_mean_composite_nrmse": new_mean,
         "absolute_mean_gain": gain,
         "required_mean_gain": required,
-        "per_response_nrmse_change": changes,
+        "composite_nlpd_gain": nlpd_gain,
+        "ana_loo_nlpd_gain": ana_nlpd_gain,
+        "mean_delta_map": mean_delta_map,
+        "mean_delta_lml": mean_delta_lml,
+        "per_response_composite_nrmse_change": changes,
         "per_response_worsening_tolerance": tolerance,
         "passed": passed,
     }
@@ -241,7 +318,7 @@ def selected_final_index(designs: Path, sequential_count: int | None) -> int:
 
 def prior_config_from_report(report: dict) -> gp_model.PriorConfig:
     fit = report.get("fit_settings", {})
-    if report.get("schema_version") != 2 or fit.get("lengthscale_prior_mode") != "soft_log_normal_map":
+    if report.get("schema_version") not in (2, 3) or fit.get("lengthscale_prior_mode") != "soft_log_normal_map":
         raise ValueError("sealed model must use the version-2 soft prior")
     length_bounds = fit["length_scale_optimizer_bounds"]
     noise_bounds = fit["nugget_optimizer_bounds_standardized_variance"]
@@ -326,7 +403,7 @@ def run(*, train: Path, reference: Path, designs: Path, truth: Path,
         new_train, reference, baseline_dir, rules_path=model_dir / "rules_used.json",
         initial_decision=model_dir / "rules_used.json", predict_path=next_designs,
         predict_index=target + 1 if next_designs else None,
-        restarts=restarts, seed=seed, loo=True, prior_config=prior_config,
+        restarts=restarts, seed=seed, validate=True, prior_config=prior_config,
     )
     selected = None
     comparisons = []
@@ -342,23 +419,23 @@ def run(*, train: Path, reference: Path, designs: Path, truth: Path,
             new_train, reference, candidate_dir, rules_path=rules_path,
             initial_decision=rules_path, predict_path=next_designs,
             predict_index=target + 1 if next_designs else None,
-            restarts=restarts, seed=seed, loo=True, prior_config=prior_config,
+            restarts=restarts, seed=seed, validate=True, prior_config=prior_config,
         )
         for key in ("train_sha256", "reference_initial_sha256",
                     "blind_prediction_sample_index", "fit_settings"):
             if baseline[key] != candidate[key]:
                 raise ValueError(f"candidate {label} differs in shared fit setting {key}")
-        passed, gate = compare_loo(baseline, candidate, settings)
+        passed, gate = compare_validation(baseline, candidate, settings)
         comparison = {
             "candidate_indices": [i + 1 for i in subset],
             "candidate_model_dir": str(candidate_dir.resolve()),
             "rules_sha256": gp_model.canonical_sha256(rules),
-            "loo_metrics": candidate["loo_metrics"],
+            "validation_metrics": candidate["validation_metrics"],
             "gate": gate,
         }
         comparisons.append(comparison)
         if passed:
-            rank = (gate["candidate_mean_loo_nrmse"], len(subset), subset)
+            rank = (gate["candidate_mean_composite_nrmse"], len(subset), subset)
             if selected is None or rank < selected[0]:
                 selected = rank, comparison, rules, changes
 
@@ -390,10 +467,10 @@ def run(*, train: Path, reference: Path, designs: Path, truth: Path,
         "candidate_comparisons": comparisons,
         "adopted_model_dir": str(chosen_dir.resolve()),
         "adopted_rules_sha256": gp_model.canonical_sha256(final_rules),
-        "baseline_loo_metrics": baseline["loo_metrics"],
+        "baseline_validation_metrics": baseline["validation_metrics"],
         "next_blind_sample_index": target + 1 if next_designs else None,
         "ledger_file": str(ledger_file.resolve()),
-        "scope": "Revealed-prefix LOO selects prior rules; future truth and independent tests are excluded.",
+        "scope": "Revealed-prefix 4D validation selects prior rules; future truth and independent tests are excluded.",
     }
     gp_model.write_json(output / "decision_record.json", record)
     print(f"Sample {target}: LLM={answer['decision']}, outcome={outcome}, "
@@ -417,9 +494,12 @@ def main() -> int:
     parser.add_argument("--output", type=Path)
     parser.add_argument("--restarts", type=int, default=3)
     parser.add_argument("--seed", type=int, default=2026)
-    parser.add_argument("--min-absolute-loo-gain", type=float, default=0.001)
-    parser.add_argument("--min-relative-loo-gain", type=float, default=0.01)
+    parser.add_argument("--min-absolute-nrmse-gain", type=float, default=0.0005)
+    parser.add_argument("--min-relative-nrmse-gain", type=float, default=0.003)
     parser.add_argument("--max-response-relative-worsening", type=float, default=0.02)
+    parser.add_argument("--max-nlpd-increase", type=float, default=0.02)
+    parser.add_argument("--min-nlpd-gain-for-tie", type=float, default=0.005)
+    parser.add_argument("--min-delta-map", type=float, default=-0.25)
     args = parser.parse_args()
     try:
         train = args.train.resolve()
@@ -428,9 +508,12 @@ def main() -> int:
         ))
         target = count + 1
         settings = GateSettings(
-            min_absolute_loo_gain=args.min_absolute_loo_gain,
-            min_relative_loo_gain=args.min_relative_loo_gain,
+            min_absolute_nrmse_gain=args.min_absolute_nrmse_gain,
+            min_relative_nrmse_gain=args.min_relative_nrmse_gain,
             max_response_relative_worsening=args.max_response_relative_worsening,
+            max_nlpd_increase=args.max_nlpd_increase,
+            min_nlpd_gain_for_tie=args.min_nlpd_gain_for_tie,
+            min_delta_map=args.min_delta_map,
         )
         run(
             train=train, reference=args.reference_initial.resolve(),

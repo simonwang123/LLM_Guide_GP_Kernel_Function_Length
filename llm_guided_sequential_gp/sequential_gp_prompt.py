@@ -95,6 +95,37 @@ def reject_constant(value: str) -> None:
     raise ValueError(f"non-finite JSON number: {value}")
 
 
+_JSON_CODE_FENCE_RE = re.compile(
+    r"```[ \t]*(?:json\b)?[ \t]*(?:\r?\n)?([\s\S]*?)\s*```",
+    flags=re.IGNORECASE,
+)
+
+
+def strip_json_code_fence(text: str) -> str:
+    """Unwrap one outer Markdown ``` or ```json fence when the reply is wrapped as a code block."""
+    stripped = text.strip()
+    if stripped.startswith("```"):
+        match = _JSON_CODE_FENCE_RE.fullmatch(stripped)
+        if match is not None:
+            return match.group(1).strip()
+    return stripped
+
+
+def parse_llm_json(raw: bytes | str) -> object:
+    """Decode UTF-8-SIG LLM output, unwrap an outer JSON code fence, and parse strictly."""
+    if isinstance(raw, (bytes, bytearray)):
+        text = bytes(raw).decode("utf-8-sig")
+    elif isinstance(raw, str):
+        text = raw.lstrip("\ufeff")
+    else:
+        raise TypeError("LLM response must be bytes or str")
+    return json.loads(
+        strip_json_code_fence(text),
+        object_pairs_hook=unique_pairs,
+        parse_constant=reject_constant,
+    )
+
+
 def exact_keys(value: object, expected: set[str], label: str) -> dict:
     if not isinstance(value, dict) or set(value) != expected:
         actual = set(value) if isinstance(value, dict) else type(value).__name__
@@ -459,7 +490,7 @@ def validate_response(request_dir: Path, response_file: Path) -> dict:
         "error": None,
     }
     try:
-        answer = json.loads(text, object_pairs_hook=unique_pairs, parse_constant=reject_constant)
+        answer = parse_llm_json(text)
         if not isinstance(answer, dict):
             raise ValueError("LLM response must be one JSON object")
         if stage == "initial":
